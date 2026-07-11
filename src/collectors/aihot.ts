@@ -20,7 +20,8 @@ export const aiHotAdapter: SourceAdapter = {
     const url = new URL(source.config.url);
     url.searchParams.set("mode", source.config.mode ?? "selected");
     url.searchParams.set("take", String(source.config.take ?? 50));
-    const { body } = await context.fetchText(url.toString());
+    const { body, status } = await context.fetchText(url.toString());
+    if (status === 304) return [];
     const payload = JSON.parse(body) as { items?: AiHotItem[] };
     return (payload.items ?? []).map(normalize);
   },

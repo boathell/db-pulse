@@ -1,6 +1,11 @@
 import { randomUUID, timingSafeEqual } from "node:crypto";
 import type { Kysely } from "kysely";
-import type { CollectedSignal, PublicEvent, SourceDescriptor } from "../domain/types.js";
+import {
+  type CollectedSignal,
+  type PublicEvent,
+  SourceConfigSchema,
+  type SourceDescriptor,
+} from "../domain/types.js";
 import { canonicalizeUrl, sha256 } from "../domain/url.js";
 import type {
   DatabaseSchema,
@@ -9,6 +14,7 @@ import type {
   NewSourceRow,
   SignalRow,
   SourceRow,
+  SourceRunRow,
   SourceUpdate,
 } from "./types.js";
 
@@ -34,7 +40,13 @@ export class Repository {
   }
 
   async getEnabledSources(): Promise<SourceRow[]> {
-    return this.db.selectFrom("sources").selectAll().where("enabled", "=", 1).execute();
+    return this.db
+      .selectFrom("sources")
+      .selectAll()
+      .where("enabled", "=", 1)
+      .where("lifecycle_status", "in", ["active", "degraded"])
+      .orderBy("priority", "desc")
+      .execute();
   }
 
   async saveSource(input: Omit<NewSourceRow, "created_at" | "updated_at">): Promise<void> {
@@ -67,6 +79,7 @@ export class Repository {
   }
 
   toSourceDescriptor(source: SourceRow): SourceDescriptor {
+    const config = SourceConfigSchema.parse(parseJson(source.config_json, null));
     return {
       id: source.id,
       slug: source.slug,
@@ -78,9 +91,166 @@ export class Repository {
       region: source.region,
       language: source.language,
       authorityScore: source.authority_score,
-      config: parseJson(source.config_json, { url: source.homepage_url }),
+      config,
       state: parseJson(source.state_json, {}),
     };
+  }
+
+  async startSourceRun(sourceId: string, jobId: string): Promise<string> {
+    const id = randomUUID();
+    await this.db
+      .insertInto("source_runs")
+      .values({
+        id,
+        source_id: sourceId,
+        job_id: jobId,
+        status: "running",
+        attempt_count: 0,
+        duration_ms: 0,
+        collected_count: 0,
+        created_count: 0,
+        skipped_count: 0,
+        http_status: null,
+        response_bytes: 0,
+        error_type: null,
+        error_code: null,
+        error_summary: null,
+        started_at: now(),
+        finished_at: null,
+      })
+      .execute();
+    return id;
+  }
+
+  async finishSourceRun(
+    id: string,
+    patch: {
+      status: string;
+      attemptCount: number;
+      durationMs: number;
+      collected: number;
+      created: number;
+      skipped: number;
+      httpStatus?: number | null;
+      responseBytes?: number;
+      errorType?: string | null;
+      errorCode?: string | null;
+      errorSummary?: string | null;
+    },
+  ): Promise<void> {
+    await this.db
+      .updateTable("source_runs")
+      .set({
+        status: patch.status,
+        attempt_count: patch.attemptCount,
+        duration_ms: patch.durationMs,
+        collected_count: patch.collected,
+        created_count: patch.created,
+        skipped_count: patch.skipped,
+        http_status: patch.httpStatus ?? null,
+        response_bytes: patch.responseBytes ?? 0,
+        error_type: patch.errorType ?? null,
+        error_code: patch.errorCode ?? null,
+        error_summary: patch.errorSummary?.slice(0, 4_000) ?? null,
+        finished_at: now(),
+      })
+      .where("id", "=", id)
+      .execute();
+  }
+
+  async listSourceRuns(sourceId?: string, limit = 100): Promise<SourceRunRow[]> {
+    let query = this.db.selectFrom("source_runs").selectAll();
+    if (sourceId) query = query.where("source_id", "=", sourceId);
+    return query.orderBy("started_at", "desc").limit(limit).execute();
+  }
+
+  async listScoutInsights(status?: string) {
+    let query = this.db.selectFrom("scout_insights").selectAll();
+    if (status) query = query.where("status", "=", status);
+    return query.orderBy("total_score", "desc").orderBy("generated_at", "desc").execute();
+  }
+
+  async getScoutInsight(id: string) {
+    return this.db.selectFrom("scout_insights").selectAll().where("id", "=", id).executeTakeFirst();
+  }
+
+  async findRecentScoutInsight(cooldownKey: string, since: string) {
+    return this.db
+      .selectFrom("scout_insights")
+      .select("id")
+      .where("cooldown_key", "=", cooldownKey)
+      .where("generated_at", ">=", since)
+      .executeTakeFirst();
+  }
+
+  async insertScoutInsight(
+    input: Omit<
+      import("./types.js").ScoutInsightTable,
+      "id" | "created_at" | "updated_at" | "published_at"
+    >,
+    eventId: string,
+  ): Promise<string> {
+    const id = randomUUID();
+    const timestamp = now();
+    await this.db.transaction().execute(async (transaction) => {
+      await transaction
+        .insertInto("scout_insights")
+        .values({ ...input, id, published_at: null, created_at: timestamp, updated_at: timestamp })
+        .execute();
+      await transaction
+        .insertInto("scout_evidence")
+        .values({
+          insight_id: id,
+          event_id: eventId,
+          evidence_role: "trigger",
+          weight: 100,
+          created_at: timestamp,
+        })
+        .execute();
+    });
+    return id;
+  }
+
+  async updateScoutInsight(id: string, patch: Partial<import("./types.js").ScoutInsightTable>) {
+    await this.db
+      .updateTable("scout_insights")
+      .set({ ...patch, updated_at: now() })
+      .where("id", "=", id)
+      .execute();
+  }
+
+  async publicScoutInsights() {
+    const insights = await this.listScoutInsights("published");
+    return Promise.all(
+      insights.map(async (insight) => {
+        const evidence = await this.db
+          .selectFrom("scout_evidence")
+          .innerJoin("events", "events.id", "scout_evidence.event_id")
+          .select(["events.slug", "events.title", "events.fact_summary as factSummary"])
+          .where("scout_evidence.insight_id", "=", insight.id)
+          .execute();
+        return {
+          slug: insight.slug,
+          kind: insight.kind,
+          title: insight.title,
+          observation: insight.observation,
+          hypothesis: insight.hypothesis,
+          whyNow: insight.why_now,
+          targetAudience: insight.target_audience,
+          suggestedAction: insight.suggested_action,
+          artifactIdea: insight.artifact_idea,
+          counterSignals: insight.counter_signals,
+          horizon: insight.horizon,
+          confidenceScore: insight.confidence_score,
+          evidenceScore: insight.evidence_score,
+          noveltyScore: insight.novelty_score,
+          leverageScore: insight.leverage_score,
+          totalScore: insight.total_score,
+          publishedAt: insight.published_at,
+          evidence,
+        };
+      }),
+    );
   }
 
   async insertSignal(sourceId: string, item: CollectedSignal): Promise<SignalRow | undefined> {
@@ -238,37 +408,50 @@ export class Repository {
   }
 
   async dashboard(): Promise<Record<string, number>> {
-    const [sources, signals, drafts, published, failedJobs] = await Promise.all([
-      this.db
-        .selectFrom("sources")
-        .select(({ fn }) => fn.countAll<number>().as("count"))
-        .executeTakeFirstOrThrow(),
-      this.db
-        .selectFrom("signals")
-        .select(({ fn }) => fn.countAll<number>().as("count"))
-        .executeTakeFirstOrThrow(),
-      this.db
-        .selectFrom("events")
-        .select(({ fn }) => fn.countAll<number>().as("count"))
-        .where("status", "in", ["draft", "review"])
-        .executeTakeFirstOrThrow(),
-      this.db
-        .selectFrom("events")
-        .select(({ fn }) => fn.countAll<number>().as("count"))
-        .where("status", "=", "published")
-        .executeTakeFirstOrThrow(),
-      this.db
-        .selectFrom("jobs")
-        .select(({ fn }) => fn.countAll<number>().as("count"))
-        .where("status", "=", "failed")
-        .executeTakeFirstOrThrow(),
-    ]);
+    const [sources, signals, drafts, published, failedJobs, degradedSources, scoutInbox] =
+      await Promise.all([
+        this.db
+          .selectFrom("sources")
+          .select(({ fn }) => fn.countAll<number>().as("count"))
+          .executeTakeFirstOrThrow(),
+        this.db
+          .selectFrom("signals")
+          .select(({ fn }) => fn.countAll<number>().as("count"))
+          .executeTakeFirstOrThrow(),
+        this.db
+          .selectFrom("events")
+          .select(({ fn }) => fn.countAll<number>().as("count"))
+          .where("status", "in", ["draft", "review"])
+          .executeTakeFirstOrThrow(),
+        this.db
+          .selectFrom("events")
+          .select(({ fn }) => fn.countAll<number>().as("count"))
+          .where("status", "=", "published")
+          .executeTakeFirstOrThrow(),
+        this.db
+          .selectFrom("jobs")
+          .select(({ fn }) => fn.countAll<number>().as("count"))
+          .where("status", "=", "failed")
+          .executeTakeFirstOrThrow(),
+        this.db
+          .selectFrom("sources")
+          .select(({ fn }) => fn.countAll<number>().as("count"))
+          .where("lifecycle_status", "in", ["degraded", "quarantined"])
+          .executeTakeFirstOrThrow(),
+        this.db
+          .selectFrom("scout_insights")
+          .select(({ fn }) => fn.countAll<number>().as("count"))
+          .where("status", "in", ["inbox", "considering"])
+          .executeTakeFirstOrThrow(),
+      ]);
     return {
       sources: Number(sources.count),
       signals: Number(signals.count),
       drafts: Number(drafts.count),
       published: Number(published.count),
       failedJobs: Number(failedJobs.count),
+      degradedSources: Number(degradedSources.count),
+      scoutInbox: Number(scoutInbox.count),
     };
   }
 

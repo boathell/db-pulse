@@ -22,7 +22,14 @@ const source = (adapter: string): SourceDescriptor => ({
 
 const context = (body: string): CollectContext => ({
   config: loadConfig({ NODE_ENV: "test", DATABASE_URL: "sqlite::memory:" }),
-  fetchText: async () => ({ body, status: 200, headers: new Headers() }),
+  fetchText: async () => ({
+    body,
+    status: 200,
+    headers: new Headers(),
+    attemptCount: 1,
+    responseBytes: Buffer.byteLength(body),
+    finalUrl: "https://example.com/feed",
+  }),
 });
 
 describe("RSS adapter", () => {

@@ -1,19 +1,26 @@
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { Kysely } from "kysely";
+import { capabilities, productVersion, releases, roadmap } from "../catalog/product.js";
 import type { AppConfig } from "../config/env.js";
 import { parseJson, Repository } from "../db/repository.js";
 import type { DatabaseSchema } from "../db/types.js";
+import { evaluateSystem } from "./evaluate.js";
 
 export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppConfig) {
   const repository = new Repository(db);
-  const [events, tracks, actors, resources, view] = await Promise.all([
+  const evaluation = await evaluateSystem(db);
+  const [events, tracks, actors, resources, view, scout] = await Promise.all([
     repository.publicEvents(),
     repository.listTracks(),
     repository.listActors(),
     repository.listResources(),
     repository.getDefaultView(),
+    repository.publicScoutInsights(),
   ]);
+  const sources = (await repository.listSources()).filter(
+    (source) => source.lifecycle_status !== "retired",
+  );
 
   const enrichedEvents = await Promise.all(
     events.map(async (event) => ({
@@ -45,6 +52,52 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
         perspective: track.perspective,
         color: track.color,
         icon: track.icon,
+      })),
+    ),
+    writeJson(join(config.distDir, "data/scout.json"), {
+      schemaVersion: 1,
+      generatedAt,
+      insights: scout,
+    }),
+    writeJson(join(config.distDir, "data/product.json"), {
+      schemaVersion: 1,
+      version: productVersion,
+      generatedAt,
+      capabilities,
+      roadmap,
+      releases,
+      evaluation: evaluation
+        ? {
+            status: evaluation.status,
+            overallScore: evaluation.overallScore,
+            dimensions: evaluation.dimensions,
+            finishedAt: evaluation.finishedAt,
+          }
+        : null,
+      sourceCoverage: {
+        total: sources.length,
+        active: sources.filter((source) => source.lifecycle_status === "active").length,
+        candidate: sources.filter((source) => source.maintenance_status === "candidate").length,
+        regions: [...new Set(sources.map((source) => source.region))],
+        categories: [...new Set(sources.map((source) => source.source_category))],
+      },
+    }),
+    writeJson(
+      join(config.distDir, "data/sources.json"),
+      sources.map((source) => ({
+        slug: source.slug,
+        name: source.name,
+        homepageUrl: source.homepage_url,
+        category: source.source_category,
+        region: source.region,
+        tier: source.tier,
+        role: source.role,
+        acquisition: source.acquisition,
+        topics: parseJson(source.topics_json, []),
+        maintenanceStatus: source.maintenance_status,
+        lifecycle: source.lifecycle_status,
+        qualityScore: source.quality_score,
+        cadence: source.cadence,
       })),
     ),
     writeJson(
@@ -104,6 +157,9 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
     tracks: tracks.length,
     actors: actors.length,
     resources: resources.length,
+    scout: scout.length,
+    sources: sources.length,
+    version: productVersion,
     generatedAt,
   };
 }

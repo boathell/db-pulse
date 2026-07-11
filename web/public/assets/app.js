@@ -3,6 +3,8 @@ const state = {
   tracks: [],
   actors: [],
   resources: [],
+  scout: [],
+  product: null,
   activeTrack: "",
   search: "",
   category: "",
@@ -18,7 +20,7 @@ const node = (tag, className, text) => {
 
 async function load() {
   try {
-    const [timeline, tracks, actors, resources] = await Promise.all([
+    const [timeline, tracks, actors, resources, scout, product] = await Promise.all([
       fetch("./data/timeline.json")
         .then(check)
         .then((response) => response.json()),
@@ -31,11 +33,21 @@ async function load() {
       fetch("./data/resources.json")
         .then(check)
         .then((response) => response.json()),
+      fetch("./data/scout.json")
+        .then(check)
+        .then((response) => response.json())
+        .catch(() => ({ insights: [] })),
+      fetch("./data/product.json")
+        .then(check)
+        .then((response) => response.json())
+        .catch(() => null),
     ]);
     state.events = timeline.events || [];
     state.tracks = tracks || [];
     state.actors = actors || [];
     state.resources = resources || [];
+    state.scout = scout.insights || [];
+    state.product = product;
     updateOverview(timeline.generatedAt);
     renderTracks();
     renderCategories();
@@ -43,10 +55,126 @@ async function load() {
     renderActors();
     renderResourceFilters();
     renderResources();
+    renderScout();
+    scheduleScoutPopover();
+    renderEvolution();
     openFromHash();
   } catch (error) {
     $("#timelineList").append(node("div", "empty-state", `数据载入失败：${error.message}`));
   }
+}
+
+function renderEvolution() {
+  const product = state.product;
+  if (!product) return;
+  $("#productVersion").textContent = `v${product.version}`;
+  $("#sourceCoverage").textContent = `${product.sourceCoverage?.total || 0}+`;
+  $("#systemScore").textContent = product.evaluation?.overallScore ?? "—";
+  const measured = (product.evaluation?.dimensions || []).filter(
+    (item) => item.status === "measured",
+  ).length;
+  $("#evaluationNote").textContent =
+    `${measured}/${product.evaluation?.dimensions?.length || 0} 个维度已有足够样本；证据不足的维度不会参与综合分。`;
+  const spine = $("#roadmapSpine");
+  spine.replaceChildren();
+  (product.roadmap || []).forEach((stateItem) => {
+    const card = node("article", `roadmap-state ${stateItem.status}`);
+    card.append(
+      node("span", "", `STATE ${stateItem.state}`),
+      node("h3", "", stateItem.name),
+      node("p", "", stateItem.promise),
+    );
+    const milestones = node("ol");
+    stateItem.milestones.forEach((milestone) => {
+      milestones.append(node("li", "", milestone));
+    });
+    card.append(milestones);
+    spine.append(card);
+  });
+  const capabilityRoot = $("#publicCapabilities");
+  capabilityRoot.replaceChildren();
+  const domains = (product.capabilities || []).reduce((groups, capability) => {
+    if (!groups[capability.domain]) groups[capability.domain] = [];
+    groups[capability.domain].push(capability);
+    return groups;
+  }, {});
+  Object.entries(domains).forEach(([domain, items]) => {
+    const group = node("section", "public-capability-group");
+    group.append(node("strong", "", domain.toUpperCase()));
+    items.forEach((capability) => {
+      const item = node("div", `public-capability ${capability.status}`);
+      item.append(node("span", "", capability.name), node("i", "", `${capability.maturity}`));
+      group.append(item);
+    });
+    capabilityRoot.append(group);
+  });
+  const releaseRoot = $("#releaseList");
+  releaseRoot.replaceChildren();
+  (product.releases || []).forEach((release) => {
+    const article = node("article", "release-card");
+    article.append(
+      node("span", "", `${release.date} · v${release.version}`),
+      node("h3", "", release.name),
+      node("p", "", release.summary),
+    );
+    const changes = node("ul");
+    release.changes.forEach((change) => {
+      changes.append(node("li", "", change));
+    });
+    article.append(changes);
+    releaseRoot.append(article);
+  });
+}
+
+function renderScout() {
+  const grid = $("#scoutGrid");
+  grid.replaceChildren();
+  state.scout.slice(0, 6).forEach((insight) => {
+    const card = node("article", "scout-card");
+    const head = node("div", "scout-card-head");
+    head.append(
+      node("span", "scout-kind", scoutKind(insight.kind)),
+      node("strong", "scout-score", String(insight.totalScore)),
+    );
+    card.append(
+      head,
+      node("h3", "", insight.title),
+      node("p", "scout-hypothesis", insight.hypothesis),
+    );
+    const detail = node("details", "scout-detail");
+    detail.append(node("summary", "", "展开行动与反证"));
+    const body = node("div");
+    [
+      ["为什么是现在", insight.whyNow],
+      ["48 小时动作", insight.suggestedAction],
+      ["建议沉淀", insight.artifactIdea],
+      ["可能错在哪", insight.counterSignals],
+    ].forEach(([label, copy]) => {
+      const section = node("section");
+      section.append(node("strong", "", label), node("p", "", copy));
+      body.append(section);
+    });
+    detail.append(body);
+    card.append(detail);
+    grid.append(card);
+  });
+  if (!state.scout.length)
+    grid.append(node("div", "empty-state", "星探正在穿梭信息之间，暂时没有达到发布门槛的想法。"));
+}
+
+function scheduleScoutPopover() {
+  const insight = state.scout[0];
+  if (!insight || localStorage.getItem(`agent-pulse-scout-dismissed:${insight.slug}`)) return;
+  setTimeout(() => {
+    $("#scoutPopoverTitle").textContent = insight.title;
+    $("#scoutPopoverCopy").textContent = insight.suggestedAction;
+    $("#scoutPopover").hidden = false;
+    $("#scoutPopover").dataset.slug = insight.slug;
+  }, 1800);
+}
+
+function scoutKind(kind) {
+  return { venture: "创业火花", media: "内容机会", work: "工作杠杆" }[kind] || "认知火花";
 }
 
 function check(response) {
@@ -343,5 +471,11 @@ $("#themeButton").addEventListener("click", () => {
   const next = themes[(themes.indexOf(current) + 1) % themes.length];
   document.documentElement.dataset.theme = next;
   localStorage.setItem("agent-pulse-theme", next);
+});
+$("#scoutDismiss").addEventListener("click", () => {
+  const popover = $("#scoutPopover");
+  if (popover.dataset.slug)
+    localStorage.setItem(`agent-pulse-scout-dismissed:${popover.dataset.slug}`, "1");
+  popover.hidden = true;
 });
 load();

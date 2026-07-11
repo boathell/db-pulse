@@ -1,25 +1,61 @@
 # AGENTS.md
 
-## Project
+# Agent Pulse
 
-Agent Pulse is a Chinese-first AI industry intelligence timeline. It collects high-value signals, clusters duplicate reports into events, scores both source credibility and cross-platform heat, and publishes concise analysis instead of raw feeds.
+> Understand AI. Build Better Decisions.
 
-## Working agreements
+## Mission
 
-- Keep product copy in Chinese; keep code, comments, commits, and technical docs in English unless a document is explicitly intended for Chinese review.
-- Read `docs/specs/2026-07-11-agent-pulse-rebuild/` before changing architecture, schema, collection workflow, ranking, or publishing behavior.
-- Keep collectors behind the shared `SourceAdapter` contract. Do not add source-specific logic to orchestration code.
-- Treat aggregators as discovery or heat signals, never as the sole authority for a factual claim.
-- Preserve provenance for every event and never publish raw third-party full text.
-- Keep SQLite as the zero-config default and MySQL as a supported runtime through the same repository layer.
-- Public output must remain static, privacy-safe, and deployable to GitHub Pages. The admin console is local/server-side only.
-- Use `npm` in this repository because `tnpm` is not available in the current environment.
-- Run `npm run check` before committing.
+Agent Pulse 是一套面向 CEO、投资人、技术负责人和创业者的 AI 行业认知系统。它持续追踪全球 AI 技术、产品、组织、资本、政策与商业化进展，将分散事实收敛为可信事件，将孤立事件组织为长期趋势，将长期趋势沉淀为行业认知。产品最终提供的是判断，而不是新闻；帮助用户理解变化，而不是消费信息；辅助决策，而不是制造焦虑。
 
-## Security and privacy
+## North Star
 
-- Never commit `.env`, database files, tokens, cookies, private feeds, local paths, or raw collector payloads.
-- Admin mutations require `ADMIN_TOKEN` outside development/test.
-- Validate all external URLs and block loopback/private-network fetches unless a source is explicitly trusted in code.
-- Sanitize imported text and render it as text, not HTML.
+用户离开 Agent Pulse 时，应该拥有比进入之前更完整的行业判断。每一篇内容至少创造一种价值：发现新的事实、理解变化原因、建立新的认知、发现新的机会、完成更好的决策。信息会快速贬值，判断会持续增值。
 
+## Product Philosophy
+
+真正重要的内容每天都只有少数几件。产品不追求最快、最全、最多，只追求最值得阅读、最值得保存、最值得分享、最值得付费。竞争力来自认知密度，而不是信息数量；来自解释世界，而不是记录世界；来自长期价值，而不是短期流量。
+
+## Product Experience
+
+整个产品围绕四个空间组织：**Today** 聚焦今天真正重要的变化；**Timeline** 展示技术、产品、资本与产业如何持续演进；**Radar** 展示全球 AI 玩家、竞争格局与行业重心变化；**Inbox** 沉淀值得持续跟进的新机会。每一次阅读都能够回答三个问题：发生了什么、为什么重要、接下来应该关注什么。
+
+## Thinking Model
+
+所有 Event 都围绕统一认知模型展开。**Fact** 记录可验证、可追溯、可引用的事实；**Reason** 解释技术、商业、组织、资本与政策背后的驱动力；**Impact** 分析真正受到影响的人、企业与产业；**Signal** 判断这是新闻还是趋势，是局部变化还是行业拐点；**Future** 提炼未来值得持续观察的问题；**Decision** 回答资源如何配置、产品如何演进、技术如何选择、企业如何应对。行业认知最终都会回到决策本身。
+
+## Event
+
+每一个 Event 都是一块完整的行业知识，而不是一篇新闻。内容保持统一结构：一句话事实、事件背景、核心变化、行业判断、长期影响、未来观察、业务价值、证据来源。事件解释变化，不复述新闻；连接趋势，不堆积信息；帮助理解，不制造阅读负担。
+
+## Insight
+
+Insight 是产品最重要的资产。它解释事件之间的关系，而不是解释事件本身；解释趋势如何形成，而不是事情如何发生；建立新的理解框架，而不是重复已有观点。一篇 Insight 只表达一个核心认知，一个段落只表达一个观点，一句话只传递一个信息。能够删除而不影响理解的内容，都应该删除。
+
+## Timeline
+
+Timeline 记录行业演进，而不是新闻历史。每条 Timeline 都持续积累同一主题的发展过程，包括 Foundation Model、Agent、Coding、Browser、Robotics、Chip、Cloud、AI Native、China AI、Open Source、Policy、Investment 等方向。同一事件可以进入多个 Timeline，事实始终保持唯一。
+
+## Opportunity
+
+真正重要的机会来自多个事件之间的连接，而不是单一新闻。每一个 Opportunity 都围绕 Opportunity、Evidence、Hypothesis、Why Now、Target、Risk、Confidence、First Action、Long-term Asset 展开，能够持续验证、持续修正，并不断沉淀为长期资产。
+
+## Heat
+
+热度代表行业影响，而不是传播规模。真正的重要事件会在官方机构、研究机构、企业、开发者社区、投资圈、媒体以及多个国家形成共识。单个平台、单个媒体或单个 KOL 的传播都不足以定义热点。
+
+## Source
+
+事实来自官方，技术来自研究，产业来自企业，观点来自专家，信号来自社区，热度来自社交平台。任何重要事件都建立在多个独立来源交叉验证之上，所有判断都能够追溯到原始证据，所有证据都保留完整 provenance。
+
+## Engineering
+
+所有来源遵循统一生命周期：注册、验证、运行、监控、降级、恢复、退役。所有数据通过统一 SourceAdapter、统一 Contract、统一 Pipeline、统一质量标准进入系统，不允许站点特例，不允许绕过验证，不允许无法追溯的内容进入公开产品。
+
+## Writing
+
+表达保持自然、克制、准确。语言像经验丰富的行业研究者，而不是媒体报道、咨询报告或 AI 输出。事实优先于修辞，解释优先于结论，长期优先于短期，洞察优先于观点。避免模板化表达、营销语言、标题党、口号式总结和 AI 味。读者感受到的是内容本身，而不是写作技巧。每篇内容都能够长期阅读、长期引用、长期沉淀。
+
+## Long-term Vision
+
+Agent Pulse 将持续完成七个阶段：可信时间轴、行业事件理解、证据驱动洞察、Opportunity Scout、AI 行业知识网络、趋势预测能力、AI 决策副驾。最终沉淀的不只是内容，而是全球 AI 行业持续演进的认知体系，成为 AI 时代值得长期信赖的认知基础设施。

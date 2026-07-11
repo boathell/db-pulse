@@ -12,6 +12,8 @@
       <nav id="adminNav">
         <button type="button" class="active" data-tab="dashboard">◫ <span>指挥中心</span></button>
         <button type="button" data-tab="sources">⌁ <span>信源矩阵</span></button>
+        <button type="button" data-tab="scout">✦ <span>星探驾驶舱</span></button>
+        <button type="button" data-tab="evaluation">◎ <span>评测中心</span></button>
         <button type="button" data-tab="events">◉ <span>事件与发布</span></button>
         <button type="button" data-tab="tracks">≋ <span>主线编排</span></button>
         <button type="button" data-tab="actors">⌬ <span>角色雷达</span></button>
@@ -25,11 +27,13 @@
       <section class="tab-page active" data-page="dashboard">
         <div class="metric-grid" id="metricGrid"></div>
         <div class="panel-grid">
-          <article class="panel"><div class="panel-head"><div><span>PIPELINE</span><h2>数据流水线</h2></div><span id="pipelineStatus" class="pill">READY</span></div><div class="pipeline-actions"><button type="button" class="pipeline-button" data-action="collect">01<br /><strong>采集</strong><small>Collect sources</small></button><button type="button" class="pipeline-button" data-action="cluster">02<br /><strong>聚类</strong><small>Cluster & score</small></button><button type="button" class="pipeline-button" data-action="export">03<br /><strong>静态化</strong><small>Export site</small></button></div><pre id="pipelineOutput">等待指令…</pre></article>
+          <article class="panel"><div class="panel-head"><div><span>PIPELINE</span><h2>数据流水线</h2></div><span id="pipelineStatus" class="pill">READY</span></div><div class="pipeline-actions"><button type="button" class="pipeline-button" data-action="collect">01<br /><strong>采集</strong><small>Collect sources</small></button><button type="button" class="pipeline-button" data-action="cluster">02<br /><strong>聚类</strong><small>Cluster & score</small></button><button type="button" class="pipeline-button" data-action="scout">03<br /><strong>星探</strong><small>Find opportunities</small></button><button type="button" class="pipeline-button" data-action="evaluate">04<br /><strong>评测</strong><small>Evaluate system</small></button><button type="button" class="pipeline-button" data-action="export">05<br /><strong>静态化</strong><small>Export site</small></button></div><pre id="pipelineOutput">等待指令…</pre></article>
           <article class="panel"><div class="panel-head"><div><span>RECENT JOBS</span><h2>任务记录</h2></div></div><div id="jobList" class="job-list"></div></article>
         </div>
       </section>
       <section class="tab-page" data-page="sources"><div class="page-toolbar"><input class="table-search" data-search="sources" placeholder="搜索信源…" /><span>控制启停、层级、权威分和采集配置</span></div><div class="data-table" id="sourcesTable"></div></section>
+      <section class="tab-page" data-page="scout"><div class="page-toolbar"><input class="table-search" data-search="scout" placeholder="搜索想法…" /><span>证据型机会只在人工接受后才能公开</span></div><div class="data-table" id="scoutTable"></div></section>
+      <section class="tab-page" data-page="evaluation"><div class="evaluation-head"><div><span>SYSTEM SCORECARD</span><h2>系统能力评测</h2><p>每个分数都附样本量与证据水位；样本不足时不把漂亮分数伪装成结论。</p></div><div class="evaluation-score"><strong id="evaluationScore">—</strong><span id="evaluationStatus">尚未评测</span></div></div><div class="evaluation-grid" id="evaluationGrid"></div><div class="capability-map" id="capabilityMap"></div></section>
       <section class="tab-page" data-page="events"><div class="page-toolbar"><input class="table-search" data-search="events" placeholder="搜索事件…" /><span>审核、编辑、置顶、发布或隐藏</span></div><div class="data-table" id="eventsTable"></div></section>
       <section class="tab-page" data-page="tracks"><div class="page-toolbar"><input class="table-search" data-search="tracks" placeholder="搜索主线…" /><span>控制颜色、顺序和叙事定义</span></div><div class="data-table" id="tracksTable"></div></section>
       <section class="tab-page" data-page="actors"><div class="page-toolbar"><input class="table-search" data-search="actors" placeholder="搜索角色…" /><span>校准国内外角色的上牌桌评分</span></div><div class="data-table" id="actorsTable"></div></section>

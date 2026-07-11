@@ -17,8 +17,94 @@ export interface SourceTable {
   last_collected_at: string | null;
   last_success_at: string | null;
   last_error: string | null;
+  lifecycle_status: Generated<string>;
+  health_score: Generated<number>;
+  consecutive_failures: Generated<number>;
+  success_count: Generated<number>;
+  failure_count: Generated<number>;
+  priority: Generated<number>;
+  timeout_ms: Generated<number>;
+  max_retries: Generated<number>;
+  base_backoff_ms: Generated<number>;
+  rate_limit_per_minute: Generated<number>;
+  next_run_at: Generated<string | null>;
+  retired_at: Generated<string | null>;
+  source_category: Generated<string>;
+  acquisition: Generated<string>;
+  topics_json: Generated<string>;
+  maintenance_status: Generated<string>;
+  cadence: Generated<string>;
+  license_note: Generated<string>;
+  quality_score: Generated<number>;
+  last_verified_at: Generated<string | null>;
   created_at: string;
   updated_at: string;
+}
+
+export interface SourceRunTable {
+  id: string;
+  source_id: string;
+  job_id: string;
+  status: string;
+  attempt_count: number;
+  duration_ms: number;
+  collected_count: number;
+  created_count: number;
+  skipped_count: number;
+  http_status: number | null;
+  response_bytes: number;
+  error_type: string | null;
+  error_code: string | null;
+  error_summary: string | null;
+  started_at: string;
+  finished_at: string | null;
+}
+
+export interface ScoutInsightTable {
+  id: string;
+  slug: string;
+  kind: string;
+  status: string;
+  title: string;
+  observation: string;
+  hypothesis: string;
+  why_now: string;
+  target_audience: string;
+  suggested_action: string;
+  artifact_idea: string;
+  counter_signals: string;
+  horizon: string;
+  confidence_score: number;
+  evidence_score: number;
+  novelty_score: number;
+  leverage_score: number;
+  total_score: number;
+  cooldown_key: string;
+  generated_at: string;
+  expires_at: string | null;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ScoutEvidenceTable {
+  insight_id: string;
+  event_id: string;
+  evidence_role: string;
+  weight: number;
+  created_at: string;
+}
+
+export interface EvaluationRunTable {
+  id: string;
+  release_version: string;
+  status: string;
+  overall_score: number;
+  dimensions_json: string;
+  capability_snapshot_json: string;
+  notes: string;
+  started_at: string;
+  finished_at: string;
 }
 
 export interface SignalTable {
@@ -186,6 +272,7 @@ export interface ViewTable {
 
 export interface DatabaseSchema {
   sources: SourceTable;
+  source_runs: SourceRunTable;
   signals: SignalTable;
   events: EventTable;
   event_signals: EventSignalTable;
@@ -197,11 +284,16 @@ export interface DatabaseSchema {
   event_actors: EventActorTable;
   model_resources: ModelResourceTable;
   views: ViewTable;
+  scout_insights: ScoutInsightTable;
+  scout_evidence: ScoutEvidenceTable;
+  evaluation_runs: EvaluationRunTable;
 }
 
 export type SourceRow = Selectable<SourceTable>;
 export type NewSourceRow = Insertable<SourceTable>;
 export type SourceUpdate = Updateable<SourceTable>;
+export type SourceRunRow = Selectable<SourceRunTable>;
+export type ScoutInsightRow = Selectable<ScoutInsightTable>;
 export type SignalRow = Selectable<SignalTable>;
 export type NewSignalRow = Insertable<SignalTable>;
 export type EventRow = Selectable<EventTable>;

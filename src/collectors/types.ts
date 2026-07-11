@@ -10,6 +10,9 @@ export interface FetchResult {
   body: string;
   status: number;
   headers: Headers;
+  attemptCount: number;
+  responseBytes: number;
+  finalUrl: string;
 }
 
 export interface SourceAdapter {

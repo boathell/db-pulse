@@ -3,7 +3,8 @@ import type { SourceAdapter } from "./types.js";
 export const jsonApiAdapter: SourceAdapter = {
   kind: "json-api",
   async collect(source, context) {
-    const { body } = await context.fetchText(source.config.url);
+    const { body, status } = await context.fetchText(source.config.url);
+    if (status === 304) return [];
     const payload = JSON.parse(body) as unknown;
     if (!Array.isArray(payload)) throw new Error("json-api adapter expects an array payload");
     return payload.slice(0, source.config.take ?? 50).map((item, index) => {

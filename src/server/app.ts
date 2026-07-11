@@ -4,18 +4,34 @@ import fastifyStatic from "@fastify/static";
 import Fastify, { type FastifyRequest } from "fastify";
 import type { Kysely } from "kysely";
 import { z } from "zod";
+import { capabilities, releases, roadmap } from "../catalog/product.js";
 import type { AppConfig } from "../config/env.js";
 import { Repository, secureTokenEquals } from "../db/repository.js";
 import type { DatabaseSchema } from "../db/types.js";
+import { transitionSource } from "../domain/source-lifecycle.js";
 import { clusterSignals } from "../pipeline/cluster.js";
 import { collectSources } from "../pipeline/collect.js";
+import { evaluateSystem, latestEvaluation } from "../pipeline/evaluate.js";
 import { exportStaticSite } from "../pipeline/export.js";
+import { runScout } from "../pipeline/scout.js";
 
 const SourcePatch = z.object({
-  enabled: z.boolean().optional(),
   authorityScore: z.number().int().min(0).max(100).optional(),
   tier: z.number().int().min(1).max(4).optional(),
   config: z.record(z.string(), z.unknown()).optional(),
+  priority: z.number().int().min(0).max(100).optional(),
+  timeoutMs: z.number().int().min(1_000).max(120_000).optional(),
+  maxRetries: z.number().int().min(0).max(5).optional(),
+  baseBackoffMs: z.number().int().min(50).max(30_000).optional(),
+  rateLimitPerMinute: z.number().int().min(1).max(1_000).optional(),
+});
+
+const SourceAction = z.object({
+  action: z.enum(["verify", "activate", "degrade", "quarantine", "restore", "retire"]),
+});
+
+const ScoutPatch = z.object({
+  status: z.enum(["inbox", "considering", "accepted", "dismissed", "archived", "published"]),
 });
 
 const EventPatch = z.object({
@@ -96,6 +112,11 @@ export async function buildApp(db: Kysely<DatabaseSchema>, config: AppConfig) {
   app.get("/api/public/tracks", async () => repository.listTracks());
   app.get("/api/public/actors", async () => repository.listActors());
   app.get("/api/public/resources", async () => repository.listResources());
+  app.get("/api/public/scout", async () => ({
+    schemaVersion: 1,
+    insights: await repository.publicScoutInsights(),
+  }));
+  app.get("/api/public/product", async () => ({ capabilities, roadmap, releases }));
 
   app.addHook("preHandler", async (request, reply) => {
     if (!request.url.startsWith("/api/admin")) return;
@@ -111,23 +132,75 @@ export async function buildApp(db: Kysely<DatabaseSchema>, config: AppConfig) {
 
   app.get("/api/admin/dashboard", async () => repository.dashboard());
   app.get("/api/admin/sources", async () => repository.listSources());
+  app.get("/api/admin/source-runs", async (request) => {
+    const query = z.object({ sourceId: z.string().uuid().optional() }).parse(request.query);
+    return repository.listSourceRuns(query.sourceId);
+  });
   app.get("/api/admin/events", async () => repository.listEvents());
   app.get("/api/admin/jobs", async () => repository.listJobs());
   app.get("/api/admin/tracks", async () => repository.listTracks());
   app.get("/api/admin/actors", async () => repository.listActors());
   app.get("/api/admin/resources", async () => repository.listResources());
   app.get("/api/admin/view", async () => repository.getDefaultView());
+  app.get("/api/admin/scout", async (request) => {
+    const query = z.object({ status: z.string().optional() }).parse(request.query);
+    return repository.listScoutInsights(query.status);
+  });
+  app.get("/api/admin/evaluation", async () => latestEvaluation(db));
 
   app.patch("/api/admin/sources/:id", async (request) => {
     const { id } = request.params as { id: string };
     const patch = SourcePatch.parse(request.body);
     await repository.updateSource(id, {
-      ...(patch.enabled === undefined ? {} : { enabled: patch.enabled ? 1 : 0 }),
       ...(patch.authorityScore === undefined ? {} : { authority_score: patch.authorityScore }),
       ...(patch.tier === undefined ? {} : { tier: patch.tier }),
       ...(patch.config === undefined ? {} : { config_json: JSON.stringify(patch.config) }),
+      ...(patch.priority === undefined ? {} : { priority: patch.priority }),
+      ...(patch.timeoutMs === undefined ? {} : { timeout_ms: patch.timeoutMs }),
+      ...(patch.maxRetries === undefined ? {} : { max_retries: patch.maxRetries }),
+      ...(patch.baseBackoffMs === undefined ? {} : { base_backoff_ms: patch.baseBackoffMs }),
+      ...(patch.rateLimitPerMinute === undefined
+        ? {}
+        : { rate_limit_per_minute: patch.rateLimitPerMinute }),
     });
     return { ok: true };
+  });
+
+  app.post("/api/admin/sources/:id/lifecycle", async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { action } = SourceAction.parse(request.body);
+    const source = await repository.getSource(id);
+    if (!source) return reply.code(404).send({ error: "Source not found" });
+    if (action === "activate" && !source.last_success_at)
+      return reply
+        .code(409)
+        .send({ error: "Source must pass a verification run before activation" });
+    let next: string;
+    try {
+      next = transitionSource(source.lifecycle_status, action);
+    } catch (error) {
+      return reply
+        .code(409)
+        .send({ error: error instanceof Error ? error.message : String(error) });
+    }
+    await repository.updateSource(id, {
+      lifecycle_status: next,
+      enabled: next === "active" || next === "degraded" ? 1 : 0,
+      retired_at: next === "retired" ? new Date().toISOString() : null,
+      maintenance_status:
+        next === "active"
+          ? "ready"
+          : next === "retired"
+            ? "retired"
+            : next === "shadow"
+              ? "candidate"
+              : source.maintenance_status,
+    });
+    const verification =
+      action === "verify" || action === "restore"
+        ? await collectSources(db, config, id)
+        : undefined;
+    return { ok: true, lifecycle: next, verification };
   });
 
   app.patch("/api/admin/events/:id", async (request) => {
@@ -236,11 +309,42 @@ export async function buildApp(db: Kysely<DatabaseSchema>, config: AppConfig) {
     return { ok: true };
   });
 
+  app.patch("/api/admin/scout/:id", async (request, reply) => {
+    const { id } = request.params as { id: string };
+    const { status } = ScoutPatch.parse(request.body);
+    const insight = await repository.getScoutInsight(id);
+    if (!insight) return reply.code(404).send({ error: "Scout insight not found" });
+    const allowed: Record<string, string[]> = {
+      inbox: ["considering", "accepted", "dismissed", "archived"],
+      considering: ["accepted", "dismissed", "archived"],
+      accepted: ["published", "archived", "dismissed"],
+      published: ["archived"],
+      dismissed: ["inbox", "archived"],
+      archived: ["inbox"],
+    };
+    if (!allowed[insight.status]?.includes(status))
+      return reply
+        .code(409)
+        .send({ error: `Invalid scout transition: ${insight.status} -> ${status}` });
+    await repository.updateScoutInsight(id, {
+      status,
+      published_at: status === "published" ? new Date().toISOString() : insight.published_at,
+    });
+    return { ok: true };
+  });
+
   app.post("/api/admin/pipeline/collect", async (request) => {
     const body = z.object({ sourceId: z.string().uuid().optional() }).parse(request.body ?? {});
     return collectSources(db, config, body.sourceId);
   });
   app.post("/api/admin/pipeline/cluster", async () => clusterSignals(db));
+  app.post("/api/admin/pipeline/scout", async (request) => {
+    const body = z
+      .object({ limit: z.number().int().min(1).max(10).optional() })
+      .parse(request.body ?? {});
+    return runScout(db, body.limit);
+  });
+  app.post("/api/admin/pipeline/evaluate", async () => evaluateSystem(db));
   app.post("/api/admin/pipeline/export", async () => exportStaticSite(db, config));
 
   await app.register(fastifyStatic, { root: config.distDir, prefix: "/" });

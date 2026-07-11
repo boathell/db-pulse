@@ -30,6 +30,19 @@ A cross-circle hot event needs confidence, independent authors/sources, platform
 - Generic array JSON API
 - HuggingNews public homepage metadata (disabled by default until a formal API/RSS exists)
 
+## Source Catalog v0.2
+
+The registry now contains 171 classified sources across 13 domains: frontier labs, China labs, research/evaluation, open source, agent/dev tools, robotics, chips/cloud/infra, capital/business, experts, media, policy, community heat and aggregators. 31 are China sources and 140 are global/overseas sources.
+
+This is a discovery and maintenance catalog, not a claim that 171 collectors are production-ready:
+
+- `ready` + `active`: contract is known and scheduled collection is allowed;
+- `candidate` + `shadow`: stable-looking API/RSS/GitHub source awaiting fixtures and verification;
+- `manual`: high-value official/expert source without a safe stable feed;
+- `restricted`: social/platform source; metadata discovery only and disabled by default.
+
+The canonical catalog is `src/catalog/sources.ts`; database rows add lifecycle, run-time health and verification evidence.
+
 ## Acquisition policy
 
 - Identify the collector with a non-browser User-Agent.
@@ -38,7 +51,14 @@ A cross-circle hot event needs confidence, independent authors/sources, platform
 - Store metadata and provenance, not complete third-party articles.
 - Respect correction/removal requests and disable unstable sources by default.
 
+## Source lifecycle and operations
+
+Sources move through `draft -> shadow -> active -> degraded -> quarantined -> retired`. Retire is a soft uninstall: historical provenance remains intact. Every execution creates a `source_runs` row with attempts, latency, counts, HTTP/error classification and response bytes.
+
+The fetch layer supports bounded retries for network errors, 408/425/429 and 5xx, exponential backoff with jitter, `Retry-After`, ETag/Last-Modified, per-source timeout policy, manual redirect validation and streamed size limits. Scheduled batches use bounded concurrency and isolate failures by source.
+
+Current limits are explicit: source-level rate policy is enforced inside one adapter run, but a global per-host token bucket and scheduler are not yet complete; adapter fixture coverage is still thin; AI HOT fingerprint polling is not yet implemented; HuggingNews remains an experimental HTML metadata adapter; repeated observations of one canonical URL across aggregators are not yet modeled separately.
+
 ## PriceAI boundary
 
 [PriceAI](https://github.com/dimthink/PriceAI) is a valuable external model-purchase reference. Its data policy does not grant bulk reuse of production prices, channel lists, stock or snapshots. Agent Pulse links to the project with attribution and independently collects official vendor price baselines; it does not mirror PriceAI production data.
-

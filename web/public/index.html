@@ -18,7 +18,7 @@
         <span><strong>AGENT PULSE</strong><small>AI INDUSTRY INTELLIGENCE</small></span>
       </a>
       <nav class="topnav" aria-label="页面导航">
-        <a href="#timeline">主线</a><a href="#china">中国雷达</a><a href="#resources">模型获取</a>
+        <a href="#top">Today</a><a href="#timeline">Timeline</a><a href="#china">Radar</a><a href="#inbox">Inbox</a><a href="#evolution">Evolution</a>
       </nav>
       <div class="top-actions">
         <button class="icon-button" id="themeButton" type="button" aria-label="切换主题">◐</button>
@@ -85,10 +85,18 @@
         <div class="empty-state" id="emptyState" hidden>没有匹配的主线节点，请调整筛选条件。</div>
       </section>
 
+      <section class="scout-section shell" id="inbox">
+        <div class="section-heading">
+          <div><span class="section-index">02</span><p class="kicker">INBOX / OPPORTUNITY SCOUT</p><h2>值得继续跟进的机会</h2></div>
+          <p>精灵不复述新闻。它从证据和主线交汇处寻找创业、内容与工作机会，并给出最小验证动作。</p>
+        </div>
+        <div class="scout-grid" id="scoutGrid"></div>
+      </section>
+
       <section class="radar-section" id="china">
         <div class="shell">
           <div class="section-heading inverse">
-            <div><span class="section-index">02</span><p class="kicker">CHINA CATCH-UP RADAR</p><h2>中国牌桌角色</h2></div>
+            <div><span class="section-index">03</span><p class="kicker">CHINA CATCH-UP RADAR</p><h2>中国牌桌角色</h2></div>
             <p>不按声量排位，按能力、生态、商业和基础设施证据持续校准。</p>
           </div>
           <div class="radar-grid">
@@ -100,18 +108,45 @@
 
       <section class="resources-section shell" id="resources">
         <div class="section-heading">
-          <div><span class="section-index">03</span><p class="kicker">MODEL ACCESS & ECONOMICS</p><h2>模型获取资源</h2></div>
+          <div><span class="section-index">04</span><p class="kicker">MODEL ACCESS & ECONOMICS</p><h2>模型获取资源</h2></div>
           <p>优先展示官方入口与价格证据；第三方比价只作购买前参考，不混淆风险等级。</p>
         </div>
         <div class="resource-filters" id="resourceFilters"></div>
         <div class="resource-grid" id="resourceGrid"></div>
         <div class="priceai-note"><strong>进一步比价</strong><span>PriceAI 覆盖官方订阅、卡网、官方 API 与中转 API。Agent Pulse 不镜像其受限数据，仅提供明确归属的购买前入口。</span><a href="https://priceai.cc" target="_blank" rel="noopener">访问 PriceAI ↗</a></div>
       </section>
+
+      <section class="evolution-section" id="evolution">
+        <div class="shell">
+          <div class="section-heading inverse">
+            <div><span class="section-index">05</span><p class="kicker">CAPABILITY & RELEASE EVOLUTION</p><h2>系统如何持续生长</h2></div>
+            <p>版本不只记录页面变化，也记录新增的处理、理解、挖掘、决策与治理能力，以及每项能力背后的证据水位。</p>
+          </div>
+          <div class="evolution-overview">
+            <div><span>VERSION</span><strong id="productVersion">—</strong></div>
+            <div><span>SOURCE CATALOG</span><strong id="sourceCoverage">—</strong></div>
+            <div><span>SYSTEM SCORE</span><strong id="systemScore">—</strong></div>
+            <p id="evaluationNote">评测载入中…</p>
+          </div>
+          <div class="roadmap-spine" id="roadmapSpine"></div>
+          <div class="evolution-columns">
+            <div><div class="evolution-title"><span>CAPABILITY MAP</span><h3>沉淀了什么能力</h3></div><div class="public-capabilities" id="publicCapabilities"></div></div>
+            <div><div class="evolution-title"><span>CHANGELOG</span><h3>每次发布改变了什么</h3></div><div class="release-list" id="releaseList"></div></div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer><div class="shell footer-inner"><div><strong>AGENT PULSE</strong><p>Signal, not noise.</p></div><p>事实与推断分离 · 一手来源优先 · 热度可解释</p><span id="footerTime">—</span></div></footer>
 
     <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+    <aside class="scout-popover" id="scoutPopover" hidden aria-live="polite">
+      <button type="button" id="scoutDismiss" aria-label="关闭星探建议">×</button>
+      <span>✦ 星探精灵刚刚路过</span>
+      <strong id="scoutPopoverTitle"></strong>
+      <p id="scoutPopoverCopy"></p>
+      <a href="#inbox">去 Inbox 看看 →</a>
+    </aside>
     <aside class="detail-drawer" id="detailDrawer" aria-hidden="true" aria-label="事件详情">
       <button class="drawer-close" id="drawerClose" type="button" aria-label="关闭详情">×</button>
       <div class="drawer-scroll">

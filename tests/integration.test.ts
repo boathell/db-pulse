@@ -28,11 +28,21 @@ describe("SQLite application", () => {
     const repository = new Repository(db);
     expect((await repository.publicEvents()).length).toBeGreaterThanOrEqual(6);
     const result = await exportStaticSite(db, config);
-    expect(result).toMatchObject({ events: 6, tracks: 10 });
+    expect(result).toMatchObject({ events: 6, tracks: 10, sources: 171, version: "0.2.0" });
     const timeline = await readFile(join(config.distDir, "data/timeline.json"), "utf8");
     expect(timeline).not.toContain("ADMIN_TOKEN");
     expect(timeline).not.toContain("/Users/");
     expect(JSON.parse(timeline).events[0]).not.toHaveProperty("manual_override");
+    const scout = JSON.parse(await readFile(join(config.distDir, "data/scout.json"), "utf8"));
+    expect(scout.insights).toHaveLength(1);
+    expect(scout.insights[0]).not.toHaveProperty("cooldown_key");
+    expect(scout.insights[0].evidence[0].slug).toBe("lingbot-vla-2-cross-embodiment");
+    const product = JSON.parse(await readFile(join(config.distDir, "data/product.json"), "utf8"));
+    expect(product.roadmap).toHaveLength(5);
+    expect(product.sourceCoverage.total).toBeGreaterThanOrEqual(100);
+    expect(product.evaluation.dimensions).toHaveLength(9);
+    expect(product.evaluation.status).toBe("partial");
+    expect(product.evaluation.overallScore).toBeLessThan(50);
   });
 
   it("protects production admin APIs", async () => {
@@ -55,6 +65,13 @@ describe("SQLite application", () => {
       headers: { authorization: "Bearer a-secure-token-for-tests" },
     });
     expect(authorized.statusCode).toBe(200);
+    const evaluation = await app.inject({
+      method: "POST",
+      url: "/api/admin/pipeline/evaluate",
+      headers: { authorization: "Bearer a-secure-token-for-tests" },
+    });
+    expect(evaluation.statusCode).toBe(200);
+    expect(evaluation.json().dimensions).toHaveLength(9);
     await app.close();
   });
 });

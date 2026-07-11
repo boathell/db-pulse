@@ -6,11 +6,11 @@ Agent Pulse separates private operational state from public intelligence:
 
 ```text
 Control plane (server-only)
-  sources / raw signals / jobs / moderation / view composer
+  source lifecycle / source runs / signals / jobs / scout inbox / moderation
                            │
                            ▼ allowlist export
 Public plane (static)
-  timeline / tracks / actors / model resources / active view
+  timeline / published scout / tracks / actors / model resources / active view
 ```
 
 The admin console is never exported to GitHub Pages.
@@ -26,7 +26,10 @@ Source registry
   └─ Aggregators: discovery only
           │
           ▼
-SourceAdapter -> CollectedSignal -> canonical URL + content hash
+bounded runner -> policy-aware fetcher -> SourceAdapter -> CollectedSignal
+       │              │
+       │              └─ retry / conditional request / redirect SSRF / body limit
+       └─ SourceRun + health reducer + lifecycle gate
           │
           ▼
 dedupe -> time/title/entity clustering -> Event
@@ -72,3 +75,10 @@ Tracks, actor roles, audience types and views never duplicate event facts. They 
 - Manual score overrides are explicit and stop automatic rescoring.
 - Static output is rebuilt from published rows only.
 
+## Current maturity boundaries
+
+- The live six-event dataset is curated seed/demo content, not proof of continuous cross-platform hotness detection.
+- Source lifecycle, retries, bounded concurrency, conditional requests and run history are implemented as a Stage 2 foundation; scheduler, per-host bulkheads, circuit breaker half-open probes, replay fixtures and SLO rollups remain future work.
+- Canonical URL uniqueness currently drops repeated observations of the same document across multiple discovery sources. A future `documents + source_observations` split is required before platform-breadth metrics are production-grade.
+- View configuration is exported, but the public client does not yet consume every layout/filter/theme control.
+- SQLite is tested in CI. MySQL shares Kysely definitions but is not yet backed by a real MySQL CI service.

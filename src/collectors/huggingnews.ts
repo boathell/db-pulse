@@ -7,7 +7,8 @@ const STORY_PATTERN =
 export const huggingNewsAdapter: SourceAdapter = {
   kind: "huggingnews",
   async collect(source, context) {
-    const { body } = await context.fetchText(source.config.url);
+    const { body, status } = await context.fetchText(source.config.url);
+    if (status === 304) return [];
     const results: CollectedSignal[] = [];
     for (const match of body.matchAll(STORY_PATTERN)) {
       const [
@@ -47,6 +48,7 @@ export const huggingNewsAdapter: SourceAdapter = {
       });
       if (results.length >= (source.config.take ?? 50)) break;
     }
+    if (results.length === 0) throw new Error("HuggingNews contract drift: no stories matched");
     return results;
   },
 };

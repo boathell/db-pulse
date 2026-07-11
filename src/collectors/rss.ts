@@ -7,7 +7,8 @@ const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_
 export const rssAdapter: SourceAdapter = {
   kind: "rss",
   async collect(source, context) {
-    const { body } = await context.fetchText(source.config.url);
+    const { body, status } = await context.fetchText(source.config.url);
+    if (status === 304) return [];
     const document = parser.parse(body) as Record<string, unknown>;
     const items = extractItems(document);
     return items

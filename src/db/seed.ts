@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import type { Kysely } from "kysely";
+import { sourceCatalog } from "../catalog/sources.js";
 import { Repository } from "./repository.js";
 import type { DatabaseSchema } from "./types.js";
 
@@ -8,152 +9,6 @@ const stableId = (namespace: string, slug: string) => {
   const hash = createHash("sha256").update(`${namespace}:${slug}`).digest("hex");
   return `${hash.slice(0, 8)}-${hash.slice(8, 12)}-4${hash.slice(13, 16)}-a${hash.slice(17, 20)}-${hash.slice(20, 32)}`;
 };
-
-const sources = [
-  [
-    "aihot",
-    "AI HOT",
-    "https://aihot.virxact.com",
-    "aihot",
-    2,
-    "aggregator",
-    "CN",
-    "zh-CN",
-    72,
-    1,
-    { url: "https://aihot.virxact.com/api/public/items", mode: "selected", take: 50 },
-  ],
-  [
-    "huggingnews",
-    "HuggingNews",
-    "https://huggingnews.com",
-    "huggingnews",
-    3,
-    "heat",
-    "GLOBAL",
-    "en",
-    60,
-    0,
-    { url: "https://huggingnews.com", take: 40, homepageOnly: true },
-  ],
-  [
-    "openai",
-    "OpenAI",
-    "https://openai.com/news/",
-    "rss",
-    1,
-    "primary",
-    "GLOBAL",
-    "en",
-    98,
-    1,
-    { url: "https://openai.com/news/rss.xml", take: 50 },
-  ],
-  [
-    "deepmind",
-    "Google DeepMind",
-    "https://deepmind.google/blog/",
-    "rss",
-    1,
-    "primary",
-    "GLOBAL",
-    "en",
-    97,
-    1,
-    { url: "https://deepmind.google/blog/rss.xml", take: 50 },
-  ],
-  [
-    "huggingface",
-    "Hugging Face",
-    "https://huggingface.co/blog",
-    "rss",
-    1,
-    "primary",
-    "GLOBAL",
-    "en",
-    91,
-    1,
-    { url: "https://huggingface.co/blog/feed.xml", take: 50 },
-  ],
-  [
-    "arxiv-ai",
-    "arXiv cs.AI",
-    "https://arxiv.org/list/cs.AI/recent",
-    "rss",
-    1,
-    "paper",
-    "GLOBAL",
-    "en",
-    86,
-    1,
-    { url: "https://rss.arxiv.org/rss/cs.AI", category: "paper", take: 50 },
-  ],
-  [
-    "hackernews-ai",
-    "Hacker News · AI",
-    "https://news.ycombinator.com",
-    "rss",
-    4,
-    "heat",
-    "GLOBAL",
-    "en",
-    48,
-    1,
-    { url: "https://hnrss.org/newest?q=AI", category: "community", take: 40 },
-  ],
-  [
-    "worldlabs",
-    "World Labs",
-    "https://www.worldlabs.ai/blog",
-    "rss",
-    1,
-    "primary",
-    "GLOBAL",
-    "en",
-    93,
-    0,
-    { url: "https://www.worldlabs.ai/blog", take: 20 },
-  ],
-  [
-    "robbyant",
-    "Robbyant / 蚂蚁集团",
-    "https://github.com/Robbyant",
-    "json-api",
-    1,
-    "primary",
-    "CN",
-    "en",
-    92,
-    0,
-    { url: "https://api.github.com/repos/Robbyant/lingbot-vla-v2/releases", take: 20 },
-  ],
-  [
-    "anthropic",
-    "Anthropic",
-    "https://www.anthropic.com/news",
-    "rss",
-    1,
-    "primary",
-    "GLOBAL",
-    "en",
-    97,
-    0,
-    { url: "https://www.anthropic.com/news", take: 30 },
-  ],
-  [
-    "priceai",
-    "PriceAI",
-    "https://priceai.cc",
-    "json-api",
-    3,
-    "resource",
-    "CN",
-    "zh-CN",
-    70,
-    0,
-    { url: "https://priceai.cc", take: 20 },
-  ],
-] as const;
 
 const tracks = [
   [
@@ -814,36 +669,51 @@ export async function seedDatabase(db: Kysely<DatabaseSchema>): Promise<void> {
   const repository = new Repository(db);
   const timestamp = isoNow();
 
-  for (const [
-    slug,
-    name,
-    homepage,
-    adapter,
-    tier,
-    role,
-    region,
-    language,
-    authority,
-    enabled,
-    config,
-  ] of sources) {
+  for (const source of sourceCatalog) {
     await repository.saveSource({
-      id: stableId("source", slug),
-      slug,
-      name,
-      homepage_url: homepage,
-      adapter,
-      tier,
-      role,
-      region,
-      language,
-      authority_score: authority,
-      enabled,
-      config_json: JSON.stringify(config),
+      id: stableId("source", source.slug),
+      slug: source.slug,
+      name: source.name,
+      homepage_url: source.homepageUrl,
+      adapter: source.adapter,
+      tier: source.tier,
+      role: source.role,
+      region: source.region,
+      language: source.language,
+      authority_score: source.authorityScore,
+      enabled: source.enabled ? 1 : 0,
+      config_json: JSON.stringify({
+        url: source.endpoint,
+        take: source.tier === 1 ? 50 : 30,
+        ...(source.slug === "aihot" ? { mode: "selected" } : {}),
+        sourceCategory: source.category,
+        acquisition: source.acquisition,
+      }),
       state_json: "{}",
       last_collected_at: null,
       last_success_at: null,
       last_error: null,
+      lifecycle_status: source.lifecycleStatus,
+      source_category: source.category,
+      acquisition: source.acquisition,
+      topics_json: JSON.stringify(source.topics),
+      maintenance_status: source.maintenanceStatus,
+      cadence: source.cadence,
+      license_note: source.licenseNote,
+      quality_score: source.qualityScore,
+      last_verified_at: null,
+    });
+  }
+  const catalogSlugs = new Set(sourceCatalog.map((source) => source.slug));
+  const staleSources = (await repository.listSources()).filter(
+    (source) => !catalogSlugs.has(source.slug),
+  );
+  for (const source of staleSources) {
+    await repository.updateSource(source.id, {
+      enabled: 0,
+      lifecycle_status: "retired",
+      maintenance_status: "retired",
+      retired_at: timestamp,
     });
   }
 
@@ -984,6 +854,71 @@ export async function seedDatabase(db: Kysely<DatabaseSchema>): Promise<void> {
   else await db.insertInto("views").values(viewValue).execute();
 
   for (const event of events) await seedEvent(db, repository, event, timestamp);
+  await seedScout(db, timestamp);
+}
+
+async function seedScout(db: Kysely<DatabaseSchema>, timestamp: string) {
+  const slug = "scout-lingbot-cross-embodiment-opportunity";
+  const existing = await db
+    .selectFrom("scout_insights")
+    .select("id")
+    .where("slug", "=", slug)
+    .executeTakeFirst();
+  const id = existing?.id ?? stableId("scout", slug);
+  const value = {
+    id,
+    slug,
+    kind: "venture",
+    status: "published",
+    title: "精灵发现：跨本体 VLA 正在打开一批“机器人能力迁移”工具机会",
+    observation:
+      "LingBot-VLA 2.0 把跨本体与多视角执行作为核心能力，说明行业开始从单机型 demo 转向可迁移能力。",
+    hypothesis:
+      "模型本身之外，数据适配、能力评测、部署诊断和任务迁移会成为机器人团队的高摩擦环节，适合从窄工具切入。",
+    why_now: "模型和开源实现刚进入开发者验证期，团队尚未形成稳定工具链，窗口早于大规模商业采购。",
+    target_audience: "具身智能创业团队、机器人算法与平台工程师",
+    suggested_action:
+      "用 48 小时访谈 5 个不同本体团队，验证迁移中最耗时的步骤；选一个问题做只读诊断 demo。",
+    artifact_idea: "跨本体迁移检查清单、公开 benchmark 和一个诊断 CLI 原型",
+    counter_signals:
+      "如果实际迁移仍高度依赖专有硬件数据、开源模型复现率低或团队更愿意内部建设，工具机会将明显收窄。",
+    horizon: "30-90d",
+    confidence_score: 74,
+    evidence_score: 78,
+    novelty_score: 86,
+    leverage_score: 88,
+    total_score: 82,
+    cooldown_key: "venture:lingbot-vla-2-cross-embodiment",
+    generated_at: timestamp,
+    expires_at: null,
+    published_at: timestamp,
+    created_at: timestamp,
+    updated_at: timestamp,
+  };
+  if (existing) {
+    await db.updateTable("scout_insights").set(value).where("id", "=", id).execute();
+  } else {
+    await db.insertInto("scout_insights").values(value).execute();
+  }
+  const eventId = stableId("event", "lingbot-vla-2-cross-embodiment");
+  const evidence = await db
+    .selectFrom("scout_evidence")
+    .select("insight_id")
+    .where("insight_id", "=", id)
+    .where("event_id", "=", eventId)
+    .executeTakeFirst();
+  if (!evidence) {
+    await db
+      .insertInto("scout_evidence")
+      .values({
+        insight_id: id,
+        event_id: eventId,
+        evidence_role: "trigger",
+        weight: 100,
+        created_at: timestamp,
+      })
+      .execute();
+  }
 }
 
 async function seedEvent(

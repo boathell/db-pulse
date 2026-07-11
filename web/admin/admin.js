@@ -6,6 +6,9 @@ const state = {
   actors: [],
   resources: [],
   view: null,
+  scout: [],
+  sourceRuns: [],
+  evaluation: null,
 };
 const $ = (selector) => document.querySelector(selector);
 const node = (tag, className, text) => {
@@ -17,6 +20,8 @@ const node = (tag, className, text) => {
 const titles = {
   dashboard: "指挥中心",
   sources: "信源矩阵",
+  scout: "星探驾驶舱",
+  evaluation: "评测中心",
   events: "事件与发布",
   tracks: "主线编排",
   actors: "角色雷达",
@@ -35,9 +40,24 @@ async function api(path, options = {}) {
 }
 async function loadAll() {
   try {
-    const [dashboard, sources, events, jobs, tracks, actors, resources, view] = await Promise.all([
+    const [
+      dashboard,
+      sources,
+      sourceRuns,
+      scout,
+      evaluation,
+      events,
+      jobs,
+      tracks,
+      actors,
+      resources,
+      view,
+    ] = await Promise.all([
       api("/api/admin/dashboard"),
       api("/api/admin/sources"),
+      api("/api/admin/source-runs"),
+      api("/api/admin/scout"),
+      api("/api/admin/evaluation"),
       api("/api/admin/events"),
       api("/api/admin/jobs"),
       api("/api/admin/tracks"),
@@ -45,10 +65,22 @@ async function loadAll() {
       api("/api/admin/resources"),
       api("/api/admin/view"),
     ]);
-    Object.assign(state, { sources, events, tracks, actors, resources, view });
+    Object.assign(state, {
+      sources,
+      sourceRuns,
+      scout,
+      evaluation,
+      events,
+      tracks,
+      actors,
+      resources,
+      view,
+    });
     renderMetrics(dashboard);
     renderJobs(jobs);
     renderSources();
+    renderScout();
+    renderEvaluation();
     renderEvents();
     renderTracks();
     renderActors();
@@ -58,6 +90,63 @@ async function loadAll() {
     toast(error.message, true);
   }
 }
+
+function renderEvaluation() {
+  const root = $("#evaluationGrid");
+  const capabilityRoot = $("#capabilityMap");
+  root.replaceChildren();
+  capabilityRoot.replaceChildren();
+  if (!state.evaluation) {
+    $("#evaluationScore").textContent = "—";
+    $("#evaluationStatus").textContent = "点击流水线中的评测开始";
+    return;
+  }
+  $("#evaluationScore").textContent = state.evaluation.overallScore;
+  $("#evaluationStatus").textContent =
+    `${state.evaluation.status} · v${state.evaluation.releaseVersion}`;
+  state.evaluation.dimensions.forEach((dimension) => {
+    const card = node("article", `evaluation-card ${dimension.status}`);
+    const top = node("div", "evaluation-card-top");
+    top.append(node("strong", "", dimension.name), node("b", "", String(dimension.score)));
+    const bar = node("div", "evaluation-bar");
+    const fill = node("i");
+    fill.style.width = `${dimension.score}%`;
+    bar.append(fill);
+    card.append(
+      top,
+      bar,
+      node(
+        "span",
+        "",
+        dimension.status === "measured"
+          ? `样本 ${dimension.sampleSize}`
+          : `证据不足 · 样本 ${dimension.sampleSize}`,
+      ),
+      node("p", "", dimension.summary),
+      node("small", "", `下一步：${dimension.nextAction}`),
+    );
+    root.append(card);
+  });
+  const domains = state.evaluation.capabilities.reduce((groups, capability) => {
+    if (!groups[capability.domain]) groups[capability.domain] = [];
+    groups[capability.domain].push(capability);
+    return groups;
+  }, {});
+  Object.entries(domains).forEach(([domain, items]) => {
+    const group = node("section", "capability-group");
+    group.append(node("h3", "", domain.toUpperCase()));
+    items.forEach((capability) => {
+      const item = node("div", `capability-item ${capability.status}`);
+      item.append(
+        node("strong", "", capability.name),
+        node("span", "", `${capability.maturity} · ${capability.status}`),
+        node("small", "", capability.evidence),
+      );
+      group.append(item);
+    });
+    capabilityRoot.append(group);
+  });
+}
 function renderMetrics(data) {
   const labels = {
     sources: "信源",
@@ -65,6 +154,8 @@ function renderMetrics(data) {
     drafts: "待审",
     published: "已发布",
     failedJobs: "失败任务",
+    degradedSources: "异常信源",
+    scoutInbox: "星探待审",
   };
   const grid = $("#metricGrid");
   grid.replaceChildren();
@@ -96,8 +187,15 @@ function renderSources(filter = "") {
     .forEach((source) => {
       const row = node("div", "table-row");
       row.append(
-        mainCell(source.name, `${source.slug} · ${source.adapter}`),
-        node("span", "cell-muted", `Tier ${source.tier} / ${source.role}`),
+        mainCell(
+          source.name,
+          `${source.slug} · ${source.source_category} · ${source.acquisition} · ${source.maintenance_status}`,
+        ),
+        node(
+          "span",
+          "cell-muted",
+          `Tier ${source.tier} / ${source.role}\n${source.lifecycle_status}`,
+        ),
       );
       const score = input("number", source.authority_score, "score-input");
       score.min = 0;
@@ -105,11 +203,128 @@ function renderSources(filter = "") {
       score.addEventListener("change", () =>
         patch(`/api/admin/sources/${source.id}`, { authorityScore: Number(score.value) }),
       );
-      row.append(score, node("span", "cell-muted", source.last_error ? "ERROR" : "HEALTHY"));
-      const toggle = switcher(source.enabled === 1, () =>
-        patch(`/api/admin/sources/${source.id}`, { enabled: toggle.classList.contains("on") }),
+      const latestRun = state.sourceRuns.find((run) => run.source_id === source.id);
+      row.append(
+        score,
+        node(
+          "span",
+          "cell-muted",
+          `健康 ${source.health_score}\n失败 ${source.consecutive_failures}\n${latestRun?.status || "未运行"}`,
+        ),
       );
-      row.append(toggle);
+      const actions = node("div", "row-actions");
+      sourceActions(source).forEach(([action, label]) => {
+        const button = node("button", "row-action", label);
+        button.addEventListener("click", () => sourceLifecycle(source.id, action));
+        actions.append(button);
+      });
+      const run = node("button", "row-action", "单源拉取");
+      run.addEventListener("click", () => runSource(source.id));
+      if (["shadow", "active", "degraded"].includes(source.lifecycle_status)) actions.append(run);
+      row.append(actions);
+      root.append(row);
+    });
+}
+
+function sourceActions(source) {
+  return (
+    {
+      draft: [["verify", "验证"]],
+      shadow: [
+        ["activate", "启用"],
+        ["quarantine", "隔离"],
+      ],
+      active: [
+        ["degrade", "降级"],
+        ["quarantine", "隔离"],
+        ["retire", "退役"],
+      ],
+      degraded: [
+        ["activate", "恢复"],
+        ["quarantine", "隔离"],
+        ["retire", "退役"],
+      ],
+      quarantined: [
+        ["restore", "复验"],
+        ["retire", "退役"],
+      ],
+      retired: [["restore", "重新安装"]],
+    }[source.lifecycle_status] || []
+  );
+}
+
+async function sourceLifecycle(id, action) {
+  try {
+    await api(`/api/admin/sources/${id}/lifecycle`, {
+      method: "POST",
+      body: JSON.stringify({ action }),
+    });
+    toast("来源状态已更新");
+    await loadAll();
+  } catch (error) {
+    toast(error.message, true);
+  }
+}
+
+async function runSource(sourceId) {
+  try {
+    const result = await api("/api/admin/pipeline/collect", {
+      method: "POST",
+      body: JSON.stringify({ sourceId }),
+    });
+    toast(
+      result.errors?.length ? "拉取完成，但存在错误" : "单源拉取成功",
+      Boolean(result.errors?.length),
+    );
+    await loadAll();
+  } catch (error) {
+    toast(error.message, true);
+  }
+}
+
+function renderScout(filter = "") {
+  const root = $("#scoutTable");
+  root.replaceChildren();
+  state.scout
+    .filter((item) => includes(item, filter))
+    .forEach((insight) => {
+      const row = node("div", "table-row scout-admin-row");
+      row.append(
+        mainCell(insight.title, `${insight.kind} · ${insight.horizon}`),
+        node(
+          "span",
+          "cell-muted",
+          `证据 ${insight.evidence_score} / 新颖 ${insight.novelty_score}`,
+        ),
+        node("strong", "", String(insight.total_score)),
+        node("span", "cell-muted", insight.status),
+      );
+      const actions = node("div", "row-actions");
+      const transitions =
+        {
+          inbox: [
+            ["considering", "细看"],
+            ["accepted", "接受"],
+            ["dismissed", "忽略"],
+          ],
+          considering: [
+            ["accepted", "接受"],
+            ["dismissed", "忽略"],
+          ],
+          accepted: [
+            ["published", "发布"],
+            ["archived", "归档"],
+          ],
+          published: [["archived", "下线"]],
+          dismissed: [["inbox", "重开"]],
+          archived: [["inbox", "重开"]],
+        }[insight.status] || [];
+      transitions.forEach(([status, label]) => {
+        const button = node("button", "row-action", label);
+        button.addEventListener("click", () => patch(`/api/admin/scout/${insight.id}`, { status }));
+        actions.append(button);
+      });
+      row.append(actions);
       root.append(row);
     });
 }
@@ -373,6 +588,7 @@ document.querySelectorAll("[data-search]").forEach((field) => {
       tracks: renderTracks,
       actors: renderActors,
       resources: renderResources,
+      scout: renderScout,
     })[field.dataset.search](field.value),
   );
 });
