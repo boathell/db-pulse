@@ -64,7 +64,7 @@
       "healthScore": 100,
       "consecutiveFailures": 0,
       "state": {
-        "etag": "W/\"items-caa62ad835f0712e\""
+        "etag": "W/\"items-aca5b144f7161240\""
       }
     },
     {
@@ -404,7 +404,7 @@
       "healthScore": 100,
       "consecutiveFailures": 0,
       "state": {
-        "etag": "\"O8rOeA\""
+        "etag": "\"vD95ew\""
       }
     },
     {
@@ -598,7 +598,7 @@
       "healthScore": 100,
       "consecutiveFailures": 0,
       "state": {
-        "lastModified": "Sat, 11 Jul 2026 18:21:43 GMT"
+        "lastModified": "Sat, 11 Jul 2026 23:12:48 GMT"
       }
     },
     {
@@ -1721,7 +1721,7 @@
       "createdAt": "2026-07-11T16:15:43.548Z"
     },
     {
-      "id": "aa9391b9-70ad-4b59-aef4-ae19573d8629",
+      "id": "424fa68b-22e1-494f-aec8-af5284e154b2",
       "sourceSlug": "openai",
       "externalId": "gpt-5-unified-routing",
       "canonicalUrl": "https://openai.com/index/introducing-gpt-5",
@@ -1856,7 +1856,7 @@
       "createdAt": "2026-07-11T16:15:43.232Z"
     },
     {
-      "id": "b647525f-c1d5-43fa-9f87-b8124a3b2a5e",
+      "id": "3a2db8ba-ba58-4b2b-a216-25802afa4b19",
       "sourceSlug": "openai",
       "externalId": "codex-general-availability",
       "canonicalUrl": "https://openai.com/index/codex-now-generally-available",
@@ -1886,6 +1886,27 @@
       "createdAt": "2026-07-11T16:05:34.465Z"
     },
     {
+      "id": "fcc86968-80f5-4c71-b21d-03ec844d8441",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875223",
+      "canonicalUrl": "https://github.com/geludobre/sovereign-agentops",
+      "urlHash": "0a18895b319ee55ab8493110aeb59d240f1166a4f215e83067be8c5ec4fca8ec",
+      "title": "Sovereign AgentOps – Self-hosted constitutional AI governance for MCP agents",
+      "summary": "Article URL: https://github.com/geludobre/sovereign-agentops Comments URL: https://news.ycombinator.com/item?id=48875223 Points: 1 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T19:52:10.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "013983093cda7a83085c0d19999559914ba7b282cd92962fbdf78661510f90a8",
+      "createdAt": "2026-07-12T00:58:10.456Z"
+    },
+    {
       "id": "8eff70e6-21fd-473d-9785-3679a21ed027",
       "sourceSlug": "openai",
       "externalId": "https://openai.com/index/introducing-genebench-pro",
@@ -1905,6 +1926,27 @@
       },
       "contentHash": "12a468a570ac4d104253711683784dc195ce0eb226149d54c95eec0f5a177b4b",
       "createdAt": "2026-07-11T16:15:43.323Z"
+    },
+    {
+      "id": "b02580a8-40c4-4aab-b62a-b17bda19fcab",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48876505",
+      "canonicalUrl": "https://www.iroh.computer/blog/mesh-llm",
+      "urlHash": "0cb2a7c0c0cba9c680db169a589a7c45101315cd19ba1f24cabf9d2b568219d2",
+      "title": "Mesh LLM: distributed AI computing on iroh",
+      "summary": "Article URL: https://www.iroh.computer/blog/mesh-llm Comments URL: https://news.ycombinator.com/item?id=48876505 Points: 55 # Comments: 15",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T22:38:57.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "6085d38672ebffcdc53b0047dd7cb97d4888d5900cf36f3a7b6c6efe76636d69",
+      "createdAt": "2026-07-12T00:58:10.447Z"
     },
     {
       "id": "ad33e329-dedf-4ec1-8054-19860972bb01",
@@ -1970,6 +2012,27 @@
       "createdAt": "2026-07-11T16:15:43.236Z"
     },
     {
+      "id": "7d7fc934-f56c-4d2e-a90e-b6acbcc3aed3",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48876343",
+      "canonicalUrl": "https://neobrowser.ai/",
+      "urlHash": "0fbb1fc1cf26faab5cd4bebda33431c08b811f4d00a8d756829ffe06e0e4e85a",
+      "title": "Neobrowser AI has rediculously strong VPN builtin for FREE",
+      "summary": "Article URL: https://neobrowser.ai/ Comments URL: https://news.ycombinator.com/item?id=48876343 Points: 2 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T22:13:36.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "3916b4bb35607b652eae0b519b324de338d5c8f28d41172f855c53feb6a5ddba",
+      "createdAt": "2026-07-12T00:58:10.449Z"
+    },
+    {
       "id": "7be68e4e-636b-4e0c-b9fe-e4edee9f4a16",
       "sourceSlug": "openai",
       "externalId": "https://openai.com/index/using-codex-to-simulate-black-holes",
@@ -2031,6 +2094,27 @@
       },
       "contentHash": "ce3b8bf621ad4cf5f05b37df93ee5a04e18f8e731b1ecf3553854eb9747d4a37",
       "createdAt": "2026-07-11T16:15:43.111Z"
+    },
+    {
+      "id": "0fa49105-1b36-4f4f-ac6d-950824e5ecdf",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875678",
+      "canonicalUrl": "https://github.com/mrhustlex/TradingSpy-TradingAgentService",
+      "urlHash": "144e49fa66866a66d2934c13979c88c1a37ec2f5a747dc110a64f26613a58fd4",
+      "title": "I built TradingSpy: local, privacy-first AI trading assistant(First Open Source)",
+      "summary": "Article URL: https://github.com/mrhustlex/TradingSpy-TradingAgentService Comments URL: https://news.ycombinator.com/item?id=48875678 Points: 2 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T20:45:06.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "d70c5f1271e105d06a4169d6b3d620e433693b54899bc153e3358edf61536243",
+      "createdAt": "2026-07-12T00:58:10.452Z"
     },
     {
       "id": "a9d300c2-9f95-4a2b-aa8c-c39591dec08b",
@@ -2117,7 +2201,7 @@
       "createdAt": "2026-07-11T16:15:43.556Z"
     },
     {
-      "id": "d8136a89-99d7-4ff1-87cd-e94ca45ba1c1",
+      "id": "79087e85-534f-4fe0-994e-3c8aabe831dd",
       "sourceSlug": "nvidia-blog-ai",
       "externalId": "nvidia-blackwell-ultra-reasoning-factory",
       "canonicalUrl": "https://nvidianews.nvidia.com/online-press-kit/gtc-2025-news",
@@ -2462,7 +2546,7 @@
       "createdAt": "2026-07-11T16:15:43.338Z"
     },
     {
-      "id": "f63087c4-6513-4882-87c6-bf7d8fb3f0a9",
+      "id": "72b4b6ed-3b0f-491a-b138-95a35737d03b",
       "sourceSlug": "minimax",
       "externalId": "minimax-m1-long-context-reasoning",
       "canonicalUrl": "https://www.minimax.io/news/minimaxm1",
@@ -2618,6 +2702,27 @@
       "createdAt": "2026-07-11T16:15:43.220Z"
     },
     {
+      "id": "a04ea321-bb52-4969-9108-8c3b868f8a02",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48876212",
+      "canonicalUrl": "https://www.untempled.com/guilhermen/art/ai-found-a-secret-computer-bug-hidden-for-15-years-plus-why-cops-chased-a-reporter-over-a-typo-cmrgwcw7o0001ky04qu4ubln8",
+      "urlHash": "2ed257c5677cef752332e0f2961872a1fc5db99f1bcf874979a8597ad442aeeb",
+      "title": "AI found a secret computer bug hidden for 15 years.",
+      "summary": "Article URL: https://www.untempled.com/guilhermen/art/ai-found-a-secret-computer-bug-hidden-for-15-years-plus-why-cops-chased-a-reporter-over-a-typo-cmrgwcw7o0001ky04qu4ubln8 Comments URL: https://news.ycombinator.com/item?id=48876212 Points: 3 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T21:53:28.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "c7ee719ae5858d2423cc1c7a6f0c11993280b0af7e47b7411418a1491e63d649",
+      "createdAt": "2026-07-12T00:58:10.450Z"
+    },
+    {
       "id": "f2390429-ea82-4f62-8bb1-b8639e54ebd6",
       "sourceSlug": "arxiv-ai",
       "externalId": "oai:arXiv.org:2607.08284v1",
@@ -2637,6 +2742,27 @@
       },
       "contentHash": "f99ac8006b3ccb0dcd1cab3ba66ab2530a8df0445c29b4a1169f74834a1d74b0",
       "createdAt": "2026-07-11T16:15:43.122Z"
+    },
+    {
+      "id": "decb13ac-c37b-4b8d-9c08-a12424cb2146",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875259",
+      "canonicalUrl": "https://github.com/AntoineF23/verdict",
+      "urlHash": "2fce98e1c0265225dade73dff5d338e51301f1a95ba053f95904c070e5111e60",
+      "title": "I built a free tool to evaluate AI agent outputs (human labels and LLM judges)",
+      "summary": "Article URL: https://github.com/AntoineF23/verdict Comments URL: https://news.ycombinator.com/item?id=48875259 Points: 1 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T19:55:44.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "2b778417c06e8cda75482fc2db920818e946f261c0e60aa9a57591666a29f03b",
+      "createdAt": "2026-07-12T00:58:10.455Z"
     },
     {
       "id": "94b21d4f-be66-4c2e-b2f2-2bf6157fdb77",
@@ -2828,7 +2954,7 @@
       "createdAt": "2026-07-11T16:15:43.330Z"
     },
     {
-      "id": "8b99504f-a97c-4670-8fa0-7231d459d61a",
+      "id": "f4d422a5-b26c-4f78-9a66-d2ddecc01494",
       "sourceSlug": "qwen",
       "externalId": "qwen-3-hybrid-thinking",
       "canonicalUrl": "https://qwenlm.github.io/blog/qwen3",
@@ -3026,7 +3152,7 @@
       "createdAt": "2026-07-11T16:15:44.806Z"
     },
     {
-      "id": "0cc40a6b-7775-491e-9e3f-7c60480fce12",
+      "id": "fa57cecb-9815-4d92-8ff9-369d71f250d6",
       "sourceSlug": "openai",
       "externalId": "gpt-live-voice-interface",
       "canonicalUrl": "https://openai.com/index/introducing-gpt-live",
@@ -3056,7 +3182,7 @@
       "createdAt": "2026-07-11T16:04:10.594Z"
     },
     {
-      "id": "c6c53340-2abf-4823-8084-3af6df11a141",
+      "id": "c9bbad5c-f74c-4f81-bd19-26d2b15c5a5a",
       "sourceSlug": "google-ai",
       "externalId": "gemini-2-5-thinking-model",
       "canonicalUrl": "https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025",
@@ -3086,7 +3212,7 @@
       "createdAt": "2026-07-11T16:05:34.440Z"
     },
     {
-      "id": "2a755379-286e-4301-8462-603057fa25d9",
+      "id": "c00b3fcd-2b06-4913-8729-9517e404b31c",
       "sourceSlug": "google-ai",
       "externalId": "gemini-2-agentic-era",
       "canonicalUrl": "https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024",
@@ -3261,6 +3387,27 @@
       },
       "contentHash": "5c7b9ae4e6b28632317587cfdb3b3c6e21db19332e2ba54fe320d48005cf6547",
       "createdAt": "2026-07-11T16:15:43.226Z"
+    },
+    {
+      "id": "9b075748-ef41-44ec-b3ca-e631dc5c5ec7",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875342",
+      "canonicalUrl": "https://github.com/sqlsure/sqlsure",
+      "urlHash": "45f9a06af6252172faf04afba20e327ca24d8b02889b202ef17032396265b3c7",
+      "title": "Show HN: Sqlsure – deterministic semantic checks for AI-generated SQL",
+      "summary": "Article URL: https://github.com/sqlsure/sqlsure Comments URL: https://news.ycombinator.com/item?id=48875342 Points: 8 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T20:03:42.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "3e2f82d7195d99ebcce90933540d11ebb5b9d32676d987ae2273a1d28d7678a7",
+      "createdAt": "2026-07-12T00:58:10.454Z"
     },
     {
       "id": "97488668-3282-49f7-af2e-c2fad87bb402",
@@ -3494,7 +3641,7 @@
       "createdAt": "2026-07-11T16:15:43.530Z"
     },
     {
-      "id": "a798ca7a-1d12-4b0f-9ad9-57cfdfe75d53",
+      "id": "30fdaa3d-7b62-4e72-9dbe-3981d81c523b",
       "sourceSlug": "anthropic",
       "externalId": "claude-4-long-running-agents",
       "canonicalUrl": "https://www.anthropic.com/news/claude-4",
@@ -3629,6 +3776,27 @@
       "createdAt": "2026-07-11T16:15:43.234Z"
     },
     {
+      "id": "a341dcf2-9e9d-4021-b3d9-b09f0ed66bb6",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875371",
+      "canonicalUrl": "https://www.bbc.com/news/articles/c9q29j47v9ro",
+      "urlHash": "55bc21c179579246fa7003a596f90f2ae67a5094a12543cfb355453804fabce8",
+      "title": "Wealthy AI workers send San Francisco house prices soaring",
+      "summary": "Article URL: https://www.bbc.com/news/articles/c9q29j47v9ro Comments URL: https://news.ycombinator.com/item?id=48875371 Points: 6 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T20:06:38.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "654dcb5098d0e23c665d510df0ce14b88d3bc67752a23640f9906bfaeef40aae",
+      "createdAt": "2026-07-12T00:58:10.454Z"
+    },
+    {
       "id": "d0d55d99-354d-4bcf-90ec-87bc2f4a2aea",
       "sourceSlug": "arxiv-ai",
       "externalId": "oai:arXiv.org:2607.07858v1",
@@ -3690,6 +3858,27 @@
       },
       "contentHash": "c49ed7024f4fd01f0ad29057bedfaf5b337f24fc2e8fbb7828f8db7dd289808a",
       "createdAt": "2026-07-11T16:15:43.339Z"
+    },
+    {
+      "id": "2cacb6ce-1fb5-460c-8648-a3faa8493653",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875888",
+      "canonicalUrl": "https://github.com/boundflow/boundflow",
+      "urlHash": "5942f06f4a799fa0a84624991a25ea10716fa527130cfbf5e3214a4566677e08",
+      "title": "Show HN: BoundFlow – an open-source control plane for AI agents",
+      "summary": "Article URL: https://github.com/boundflow/boundflow Comments URL: https://news.ycombinator.com/item?id=48875888 Points: 1 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T21:07:11.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "20052f2599cd8ce2d4752e498bf011311abe7a3c26d1a443f33e0f70f39c34dc",
+      "createdAt": "2026-07-12T00:58:10.450Z"
     },
     {
       "id": "8252fd13-123e-47c4-b63e-03bc47b3825d",
@@ -3902,7 +4091,7 @@
       "createdAt": "2026-07-11T16:15:43.545Z"
     },
     {
-      "id": "a0939380-d8a7-4ccf-bbc6-8b1ade474ce8",
+      "id": "650d109b-19b1-407d-92e3-405535940f82",
       "sourceSlug": "openai",
       "externalId": "openai-o3-o4-mini-tools",
       "canonicalUrl": "https://openai.com/index/introducing-o3-and-o4-mini",
@@ -4016,7 +4205,7 @@
       "createdAt": "2026-07-11T16:15:43.538Z"
     },
     {
-      "id": "daf925b2-43a0-4281-b627-ac1b52ca0fa0",
+      "id": "12503d50-a175-435b-892d-1b1ac575a9c5",
       "sourceSlug": "eu-ai-office",
       "externalId": "eu-ai-act-enters-force",
       "canonicalUrl": "https://digital-strategy.ec.europa.eu/en/news/european-artificial-intelligence-act-comes-force",
@@ -4222,7 +4411,7 @@
       "createdAt": "2026-07-11T16:15:43.118Z"
     },
     {
-      "id": "887135f8-a1d2-4c17-9c83-565094758142",
+      "id": "8f0f1a74-de3d-459f-abff-1775f7c14867",
       "sourceSlug": "meta-ai",
       "externalId": "llama-4-native-multimodal-moe",
       "canonicalUrl": "https://ai.meta.com/blog/llama-4-multimodal-intelligence",
@@ -4292,6 +4481,27 @@
       },
       "contentHash": "a2761de848e8d1834e43a6ff299fdc0a9d4f15011b81645a54941657103448e6",
       "createdAt": "2026-07-11T16:15:43.205Z"
+    },
+    {
+      "id": "01131f23-3087-4462-a129-7cbd8167d0cf",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875413",
+      "canonicalUrl": "https://data.deepsynthesis.org/",
+      "urlHash": "797b4e3e25ef2284f1c5ad1bc315b795537b977dc72514dc27ac1bfa95fd79ef",
+      "title": "The AI Disagreement Index: 8 models agreed on the \"best tool\" 0 of 16 times",
+      "summary": "Article URL: https://data.deepsynthesis.org/ Comments URL: https://news.ycombinator.com/item?id=48875413 Points: 1 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T20:12:06.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "0d0833c30c070baf56f9a1239ed5d1e30a2279f4cc3f29fd0416f2c1646a5d25",
+      "createdAt": "2026-07-12T00:58:10.453Z"
     },
     {
       "id": "d9b44146-0d21-4636-89c6-82b803207a6a",
@@ -4525,7 +4735,28 @@
       "createdAt": "2026-07-11T16:15:43.531Z"
     },
     {
-      "id": "6f844700-69b4-4b36-b215-5e32aed6087b",
+      "id": "5bf7b047-6a8f-4bee-8e45-754cb36120b4",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48876731",
+      "canonicalUrl": "https://www.youtube.com/watch?v=Xr9VqRawjAU",
+      "urlHash": "8e14f3ba03b7c39337bf43353bdad506ac87afb8d45ff12b8d49391db2fb6298",
+      "title": "The Human Cell Is Wildly Complex. Can AI Decode It? – Silvana Konermann – Ted [video]",
+      "summary": "Article URL: https://www.youtube.com/watch?v=Xr9VqRawjAU Comments URL: https://news.ycombinator.com/item?id=48876731 Points: 1 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T23:12:48.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "ea84f91b7e774e3a973a745a59c6441bcf43ba899e286258d1ebcb23f3f38996",
+      "createdAt": "2026-07-12T00:58:10.445Z"
+    },
+    {
+      "id": "08994028-62b7-4f00-a440-d961e13f1f1b",
       "sourceSlug": "meta-ai",
       "externalId": "llama-3-1-open-frontier-model",
       "canonicalUrl": "https://ai.meta.com/blog/meta-llama-3-1",
@@ -4639,6 +4870,27 @@
       "createdAt": "2026-07-11T16:15:44.811Z"
     },
     {
+      "id": "4eaf93cd-4377-4c7f-9a54-d1f6d89a7237",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48876610",
+      "canonicalUrl": "https://github.com/shehryarsaroya/agenttransfer",
+      "urlHash": "940f8d438039ee8e11f176b3b40846c2b8f12a3ada2d4846647fcde27ad747ae",
+      "title": "Show HN: AgentTransfer – open-source file transfer for AI agents (one Go binary)",
+      "summary": "Article URL: https://github.com/shehryarsaroya/agenttransfer Comments URL: https://news.ycombinator.com/item?id=48876610 Points: 1 # Comments: 1",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T22:52:52.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "e6a6ba74cd9a5d1cf05d0df53588ba684fe079a864b307f2d98d459d96872166",
+      "createdAt": "2026-07-12T00:58:10.446Z"
+    },
+    {
       "id": "362ddc0c-f7f1-4034-b65e-af4273dbfd7b",
       "sourceSlug": "anthropic",
       "externalId": "claude-constitution-2026",
@@ -4711,6 +4963,27 @@
       "createdAt": "2026-07-11T16:15:43.219Z"
     },
     {
+      "id": "622e339d-e219-46e3-89cd-252118c345de",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48876348",
+      "canonicalUrl": "https://tokentime.bar/",
+      "urlHash": "97f915e659964e3c3d2438e49a16401123d1c100fb7691df9122284eec5de913",
+      "title": "Show HN: Token Time – Screen Time, but for your AI agent tokens",
+      "summary": "Article URL: https://tokentime.bar Comments URL: https://news.ycombinator.com/item?id=48876348 Points: 1 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T22:13:52.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "232419c4b2a317a22d86dd12d1d1f513212a99a1087a33371140a6defc2405bd",
+      "createdAt": "2026-07-12T00:58:10.448Z"
+    },
+    {
       "id": "961af4d8-3473-4c80-825e-81ec73f31bce",
       "sourceSlug": "deepmind",
       "externalId": "https://deepmind.google/blog/introducing-gemma-4-12b-a-unified-encoder-free-multimodal-model/",
@@ -4774,7 +5047,7 @@
       "createdAt": "2026-07-11T16:15:43.547Z"
     },
     {
-      "id": "5f7fe85a-b03a-4cdf-aa00-199c1c69c495",
+      "id": "d91bfb00-47b6-44fd-8b29-532eb2ddb25c",
       "sourceSlug": "moonshot",
       "externalId": "kimi-k2-agentic-open-model",
       "canonicalUrl": "https://github.com/MoonshotAI/Kimi-K2",
@@ -4930,7 +5203,7 @@
       "createdAt": "2026-07-11T16:15:43.223Z"
     },
     {
-      "id": "96f779b3-0746-4b44-925e-2e152c68ba79",
+      "id": "66838bc3-0619-4acd-90a4-71a32f663845",
       "sourceSlug": "qwen",
       "externalId": "qwen-2-5-open-model-matrix",
       "canonicalUrl": "https://qwenlm.github.io/blog/qwen2.5",
@@ -4981,7 +5254,7 @@
       "createdAt": "2026-07-11T16:15:43.545Z"
     },
     {
-      "id": "a683a544-423e-4f3e-a40b-856798e468e4",
+      "id": "5713574e-95c7-49c7-8311-b548624014ef",
       "sourceSlug": "anthropic",
       "externalId": "claude-computer-use",
       "canonicalUrl": "https://www.anthropic.com/news/3-5-models-and-computer-use",
@@ -5179,7 +5452,7 @@
       "createdAt": "2026-07-11T16:15:43.121Z"
     },
     {
-      "id": "e5e09525-c924-4bb4-a5c9-973fcf1f0aab",
+      "id": "00181d47-69d1-43cf-b7dd-e42c6a5887d4",
       "sourceSlug": "anthropic",
       "externalId": "claude-3-7-code-preview",
       "canonicalUrl": "https://www.anthropic.com/news/claude-3-7-sonnet",
@@ -5209,6 +5482,48 @@
       "createdAt": "2026-07-11T16:05:34.434Z"
     },
     {
+      "id": "2d3cabb0-dba1-4517-94d6-e1d52ecf350a",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48876489",
+      "canonicalUrl": "https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation",
+      "urlHash": "ab391d88e9ebdd39b4b472c90800f51d4244ae97f75cad99810022e4cdd8403f",
+      "title": "AI and Job Postings: From Destruction to Creation?",
+      "summary": "Article URL: https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation/ Comments URL: https://news.ycombinator.com/item?id=48876489 Points: 3 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T22:37:18.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "f160a27a27c2f1e98e585483d6b6fd2b44cd30083dcd46c05f97160ee51f2884",
+      "createdAt": "2026-07-12T00:58:10.448Z"
+    },
+    {
+      "id": "37dc5a25-90da-4422-a34e-bd5a80b21427",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48874871",
+      "canonicalUrl": "https://wram.chat/",
+      "urlHash": "ab3eb9631c6c57466d0285d461ac2240c7228ab8133860cf7782b4c5848090d2",
+      "title": "Show HN: Settle any argument with a friend – an AI judge decides who's right",
+      "summary": "Article URL: https://wram.chat Comments URL: https://news.ycombinator.com/item?id=48874871 Points: 1 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T19:14:18.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "c94fd0cef350fd5f6351f2362461dd5dda398405a140ec1442290bd200a11f39",
+      "createdAt": "2026-07-12T00:58:10.457Z"
+    },
+    {
       "id": "c468565e-f53e-4ec4-b73f-4476b8a54502",
       "sourceSlug": "openai",
       "externalId": "https://openai.com/index/australian-payments-plus",
@@ -5230,7 +5545,7 @@
       "createdAt": "2026-07-11T16:15:43.322Z"
     },
     {
-      "id": "9ee8d4c7-67bf-46ef-a35e-9c284fdde535",
+      "id": "0fb94c32-8f6d-46cb-8c97-77fc4e0f827c",
       "sourceSlug": "openai",
       "externalId": "openai-codex-cloud-agent",
       "canonicalUrl": "https://openai.com/index/introducing-codex",
@@ -5344,7 +5659,7 @@
       "createdAt": "2026-07-11T16:15:43.326Z"
     },
     {
-      "id": "453cafd5-4ccc-4026-9963-d222b56cac49",
+      "id": "1f61b657-9635-4a06-bb47-298d69f5cdcd",
       "sourceSlug": "deepseek",
       "externalId": "deepseek-r1-open-reasoning",
       "canonicalUrl": "https://github.com/deepseek-ai/DeepSeek-R1",
@@ -5395,7 +5710,7 @@
       "createdAt": "2026-07-11T16:15:43.108Z"
     },
     {
-      "id": "e4ad5b41-72be-4a0d-bbe5-20d6f3b58448",
+      "id": "36d74a1f-4634-4224-b1e0-8a5adc28881c",
       "sourceSlug": "openai",
       "externalId": "chatgpt-agent-research-to-action",
       "canonicalUrl": "https://openai.com/index/introducing-chatgpt-agent",
@@ -5488,6 +5803,27 @@
       "createdAt": "2026-07-11T16:15:43.543Z"
     },
     {
+      "id": "353dc0fd-2aae-45aa-babf-a4a6921206b4",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875323",
+      "canonicalUrl": "https://ai-arcade.app/",
+      "urlHash": "b410d89cfd0f7120504d88989c6ef04f4b523246e0ec58fe55b6ec3bba9b3b91",
+      "title": "AI Arcade – which coding model can build the best arcade game",
+      "summary": "Article URL: https://ai-arcade.app Comments URL: https://news.ycombinator.com/item?id=48875323 Points: 1 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T20:02:45.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "4086c1382624256b438f4c480f2d74dc11f5e2e2b0e778d2028f1c9045d2bafc",
+      "createdAt": "2026-07-12T00:58:10.455Z"
+    },
+    {
       "id": "b9f0fd62-b82e-4e74-a205-f63b400d2cad",
       "sourceSlug": "huggingface",
       "externalId": "https://huggingface.co/blog/PaddlePaddle/pp-ocrv6",
@@ -5551,7 +5887,7 @@
       "createdAt": "2026-07-11T16:15:43.224Z"
     },
     {
-      "id": "bf7736cd-8642-410c-92eb-6f69b77974b9",
+      "id": "abc0e486-c2a5-46f7-b9be-01c37b39c68f",
       "sourceSlug": "anthropic",
       "externalId": "anthropic-series-h-scale",
       "canonicalUrl": "https://www.anthropic.com/news/series-h",
@@ -5623,7 +5959,7 @@
       "createdAt": "2026-07-11T16:15:43.321Z"
     },
     {
-      "id": "3a6e47fa-8abd-4cea-a7f0-eb3ff2da3ce2",
+      "id": "9bbb557b-bde5-4e54-bd8b-070a8d0db47a",
       "sourceSlug": "anthropic",
       "externalId": "claude-opus-4-7-agent-work",
       "canonicalUrl": "https://www.anthropic.com/news/claude-opus-4-7",
@@ -5653,7 +5989,7 @@
       "createdAt": "2026-07-11T16:05:34.469Z"
     },
     {
-      "id": "8ed13067-f0ad-45bd-bae9-5d0a9a16437c",
+      "id": "197ab8d4-5dc4-4256-a183-8698312fd698",
       "sourceSlug": "openai",
       "externalId": "gpt-5-6-microsoft-365-distribution",
       "canonicalUrl": "https://openai.com/index/gpt-5-6-preferred-model-microsoft-365-copilot",
@@ -5767,7 +6103,7 @@
       "createdAt": "2026-07-11T16:15:43.555Z"
     },
     {
-      "id": "eed2fe84-fb98-4f40-a7fe-edf1a1608508",
+      "id": "c5ea2c43-6557-45cc-ba25-46d035a84709",
       "sourceSlug": "openai",
       "externalId": "openai-responses-agents-sdk",
       "canonicalUrl": "https://openai.com/index/new-tools-for-building-agents",
@@ -5837,6 +6173,27 @@
       },
       "contentHash": "c72ea94360510b772962135a3e9a0da5647f37c5b9e1e43914a5da26b00e5b72",
       "createdAt": "2026-07-11T16:15:43.207Z"
+    },
+    {
+      "id": "9eccc6cd-ba82-4161-b9d1-97f53f39fbc7",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875466",
+      "canonicalUrl": "https://hardcoresoftware.learningbyshipping.com/p/240-banning-ai-in-law-school-weve",
+      "urlHash": "bfb893794041c86be1b49d1dde8ddf5b255ee18d917d14fc0233f7c8fb4bda8f",
+      "title": "Banning AI in Law School: We've Seen This Before",
+      "summary": "Article URL: https://hardcoresoftware.learningbyshipping.com/p/240-banning-ai-in-law-school-weve Comments URL: https://news.ycombinator.com/item?id=48875466 Points: 3 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T20:18:07.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "d0201c04ad870656a9d0107c7e2363ee773e883d1b9e6a89db355471ab10d14f",
+      "createdAt": "2026-07-12T00:58:10.453Z"
     },
     {
       "id": "cf4cd53b-7d43-4fcc-b4be-b136b128be2d",
@@ -6049,7 +6406,7 @@
       "createdAt": "2026-07-11T16:15:43.338Z"
     },
     {
-      "id": "51e83c42-3860-45c4-b647-28ffa79d1503",
+      "id": "fcf9da6d-044a-4080-9c35-27cdea2affad",
       "sourceSlug": "google-developers",
       "externalId": "google-a2a-agent-protocol",
       "canonicalUrl": "https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability",
@@ -6352,7 +6709,7 @@
       "createdAt": "2026-07-11T16:15:43.337Z"
     },
     {
-      "id": "0229dcae-4916-43cc-98ae-777f0a729d8b",
+      "id": "84dce588-a1b6-4830-9fd9-c07df6c081ee",
       "sourceSlug": "robbyant",
       "externalId": "lingbot-vla-2-cross-embodiment",
       "canonicalUrl": "https://github.com/Robbyant/lingbot-vla-v2",
@@ -6381,6 +6738,27 @@
       },
       "contentHash": "b5122c6caaed192651bbd031ed37626266930d31d75020e1b6c994426ad8330c",
       "createdAt": "2026-07-11T16:04:10.599Z"
+    },
+    {
+      "id": "45de715d-e2e7-499b-b662-39f57642b2d6",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875051",
+      "canonicalUrl": "https://wizard.teddytennant.com/",
+      "urlHash": "d5fe29d77ce68ebd1c851c550abb13fc17c4b26f70bf663931ee323d428aa8d5",
+      "title": "Show HN: Wizard – Self-extending Rust terminal AI agent (one-line install)",
+      "summary": "Article URL: https://wizard.teddytennant.com Comments URL: https://news.ycombinator.com/item?id=48875051 Points: 1 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T19:34:35.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "47f2444ab1c50dcec74e333825b60257ce9fe96eb941dc1cb3c6aeb654b2bb32",
+      "createdAt": "2026-07-12T00:58:10.456Z"
     },
     {
       "id": "a6215c96-6613-4e0e-8a12-dba2c9dfc019",
@@ -6614,7 +6992,7 @@
       "createdAt": "2026-07-11T16:15:43.103Z"
     },
     {
-      "id": "e798142d-2bf9-49eb-849c-ada9f86f5896",
+      "id": "fec6a5aa-e6b6-4b50-9b44-410fa90b40ac",
       "sourceSlug": "openai",
       "externalId": "gpt-5-5-real-work",
       "canonicalUrl": "https://openai.com/index/introducing-gpt-5-5",
@@ -6665,7 +7043,7 @@
       "createdAt": "2026-07-11T16:15:43.319Z"
     },
     {
-      "id": "9c8cfefb-2e6d-4e7c-9d10-f3d3fb84e808",
+      "id": "31f374f2-3372-4b64-93f4-a0d0e441d0f3",
       "sourceSlug": "openai",
       "externalId": "openai-deep-research",
       "canonicalUrl": "https://openai.com/index/introducing-deep-research",
@@ -6737,7 +7115,7 @@
       "createdAt": "2026-07-11T16:15:43.102Z"
     },
     {
-      "id": "1ce3a257-a7c3-4b1b-a09c-f72f918fc2b3",
+      "id": "8b5fe813-cdc1-48fa-9c97-9330d2c50d19",
       "sourceSlug": "openai",
       "externalId": "gpt-5-6-agent-platform-shift",
       "canonicalUrl": "https://openai.com/index/gpt-5-6",
@@ -6788,7 +7166,7 @@
       "createdAt": "2026-07-11T16:15:43.330Z"
     },
     {
-      "id": "df9fb725-1cc9-43b2-a296-d7e8e96e6db3",
+      "id": "e5d65257-fd7f-4081-aef7-93b00cd627e0",
       "sourceSlug": "anthropic",
       "externalId": "model-context-protocol",
       "canonicalUrl": "https://www.anthropic.com/news/model-context-protocol",
@@ -6986,7 +7364,7 @@
       "createdAt": "2026-07-11T16:15:44.810Z"
     },
     {
-      "id": "69578723-a77d-46ce-9bd2-e7272c6e23b4",
+      "id": "edfec694-7742-43a7-b26e-69d6cc9edd61",
       "sourceSlug": "openai",
       "externalId": "swe-bench-pro-signal-noise",
       "canonicalUrl": "https://openai.com/index/separating-signal-from-noise-coding-evaluations",
@@ -7121,7 +7499,7 @@
       "createdAt": "2026-07-11T16:15:43.236Z"
     },
     {
-      "id": "ce598677-b783-4949-8b12-f012e22de63b",
+      "id": "d6fab85e-b630-419e-b990-021218cc91dd",
       "sourceSlug": "anthropic",
       "externalId": "claude-constitution-2026",
       "canonicalUrl": "https://www.anthropic.com/news/claude-new-constitution",
@@ -7172,7 +7550,7 @@
       "createdAt": "2026-07-11T16:15:43.332Z"
     },
     {
-      "id": "7a667ba8-96e5-47c2-85e5-87f5c7ec6898",
+      "id": "bb046b29-0d49-4ae5-ab36-ee4fa0f96ece",
       "sourceSlug": "openai",
       "externalId": "openai-operator-browser-agent",
       "canonicalUrl": "https://openai.com/index/introducing-operator",
@@ -7223,7 +7601,7 @@
       "createdAt": "2026-07-11T16:15:43.113Z"
     },
     {
-      "id": "fb51cc27-fd73-4809-9fae-be436140943f",
+      "id": "69f3bb32-4eaf-45e0-9fde-846efe1cda86",
       "sourceSlug": "deepseek",
       "externalId": "deepseek-v3-efficient-frontier",
       "canonicalUrl": "https://github.com/deepseek-ai/DeepSeek-V3",
@@ -7316,6 +7694,27 @@
       "createdAt": "2026-07-11T16:15:43.546Z"
     },
     {
+      "id": "5b6fb53c-6c70-424e-9493-29c70160bea9",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875279",
+      "canonicalUrl": "https://www.30secondsofknowledge.com/",
+      "urlHash": "f3f272a724356527cf6a7e2f12b66847b81862207dc9cfc67d9920d5eb9aa1d8",
+      "title": "Show HN: Don't let your engineering brain rot in the age of AI",
+      "summary": "Article URL: https://www.30secondsofknowledge.com Comments URL: https://news.ycombinator.com/item?id=48875279 Points: 2 # Comments: 0",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T19:57:30.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "1a0d7d470bc61458894c4c2219f301ebe080b291466e063a8e612382a2f4be94",
+      "createdAt": "2026-07-12T00:58:10.455Z"
+    },
+    {
       "id": "bd1dfbef-c3cd-4814-8259-d0777cdf1e75",
       "sourceSlug": "arxiv-ai",
       "externalId": "oai:arXiv.org:2607.08255v1",
@@ -7337,7 +7736,7 @@
       "createdAt": "2026-07-11T16:15:43.119Z"
     },
     {
-      "id": "6e7b3fb5-d8ff-4b6c-818c-5beac450ec21",
+      "id": "661edcfb-70fa-47d7-9529-ba240dccc427",
       "sourceSlug": "worldlabs",
       "externalId": "world-model-functional-taxonomy",
       "canonicalUrl": "https://www.worldlabs.ai/blog",
@@ -7430,7 +7829,7 @@
       "createdAt": "2026-07-11T16:15:43.107Z"
     },
     {
-      "id": "180c0de2-6a0c-4464-b783-305d084c3803",
+      "id": "a83bb65d-e8b3-469d-adf5-320a86061690",
       "sourceSlug": "openai",
       "externalId": "openai-o1-test-time-reasoning",
       "canonicalUrl": "https://openai.com/index/introducing-openai-o1-preview",
@@ -7458,6 +7857,27 @@
       },
       "contentHash": "2cd7e7465a20eb51e4667c2b847571ba4554d89c0d050597d63d233a1ade6e4f",
       "createdAt": "2026-07-11T16:05:34.408Z"
+    },
+    {
+      "id": "086682f7-bcb1-4558-a9ee-c68c9cfd45fc",
+      "sourceSlug": "hackernews-ai",
+      "externalId": "https://news.ycombinator.com/item?id=48875773",
+      "canonicalUrl": "https://www.washingtonpost.com/technology/2026/07/11/ais-soon-to-be-billionaires-want-know-what-do-with-all-that-money",
+      "urlHash": "fdce7c4edfcf5912126383a637c51e042917d6f65ed5cc05b0ed5c7057297bfb",
+      "title": "Being part of one of the biggest wealth creation events in history (AI)",
+      "summary": "Article URL: https://www.washingtonpost.com/technology/2026/07/11/ais-soon-to-be-billionaires-want-know-what-do-with-all-that-money/ Comments URL: https://news.ycombinator.com/item?id=48875773 Points: 2 # Comments: 1",
+      "author": null,
+      "language": "en",
+      "publishedAt": "2026-07-11T20:54:11.000Z",
+      "category": "industry",
+      "tags": [],
+      "metrics": {
+        "platforms": [
+          "rss"
+        ]
+      },
+      "contentHash": "4a2970dc4c8dea161cbaffe77ef3c3e6793b9bb11926e6bc433838f094867d72",
+      "createdAt": "2026-07-12T00:58:10.451Z"
     },
     {
       "id": "2e35b1f3-10e5-4943-89eb-d0918c55f3cf",
@@ -7944,6 +8364,41 @@
       "status": "pending",
       "firstSeenAt": "2026-07-11T16:15:43.747Z",
       "createdAt": "2026-07-11T16:15:43.747Z"
+    },
+    {
+      "id": "4e26746a-6158-4b7c-96b9-510c677ca1c8",
+      "identityHash": "5d7b8bbced4fcc23a2f08d0a40b5f3b0590cbdef92a22076461a63e162019a64",
+      "aggregatorSlug": "aihot",
+      "externalId": "cmrgzykqg00jabid4acp6zpjm",
+      "discoveryUrl": "https://aihot.virxact.com/items/cmrgzykqg00jabid4acp6zpjm",
+      "discoveryUrlHash": "f1966fe41197f1f4b6e6c358ab506e0273f6e8f512260871e29b07775ea236a6",
+      "originUrl": "https://www.ithome.com/0/975/634.htm",
+      "originUrlHash": "8fff53ecf859db952244dd62d70932c78389632700aaba4875649a43e778b729",
+      "originKind": "media",
+      "originName": "IT之家（RSS）",
+      "handles": [],
+      "title": "彭博社揭秘苹果起诉 OpenAI 内幕：前员工一句\"哈哈\"成窃密关键",
+      "summary": "苹果起诉 OpenAI，指控前工程师 Chang Liu 离职时带走未归还的 MacBook、一名可分享内情的员工，并利用软件漏洞持续访问苹果内网。他发现漏洞后向同事分享\"哈哈，我发现我还能访问网络存储\"，后者协助其获取更多机密。苹果称 OpenAI 试图复制 iPhone 产品研发体系，核心从非法窃取的商业机密腐烂。目前已有超 400 名苹果员工跳槽至 OpenAI，包括前苹果高管、现任 OpenAI 首席硬件官 Tang Tan。苹果曾于今年 2 月尝试私了，但 OpenAI 未回应。",
+      "language": "zh-CN",
+      "publishedAt": "2026-07-11T23:21:57.000Z",
+      "category": "industry",
+      "tags": [
+        "industry"
+      ],
+      "metrics": {
+        "platforms": [
+          "aggregator"
+        ],
+        "regions": [
+          "CN"
+        ]
+      },
+      "matchedSourceSlug": "ithome-ai",
+      "candidateSourceSlugs": [],
+      "matchedSignalId": null,
+      "status": "matched_source",
+      "firstSeenAt": "2026-07-12T00:58:10.847Z",
+      "createdAt": "2026-07-12T00:58:10.847Z"
     },
     {
       "id": "77694fcc-62c0-4335-83a2-2c1083e4cb6d",
@@ -9511,6 +9966,94 @@
       "createdAt": "2026-07-11T18:34:43.263Z"
     },
     {
+      "id": "bd2a7d16-be02-41c4-936d-0d9240721695",
+      "slug": "ai-and-job-postings-from-destruction-to-creation-2026-07-12",
+      "title": "AI and Job Postings: From Destruction to Creation?",
+      "factSummary": "Article URL: https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation/ Comments URL: https://news.ycombinator.com/item?id=48876489 Points: 3 # Comments: 0",
+      "summary": "Article URL: https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation/ Comments URL: https://news.ycombinator.com/item?id=48876489 Points: 3 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "ai",
+        "job",
+        "postings",
+        "from",
+        "destruction",
+        "creation"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 98,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T22:37:18.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.919Z"
+    },
+    {
+      "id": "69fcb73b-b853-4169-87b0-bcb3c3c8b2b2",
+      "slug": "ai-arcade-which-coding-model-can-build-the-best-arcade-game-2026-07-12",
+      "title": "AI Arcade – which coding model can build the best arcade game",
+      "factSummary": "Article URL: https://ai-arcade.app Comments URL: https://news.ycombinator.com/item?id=48875323 Points: 1 # Comments: 0",
+      "summary": "Article URL: https://ai-arcade.app Comments URL: https://news.ycombinator.com/item?id=48875323 Points: 1 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "ai",
+        "arcade",
+        "which",
+        "coding",
+        "model",
+        "can",
+        "build",
+        "best"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 95,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T20:02:45.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.932Z"
+    },
+    {
       "id": "b4a3097b-69b1-442d-80eb-360b1afc00d3",
       "slug": "ai-coding-agents-read-your-code-perfectly-and-understand-your-team-not-at-all-2026-07-11",
       "title": "AI coding agents read your code perfectly and understand your team not at all",
@@ -9599,6 +10142,51 @@
       "happenedAt": "2026-07-11T17:00:52.000Z",
       "publishedAt": null,
       "createdAt": "2026-07-11T18:34:43.269Z"
+    },
+    {
+      "id": "258b4d3c-c140-4ee6-be0c-c308f7f5ac16",
+      "slug": "ai-found-a-secret-computer-bug-hidden-for-15-years-2026-07-12",
+      "title": "AI found a secret computer bug hidden for 15 years.",
+      "factSummary": "Article URL: https://www.untempled.com/guilhermen/art/ai-found-a-secret-computer-bug-hidden-for-15-years-plus-why-cops-chased-a-reporter-over-a-typo-cmrgwcw7o0001ky04qu4ubln8 Comments URL: https://news.ycombinator.com/item?id=48876212 Points: 3 # Comments: 0",
+      "summary": "Article URL: https://www.untempled.com/guilhermen/art/ai-found-a-secret-computer-bug-hidden-for-15-years-plus-why-cops-chased-a-reporter-over-a-typo-cmrgwcw7o0001ky04qu4ubln8 Comments URL: https://news.ycombinator.com/item?id=48876212 Points: 3 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "ai",
+        "found",
+        "secret",
+        "computer",
+        "bug",
+        "hidden",
+        "15",
+        "years"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 97,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T21:53:28.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.923Z"
     },
     {
       "id": "b4545683-f82a-4e92-ac12-8766b633ba65",
@@ -10483,6 +11071,51 @@
       "createdAt": "2026-07-11T16:15:44.854Z"
     },
     {
+      "id": "77f57837-3e95-4a69-989b-66591d6d5189",
+      "slug": "banning-ai-in-law-school-we-ve-seen-this-before-2026-07-12",
+      "title": "Banning AI in Law School: We've Seen This Before",
+      "factSummary": "Article URL: https://hardcoresoftware.learningbyshipping.com/p/240-banning-ai-in-law-school-weve Comments URL: https://news.ycombinator.com/item?id=48875466 Points: 3 # Comments: 0",
+      "summary": "Article URL: https://hardcoresoftware.learningbyshipping.com/p/240-banning-ai-in-law-school-weve Comments URL: https://news.ycombinator.com/item?id=48875466 Points: 3 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "banning",
+        "ai",
+        "law",
+        "school",
+        "we",
+        "ve",
+        "seen",
+        "this"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 95,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T20:18:07.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.927Z"
+    },
+    {
       "id": "c9a0146d-0d1a-4903-8cd7-66c93e8f5d6d",
       "slug": "bbva-puts-ai-at-the-core-of-banking-with-openai-2026-07-11",
       "title": "BBVA puts AI at the core of banking with OpenAI",
@@ -10525,6 +11158,51 @@
       "happenedAt": "2026-06-11T00:00:00.000Z",
       "publishedAt": null,
       "createdAt": "2026-07-11T16:15:44.929Z"
+    },
+    {
+      "id": "6c51fed2-78f4-4cb0-8d00-2d852ac640be",
+      "slug": "being-part-of-one-of-the-biggest-wealth-creation-events-in-history-ai-2026-07-12",
+      "title": "Being part of one of the biggest wealth creation events in history (AI)",
+      "factSummary": "Article URL: https://www.washingtonpost.com/technology/2026/07/11/ais-soon-to-be-billionaires-want-know-what-do-with-all-that-money/ Comments URL: https://news.ycombinator.com/item?id=48875773 Points: 2 # Comments: 1",
+      "summary": "Article URL: https://www.washingtonpost.com/technology/2026/07/11/ais-soon-to-be-billionaires-want-know-what-do-with-all-that-money/ Comments URL: https://news.ycombinator.com/item?id=48875773 Points: 2 # Comments: 1",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "being",
+        "part",
+        "one",
+        "biggest",
+        "wealth",
+        "creation",
+        "events",
+        "history"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 96,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T20:54:11.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.925Z"
     },
     {
       "id": "a8ca9d68-226e-48ee-ab92-80816f08d7f0",
@@ -14524,6 +15202,96 @@
       "createdAt": "2026-07-11T16:15:44.889Z"
     },
     {
+      "id": "f02af439-44ef-44b6-a9eb-1252e6b30ab4",
+      "slug": "i-built-a-free-tool-to-evaluate-ai-agent-outputs-human-labels-and-llm-judges-2026-07-12",
+      "title": "I built a free tool to evaluate AI agent outputs (human labels and LLM judges)",
+      "factSummary": "Article URL: https://github.com/AntoineF23/verdict Comments URL: https://news.ycombinator.com/item?id=48875259 Points: 1 # Comments: 0",
+      "summary": "Article URL: https://github.com/AntoineF23/verdict Comments URL: https://news.ycombinator.com/item?id=48875259 Points: 1 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "built",
+        "free",
+        "tool",
+        "evaluate",
+        "ai",
+        "agent",
+        "outputs",
+        "human"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 95,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T19:55:44.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.935Z"
+    },
+    {
+      "id": "3b94d054-d784-4b66-b1b6-a70d3302795e",
+      "slug": "i-built-tradingspy-local-privacy-first-ai-trading-assistant-first-open-source-2026-07-12",
+      "title": "I built TradingSpy: local, privacy-first AI trading assistant(First Open Source)",
+      "factSummary": "Article URL: https://github.com/mrhustlex/TradingSpy-TradingAgentService Comments URL: https://news.ycombinator.com/item?id=48875678 Points: 2 # Comments: 0",
+      "summary": "Article URL: https://github.com/mrhustlex/TradingSpy-TradingAgentService Comments URL: https://news.ycombinator.com/item?id=48875678 Points: 2 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "built",
+        "tradingspy",
+        "local",
+        "privacy",
+        "first",
+        "ai",
+        "trading",
+        "assistant"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 96,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T20:45:06.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.926Z"
+    },
+    {
       "id": "4cd7d7e0-6c5c-45c1-b9f8-e7f6d0a97160",
       "slug": "i-made-ai-agents-play-diplomacy-2026-07-11",
       "title": "I made AI agents play diplomacy",
@@ -15921,6 +16689,49 @@
       "createdAt": "2026-07-11T16:15:44.855Z"
     },
     {
+      "id": "9a1d0135-45d2-4124-8e41-3d14d87f78d8",
+      "slug": "mesh-llm-distributed-ai-computing-on-iroh-2026-07-12",
+      "title": "Mesh LLM: distributed AI computing on iroh",
+      "factSummary": "Article URL: https://www.iroh.computer/blog/mesh-llm Comments URL: https://news.ycombinator.com/item?id=48876505 Points: 55 # Comments: 15",
+      "summary": "Article URL: https://www.iroh.computer/blog/mesh-llm Comments URL: https://news.ycombinator.com/item?id=48876505 Points: 55 # Comments: 15",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "mesh",
+        "llm",
+        "distributed",
+        "ai",
+        "computing",
+        "iroh"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 98,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T22:38:57.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.918Z"
+    },
+    {
       "id": "3d8ed82d-3e46-4cc0-a1cf-a9953b791d26",
       "slug": "migrating-your-github-ci-to-hugging-face-jobs-2026-07-11",
       "title": "Migrating Your GitHub CI to Hugging Face Jobs",
@@ -16354,6 +17165,51 @@
       "happenedAt": "2026-06-04T18:57:45.000Z",
       "publishedAt": null,
       "createdAt": "2026-07-11T16:15:44.940Z"
+    },
+    {
+      "id": "7903841e-4c61-4b46-8df8-c9785f2222fc",
+      "slug": "neobrowser-ai-has-rediculously-strong-vpn-builtin-for-free-2026-07-12",
+      "title": "Neobrowser AI has rediculously strong VPN builtin for FREE",
+      "factSummary": "Article URL: https://neobrowser.ai/ Comments URL: https://news.ycombinator.com/item?id=48876343 Points: 2 # Comments: 0",
+      "summary": "Article URL: https://neobrowser.ai/ Comments URL: https://news.ycombinator.com/item?id=48876343 Points: 2 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "neobrowser",
+        "ai",
+        "has",
+        "rediculously",
+        "strong",
+        "vpn",
+        "builtin",
+        "free"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 97,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T22:13:36.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.922Z"
     },
     {
       "id": "25a1aae7-81bf-4a29-b1c6-3b110edb9f6c",
@@ -18700,6 +19556,51 @@
       "createdAt": "2026-07-11T16:15:44.824Z"
     },
     {
+      "id": "0e1ee0fb-ed47-4dba-8717-0996149a8793",
+      "slug": "show-hn-agenttransfer-open-source-file-transfer-for-ai-agents-one-go-binary-2026-07-12",
+      "title": "Show HN: AgentTransfer – open-source file transfer for AI agents (one Go binary)",
+      "factSummary": "Article URL: https://github.com/shehryarsaroya/agenttransfer Comments URL: https://news.ycombinator.com/item?id=48876610 Points: 1 # Comments: 1",
+      "summary": "Article URL: https://github.com/shehryarsaroya/agenttransfer Comments URL: https://news.ycombinator.com/item?id=48876610 Points: 1 # Comments: 1",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "show",
+        "hn",
+        "agenttransfer",
+        "open",
+        "source",
+        "file",
+        "transfer",
+        "ai"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 98,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T22:52:52.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.917Z"
+    },
+    {
       "id": "32a03b2f-c663-43cd-b846-0bfe794c6e2e",
       "slug": "show-hn-ai-assistant-for-google-chat-to-translate-any-file-preserving-layout-2026-07-11",
       "title": "Show HN: AI assistant for Google Chat to translate any file preserving layout",
@@ -18743,6 +19644,51 @@
       "happenedAt": "2026-07-11T12:00:32.000Z",
       "publishedAt": null,
       "createdAt": "2026-07-11T16:15:44.825Z"
+    },
+    {
+      "id": "42d324f6-ec72-4a30-88ec-44f356d963cb",
+      "slug": "show-hn-boundflow-an-open-source-control-plane-for-ai-agents-2026-07-12",
+      "title": "Show HN: BoundFlow – an open-source control plane for AI agents",
+      "factSummary": "Article URL: https://github.com/boundflow/boundflow Comments URL: https://news.ycombinator.com/item?id=48875888 Points: 1 # Comments: 0",
+      "summary": "Article URL: https://github.com/boundflow/boundflow Comments URL: https://news.ycombinator.com/item?id=48875888 Points: 1 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "show",
+        "hn",
+        "boundflow",
+        "open",
+        "source",
+        "control",
+        "plane",
+        "ai"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 96,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T21:07:11.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.924Z"
     },
     {
       "id": "f9110986-92ac-46a9-8e2a-3611c4a5b81e",
@@ -18833,6 +19779,51 @@
       "happenedAt": "2026-07-11T09:48:44.000Z",
       "publishedAt": null,
       "createdAt": "2026-07-11T16:15:44.831Z"
+    },
+    {
+      "id": "601d0a76-0633-44ca-8eb0-c9b16a569e7a",
+      "slug": "show-hn-don-t-let-your-engineering-brain-rot-in-the-age-of-ai-2026-07-12",
+      "title": "Show HN: Don't let your engineering brain rot in the age of AI",
+      "factSummary": "Article URL: https://www.30secondsofknowledge.com Comments URL: https://news.ycombinator.com/item?id=48875279 Points: 2 # Comments: 0",
+      "summary": "Article URL: https://www.30secondsofknowledge.com Comments URL: https://news.ycombinator.com/item?id=48875279 Points: 2 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "show",
+        "hn",
+        "don",
+        "let",
+        "your",
+        "engineering",
+        "brain",
+        "rot"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 95,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T19:57:30.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.933Z"
     },
     {
       "id": "6e719969-bede-43cd-adab-f31e4950ba9d",
@@ -18970,6 +19961,186 @@
       "createdAt": "2026-07-11T16:15:44.827Z"
     },
     {
+      "id": "9973e916-76a2-4e5a-9a87-f55c27cff899",
+      "slug": "show-hn-settle-any-argument-with-a-friend-an-ai-judge-decides-who-s-right-2026-07-12",
+      "title": "Show HN: Settle any argument with a friend – an AI judge decides who's right",
+      "factSummary": "Article URL: https://wram.chat Comments URL: https://news.ycombinator.com/item?id=48874871 Points: 1 # Comments: 0",
+      "summary": "Article URL: https://wram.chat Comments URL: https://news.ycombinator.com/item?id=48874871 Points: 1 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "show",
+        "hn",
+        "settle",
+        "any",
+        "argument",
+        "friend",
+        "ai",
+        "judge"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 94,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T19:14:18.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.938Z"
+    },
+    {
+      "id": "7b30b416-033e-4843-bdc4-9ed7f1637a27",
+      "slug": "show-hn-sqlsure-deterministic-semantic-checks-for-ai-generated-sql-2026-07-12",
+      "title": "Show HN: Sqlsure – deterministic semantic checks for AI-generated SQL",
+      "factSummary": "Article URL: https://github.com/sqlsure/sqlsure Comments URL: https://news.ycombinator.com/item?id=48875342 Points: 8 # Comments: 0",
+      "summary": "Article URL: https://github.com/sqlsure/sqlsure Comments URL: https://news.ycombinator.com/item?id=48875342 Points: 8 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "show",
+        "hn",
+        "sqlsure",
+        "deterministic",
+        "semantic",
+        "checks",
+        "ai",
+        "generated"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 95,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T20:03:42.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.931Z"
+    },
+    {
+      "id": "452b8bd3-1039-4fd3-808b-bbff01315032",
+      "slug": "show-hn-token-time-screen-time-but-for-your-ai-agent-tokens-2026-07-12",
+      "title": "Show HN: Token Time – Screen Time, but for your AI agent tokens",
+      "factSummary": "Article URL: https://tokentime.bar Comments URL: https://news.ycombinator.com/item?id=48876348 Points: 1 # Comments: 0",
+      "summary": "Article URL: https://tokentime.bar Comments URL: https://news.ycombinator.com/item?id=48876348 Points: 1 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "show",
+        "hn",
+        "token",
+        "time",
+        "screen",
+        "but",
+        "your",
+        "ai"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 97,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T22:13:52.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.921Z"
+    },
+    {
+      "id": "741e78d0-0ca2-4e57-93e3-f2ca9a5f15d1",
+      "slug": "show-hn-wizard-self-extending-rust-terminal-ai-agent-one-line-install-2026-07-12",
+      "title": "Show HN: Wizard – Self-extending Rust terminal AI agent (one-line install)",
+      "factSummary": "Article URL: https://wizard.teddytennant.com Comments URL: https://news.ycombinator.com/item?id=48875051 Points: 1 # Comments: 0",
+      "summary": "Article URL: https://wizard.teddytennant.com Comments URL: https://news.ycombinator.com/item?id=48875051 Points: 1 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "show",
+        "hn",
+        "wizard",
+        "self",
+        "extending",
+        "rust",
+        "terminal",
+        "ai"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 95,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T19:34:35.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.937Z"
+    },
+    {
       "id": "26944648-db02-4a47-9784-faf772b4dbcb",
       "slug": "simulate-real-world-places-with-project-genie-and-street-view-2026-07-11",
       "title": "Simulate real-world places with Project Genie and Street View",
@@ -19058,6 +20229,51 @@
       "happenedAt": "2026-07-11T04:00:00.000Z",
       "publishedAt": null,
       "createdAt": "2026-07-11T16:15:44.879Z"
+    },
+    {
+      "id": "b5a52265-e91f-4c19-8345-1f66440c7cbe",
+      "slug": "sovereign-agentops-self-hosted-constitutional-ai-governance-for-mcp-agents-2026-07-12",
+      "title": "Sovereign AgentOps – Self-hosted constitutional AI governance for MCP agents",
+      "factSummary": "Article URL: https://github.com/geludobre/sovereign-agentops Comments URL: https://news.ycombinator.com/item?id=48875223 Points: 1 # Comments: 0",
+      "summary": "Article URL: https://github.com/geludobre/sovereign-agentops Comments URL: https://news.ycombinator.com/item?id=48875223 Points: 1 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "sovereign",
+        "agentops",
+        "self",
+        "hosted",
+        "constitutional",
+        "ai",
+        "governance",
+        "mcp"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 95,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T19:52:10.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.936Z"
     },
     {
       "id": "35041ff6-d58f-44a0-ab60-008af134f968",
@@ -19279,6 +20495,51 @@
       "createdAt": "2026-07-11T18:34:43.264Z"
     },
     {
+      "id": "b36eec5c-0c2c-478d-b8d5-e8d647217750",
+      "slug": "the-ai-disagreement-index-8-models-agreed-on-the-best-tool-0-of-16-times-2026-07-12",
+      "title": "The AI Disagreement Index: 8 models agreed on the \"best tool\" 0 of 16 times",
+      "factSummary": "Article URL: https://data.deepsynthesis.org/ Comments URL: https://news.ycombinator.com/item?id=48875413 Points: 1 # Comments: 0",
+      "summary": "Article URL: https://data.deepsynthesis.org/ Comments URL: https://news.ycombinator.com/item?id=48875413 Points: 1 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "ai",
+        "disagreement",
+        "index",
+        "models",
+        "agreed",
+        "best",
+        "tool",
+        "16"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 95,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T20:12:06.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.928Z"
+    },
+    {
       "id": "4df10883-9d66-4b64-b539-e9f2ed970488",
       "slug": "the-complexities-of-patient-centred-conversational-artificial-intelligence-2026-07-11",
       "title": "The complexities of patient-centred conversational artificial intelligence",
@@ -19320,6 +20581,51 @@
       "happenedAt": "2026-07-11T04:00:00.000Z",
       "publishedAt": null,
       "createdAt": "2026-07-11T16:15:44.877Z"
+    },
+    {
+      "id": "4e93b98c-bf90-494d-86ad-e942986cb80b",
+      "slug": "the-human-cell-is-wildly-complex-can-ai-decode-it-silvana-konermann-ted-video-2026-07-12",
+      "title": "The Human Cell Is Wildly Complex. Can AI Decode It? – Silvana Konermann – Ted [video]",
+      "factSummary": "Article URL: https://www.youtube.com/watch?v=Xr9VqRawjAU Comments URL: https://news.ycombinator.com/item?id=48876731 Points: 1 # Comments: 0",
+      "summary": "Article URL: https://www.youtube.com/watch?v=Xr9VqRawjAU Comments URL: https://news.ycombinator.com/item?id=48876731 Points: 1 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "human",
+        "cell",
+        "is",
+        "wildly",
+        "complex",
+        "can",
+        "ai",
+        "decode"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 98,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T23:12:48.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.915Z"
     },
     {
       "id": "cfc5c88f-8977-4fd4-924b-ea4a6ffc5063",
@@ -19895,6 +21201,51 @@
       "createdAt": "2026-07-11T16:15:44.949Z"
     },
     {
+      "id": "2077386d-7684-46f4-bf3d-dd6a3ad3d773",
+      "slug": "wealthy-ai-workers-send-san-francisco-house-prices-soaring-2026-07-12",
+      "title": "Wealthy AI workers send San Francisco house prices soaring",
+      "factSummary": "Article URL: https://www.bbc.com/news/articles/c9q29j47v9ro Comments URL: https://news.ycombinator.com/item?id=48875371 Points: 6 # Comments: 0",
+      "summary": "Article URL: https://www.bbc.com/news/articles/c9q29j47v9ro Comments URL: https://news.ycombinator.com/item?id=48875371 Points: 6 # Comments: 0",
+      "technicalInsight": "待编辑：这项变化对能力、成本或工程路线意味着什么？",
+      "industryInsight": "待编辑：这项变化会如何影响竞争结构与产业分工？",
+      "futureOutlook": "待编辑：接下来要观察哪些可验证信号？",
+      "businessValue": "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+      "category": "industry",
+      "company": "industry",
+      "keywords": [
+        "wealthy",
+        "ai",
+        "workers",
+        "send",
+        "san",
+        "francisco",
+        "house",
+        "prices"
+      ],
+      "confidenceScore": 35,
+      "heatScore": 23,
+      "impactScore": 55,
+      "valueScore": 47,
+      "scoreFactors": {
+        "authority": 45,
+        "corroboration": 20,
+        "primaryEvidence": 0,
+        "uniqueAuthors": 0,
+        "independentSources": 1,
+        "platformBreadth": 1,
+        "regionBreadth": 0,
+        "velocity": 0,
+        "freshness": 95,
+        "crossRegion": false
+      },
+      "status": "review",
+      "featured": 0,
+      "manualOverride": 0,
+      "happenedAt": "2026-07-11T20:06:38.000Z",
+      "publishedAt": null,
+      "createdAt": "2026-07-12T00:58:10.929Z"
+    },
+    {
       "id": "2a2f6249-1b90-4762-ace2-91a6de6a8561",
       "slug": "what-codex-unlocks-for-notion-2026-07-11",
       "title": "What Codex unlocks for Notion",
@@ -20066,7 +21417,7 @@
   "eventSignals": [
     {
       "eventId": "006d1189-8941-42fd-a98b-3720645cc0a7",
-      "signalId": "8b99504f-a97c-4670-8fa0-7231d459d61a",
+      "signalId": "f4d422a5-b26c-4f78-9a66-d2ddecc01494",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.450Z"
@@ -20108,7 +21459,7 @@
     },
     {
       "eventId": "034a79ea-710b-4427-a223-4d73be2d5c59",
-      "signalId": "a0939380-d8a7-4ccf-bbc6-8b1ade474ce8",
+      "signalId": "650d109b-19b1-407d-92e3-405535940f82",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.448Z"
@@ -20136,7 +21487,7 @@
     },
     {
       "eventId": "05a8570a-2466-4c7f-a456-83317d120a6f",
-      "signalId": "69578723-a77d-46ce-9bd2-e7272c6e23b4",
+      "signalId": "edfec694-7742-43a7-b26e-69d6cc9edd61",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:04:10.598Z"
@@ -20185,7 +21536,7 @@
     },
     {
       "eventId": "0c97366f-ff0a-464b-af04-f799fe030c9d",
-      "signalId": "0cc40a6b-7775-491e-9e3f-7c60480fce12",
+      "signalId": "fa57cecb-9815-4d92-8ff9-369d71f250d6",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:04:10.595Z"
@@ -20199,7 +21550,7 @@
     },
     {
       "eventId": "0d1ba57b-62c0-49a3-a198-04c7cf9266a7",
-      "signalId": "b647525f-c1d5-43fa-9f87-b8124a3b2a5e",
+      "signalId": "3a2db8ba-ba58-4b2b-a216-25802afa4b19",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.466Z"
@@ -20212,8 +21563,15 @@
       "createdAt": "2026-07-11T16:15:44.866Z"
     },
     {
+      "eventId": "0e1ee0fb-ed47-4dba-8717-0996149a8793",
+      "signalId": "4eaf93cd-4377-4c7f-9a54-d1f6d89a7237",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.917Z"
+    },
+    {
       "eventId": "0e3e1d81-95d0-4e68-a46b-59e80f7f79df",
-      "signalId": "51e83c42-3860-45c4-b647-28ffa79d1503",
+      "signalId": "fcf9da6d-044a-4080-9c35-27cdea2affad",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.445Z"
@@ -20241,7 +21599,7 @@
     },
     {
       "eventId": "104d8a19-a1ab-450f-ad20-a6f79104903b",
-      "signalId": "1ce3a257-a7c3-4b1b-a09c-f72f918fc2b3",
+      "signalId": "8b5fe813-cdc1-48fa-9c97-9330d2c50d19",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:04:10.584Z"
@@ -20262,7 +21620,7 @@
     },
     {
       "eventId": "11e8097c-d4f1-4dad-a02d-80170b858d13",
-      "signalId": "ce598677-b783-4949-8b12-f012e22de63b",
+      "signalId": "d6fab85e-b630-419e-b990-021218cc91dd",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:15:42.144Z"
@@ -20345,6 +21703,13 @@
       "createdAt": "2026-07-11T16:15:44.819Z"
     },
     {
+      "eventId": "2077386d-7684-46f4-bf3d-dd6a3ad3d773",
+      "signalId": "a341dcf2-9e9d-4021-b3d9-b09f0ed66bb6",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.930Z"
+    },
+    {
       "eventId": "212e7e22-29aa-4e19-98d2-84bc601ad66e",
       "signalId": "02dbb7b7-bb47-49b4-ae28-7ae9802f06c5",
       "evidenceRole": "supporting",
@@ -20360,7 +21725,7 @@
     },
     {
       "eventId": "21f4c505-332c-4c6e-ad8c-953e35619366",
-      "signalId": "fb51cc27-fd73-4809-9fae-be436140943f",
+      "signalId": "69f3bb32-4eaf-45e0-9fde-846efe1cda86",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.423Z"
@@ -20378,6 +21743,13 @@
       "evidenceRole": "supporting",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:15:44.976Z"
+    },
+    {
+      "eventId": "258b4d3c-c140-4ee6-be0c-c308f7f5ac16",
+      "signalId": "a04ea321-bb52-4969-9108-8c3b868f8a02",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.923Z"
     },
     {
       "eventId": "25a1aae7-81bf-4a29-b1c6-3b110edb9f6c",
@@ -20409,7 +21781,7 @@
     },
     {
       "eventId": "29fdd2f6-d612-4058-a2bf-8f53802ce927",
-      "signalId": "e798142d-2bf9-49eb-849c-ada9f86f5896",
+      "signalId": "fec6a5aa-e6b6-4b50-9b44-410fa90b40ac",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.472Z"
@@ -20465,7 +21837,7 @@
     },
     {
       "eventId": "33008925-5cfd-4f02-a961-0df27bec0e8f",
-      "signalId": "0229dcae-4916-43cc-98ae-777f0a729d8b",
+      "signalId": "84dce588-a1b6-4830-9fd9-c07df6c081ee",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:04:10.600Z"
@@ -20555,6 +21927,13 @@
       "createdAt": "2026-07-11T16:15:44.967Z"
     },
     {
+      "eventId": "3b94d054-d784-4b66-b1b6-a70d3302795e",
+      "signalId": "0fa49105-1b36-4f4f-ac6d-950824e5ecdf",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.926Z"
+    },
+    {
       "eventId": "3d8ed82d-3e46-4cc0-a1cf-a9953b791d26",
       "signalId": "ae49751b-5343-46f8-85da-ed92b17de426",
       "evidenceRole": "supporting",
@@ -20597,11 +21976,25 @@
       "createdAt": "2026-07-11T16:15:44.892Z"
     },
     {
+      "eventId": "42d324f6-ec72-4a30-88ec-44f356d963cb",
+      "signalId": "2cacb6ce-1fb5-460c-8648-a3faa8493653",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.924Z"
+    },
+    {
       "eventId": "43d09595-69c2-478c-8dd4-3604899dded0",
       "signalId": "fefd251e-9a63-49f1-91bb-dc3451c00eba",
       "evidenceRole": "supporting",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:15:44.957Z"
+    },
+    {
+      "eventId": "452b8bd3-1039-4fd3-808b-bbff01315032",
+      "signalId": "622e339d-e219-46e3-89cd-252118c345de",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.921Z"
     },
     {
       "eventId": "466244ed-17ea-4916-87d2-1a1bfdef18c7",
@@ -20612,7 +22005,7 @@
     },
     {
       "eventId": "4a6cb77e-f99d-4853-acd4-58fe79bb1a50",
-      "signalId": "7a667ba8-96e5-47c2-85e5-87f5c7ec6898",
+      "signalId": "bb046b29-0d49-4ae5-ab36-ee4fa0f96ece",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.429Z"
@@ -20651,6 +22044,13 @@
       "evidenceRole": "supporting",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T18:34:43.269Z"
+    },
+    {
+      "eventId": "4e93b98c-bf90-494d-86ad-e942986cb80b",
+      "signalId": "5bf7b047-6a8f-4bee-8e45-754cb36120b4",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.915Z"
     },
     {
       "eventId": "4f2f0b19-605b-4c38-87ea-767b582ca9ef",
@@ -20710,7 +22110,7 @@
     },
     {
       "eventId": "540729f4-2603-44cd-affe-2544683b0a0d",
-      "signalId": "180c0de2-6a0c-4464-b783-305d084c3803",
+      "signalId": "a83bb65d-e8b3-469d-adf5-320a86061690",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.409Z"
@@ -20779,6 +22179,13 @@
       "createdAt": "2026-07-11T16:15:44.829Z"
     },
     {
+      "eventId": "601d0a76-0633-44ca-8eb0-c9b16a569e7a",
+      "signalId": "5b6fb53c-6c70-424e-9493-29c70160bea9",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.933Z"
+    },
+    {
       "eventId": "625fd22b-a628-4fe0-b37a-4eecafc9fbdd",
       "signalId": "f40280e5-f812-4118-93a4-97b36b962028",
       "evidenceRole": "supporting",
@@ -20828,6 +22235,13 @@
       "createdAt": "2026-07-11T16:15:44.883Z"
     },
     {
+      "eventId": "69fcb73b-b853-4169-87b0-bcb3c3c8b2b2",
+      "signalId": "353dc0fd-2aae-45aa-babf-a4a6921206b4",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.932Z"
+    },
+    {
       "eventId": "6aded5a4-9857-402e-9c6e-31a4b2fb0d72",
       "signalId": "961af4d8-3473-4c80-825e-81ec73f31bce",
       "evidenceRole": "supporting",
@@ -20843,7 +22257,7 @@
     },
     {
       "eventId": "6babbba4-c95a-4718-abcf-3d0b0f064cbb",
-      "signalId": "a683a544-423e-4f3e-a40b-856798e468e4",
+      "signalId": "5713574e-95c7-49c7-8311-b548624014ef",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.414Z"
@@ -20854,6 +22268,13 @@
       "evidenceRole": "supporting",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:15:44.849Z"
+    },
+    {
+      "eventId": "6c51fed2-78f4-4cb0-8d00-2d852ac640be",
+      "signalId": "086682f7-bcb1-4558-a9ee-c68c9cfd45fc",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.925Z"
     },
     {
       "eventId": "6c76ccd8-a089-4598-b00c-401a562921b1",
@@ -20885,7 +22306,7 @@
     },
     {
       "eventId": "6ea5b565-034c-412c-aca1-d1444584132b",
-      "signalId": "6e7b3fb5-d8ff-4b6c-818c-5beac450ec21",
+      "signalId": "661edcfb-70fa-47d7-9529-ba240dccc427",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:04:10.603Z"
@@ -20933,6 +22354,13 @@
       "createdAt": "2026-07-11T16:15:44.922Z"
     },
     {
+      "eventId": "741e78d0-0ca2-4e57-93e3-f2ca9a5f15d1",
+      "signalId": "45de715d-e2e7-499b-b662-39f57642b2d6",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.937Z"
+    },
+    {
       "eventId": "749b48fc-455f-458f-8b3d-6f99197325cf",
       "signalId": "b6e359ab-3fed-4b67-b1a4-d769fe6f007a",
       "evidenceRole": "supporting",
@@ -20975,11 +22403,32 @@
       "createdAt": "2026-07-11T16:15:44.880Z"
     },
     {
+      "eventId": "77f57837-3e95-4a69-989b-66591d6d5189",
+      "signalId": "9eccc6cd-ba82-4161-b9d1-97f53f39fbc7",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.927Z"
+    },
+    {
+      "eventId": "7903841e-4c61-4b46-8df8-c9785f2222fc",
+      "signalId": "7d7fc934-f56c-4d2e-a90e-b6acbcc3aed3",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.922Z"
+    },
+    {
       "eventId": "79126618-11b2-4298-aa1f-5217f4907cd2",
-      "signalId": "aa9391b9-70ad-4b59-aef4-ae19573d8629",
+      "signalId": "424fa68b-22e1-494f-aec8-af5284e154b2",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.464Z"
+    },
+    {
+      "eventId": "7b30b416-033e-4843-bdc4-9ed7f1637a27",
+      "signalId": "9b075748-ef41-44ec-b3ca-e631dc5c5ec7",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.931Z"
     },
     {
       "eventId": "7b8478b5-b50b-498f-bea2-8b9fb722813d",
@@ -21039,14 +22488,14 @@
     },
     {
       "eventId": "885ebdbc-84dd-49b9-ae62-3615970d7ba7",
-      "signalId": "9c8cfefb-2e6d-4e7c-9d10-f3d3fb84e808",
+      "signalId": "31f374f2-3372-4b64-93f4-a0d0e441d0f3",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.432Z"
     },
     {
       "eventId": "8956c17b-b714-42b5-a78d-cabc195db6b5",
-      "signalId": "bf7736cd-8642-410c-92eb-6f69b77974b9",
+      "signalId": "abc0e486-c2a5-46f7-b9be-01c37b39c68f",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.475Z"
@@ -21137,14 +22586,14 @@
     },
     {
       "eventId": "973579c7-8e53-41c6-abe5-3072f168be28",
-      "signalId": "df9fb725-1cc9-43b2-a296-d7e8e96e6db3",
+      "signalId": "e5d65257-fd7f-4081-aef7-93b00cd627e0",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.418Z"
     },
     {
       "eventId": "97de3ebd-b095-4916-a8c2-c27e94ebe521",
-      "signalId": "887135f8-a1d2-4c17-9c83-565094758142",
+      "signalId": "8f0f1a74-de3d-459f-abff-1775f7c14867",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.443Z"
@@ -21176,6 +22625,20 @@
       "evidenceRole": "supporting",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:15:44.903Z"
+    },
+    {
+      "eventId": "9973e916-76a2-4e5a-9a87-f55c27cff899",
+      "signalId": "37dc5a25-90da-4422-a34e-bd5a80b21427",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.938Z"
+    },
+    {
+      "eventId": "9a1d0135-45d2-4124-8e41-3d14d87f78d8",
+      "signalId": "b02580a8-40c4-4aab-b62a-b17bda19fcab",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.919Z"
     },
     {
       "eventId": "9a1d3505-051f-45e5-92cf-12b18de5eb0c",
@@ -21221,7 +22684,7 @@
     },
     {
       "eventId": "9e0f0679-fad3-45f7-a504-972c805f9ac8",
-      "signalId": "453cafd5-4ccc-4026-9963-d222b56cac49",
+      "signalId": "1f61b657-9635-4a06-bb47-298d69f5cdcd",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.426Z"
@@ -21284,7 +22747,7 @@
     },
     {
       "eventId": "a711482c-4368-4381-a080-1dd05e1ec212",
-      "signalId": "3a6e47fa-8abd-4cea-a7f0-eb3ff2da3ce2",
+      "signalId": "9bbb557b-bde5-4e54-bd8b-070a8d0db47a",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.470Z"
@@ -21326,7 +22789,7 @@
     },
     {
       "eventId": "aec8bb5e-ca14-4af5-a09f-c43671eeced6",
-      "signalId": "daf925b2-43a0-4281-b627-ac1b52ca0fa0",
+      "signalId": "12503d50-a175-435b-892d-1b1ac575a9c5",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.402Z"
@@ -21347,7 +22810,7 @@
     },
     {
       "eventId": "b203cdb6-617c-44ae-ab46-9d7bbeae3d06",
-      "signalId": "f63087c4-6513-4882-87c6-bf7d8fb3f0a9",
+      "signalId": "72b4b6ed-3b0f-491a-b138-95a35737d03b",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.457Z"
@@ -21358,6 +22821,13 @@
       "evidenceRole": "supporting",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:15:44.903Z"
+    },
+    {
+      "eventId": "b36eec5c-0c2c-478d-b8d5-e8d647217750",
+      "signalId": "01131f23-3087-4462-a129-7cbd8167d0cf",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.929Z"
     },
     {
       "eventId": "b4545683-f82a-4e92-ac12-8766b633ba65",
@@ -21379,6 +22849,13 @@
       "evidenceRole": "supporting",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:15:44.852Z"
+    },
+    {
+      "eventId": "b5a52265-e91f-4c19-8345-1f66440c7cbe",
+      "signalId": "fcc86968-80f5-4c71-b21d-03ec844d8441",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.936Z"
     },
     {
       "eventId": "b82e01ae-a2a2-4622-8a9c-6aea06db667f",
@@ -21416,6 +22893,13 @@
       "createdAt": "2026-07-11T16:15:44.942Z"
     },
     {
+      "eventId": "bd2a7d16-be02-41c4-936d-0d9240721695",
+      "signalId": "2d3cabb0-dba1-4517-94d6-e1d52ecf350a",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.920Z"
+    },
+    {
       "eventId": "c117ef59-027a-4148-98f5-010f07474f4c",
       "signalId": "5e460fd7-df71-4c4a-a471-5fe985d2a259",
       "evidenceRole": "supporting",
@@ -21431,7 +22915,7 @@
     },
     {
       "eventId": "c14a2dbb-d158-470a-aaed-e925dc33bbe1",
-      "signalId": "c6c53340-2abf-4823-8084-3af6df11a141",
+      "signalId": "c9bbad5c-f74c-4f81-bd19-26d2b15c5a5a",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.441Z"
@@ -21487,7 +22971,7 @@
     },
     {
       "eventId": "c38063ad-13b8-47b3-a64d-56b1b909511e",
-      "signalId": "e5e09525-c924-4bb4-a5c9-973fcf1f0aab",
+      "signalId": "00181d47-69d1-43cf-b7dd-e42c6a5887d4",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.434Z"
@@ -21529,7 +23013,7 @@
     },
     {
       "eventId": "c931d270-4d51-4f48-a941-e230150387f2",
-      "signalId": "d8136a89-99d7-4ff1-87cd-e94ca45ba1c1",
+      "signalId": "79087e85-534f-4fe0-994e-3c8aabe831dd",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.439Z"
@@ -21585,7 +23069,7 @@
     },
     {
       "eventId": "d1c48811-386a-411e-a37b-32df885227d5",
-      "signalId": "6f844700-69b4-4b36-b215-5e32aed6087b",
+      "signalId": "08994028-62b7-4f00-a440-d961e13f1f1b",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.399Z"
@@ -21641,7 +23125,7 @@
     },
     {
       "eventId": "dd96da4a-eda4-41b0-a8d0-c46f6f07a5e5",
-      "signalId": "a798ca7a-1d12-4b0f-9ad9-57cfdfe75d53",
+      "signalId": "30fdaa3d-7b62-4e72-9dbe-3981d81c523b",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.454Z"
@@ -21753,7 +23237,7 @@
     },
     {
       "eventId": "eaf47812-f3ce-4812-a868-3a4063871e87",
-      "signalId": "5f7fe85a-b03a-4cdf-aa00-199c1c69c495",
+      "signalId": "d91bfb00-47b6-44fd-8b29-532eb2ddb25c",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.459Z"
@@ -21781,7 +23265,7 @@
     },
     {
       "eventId": "ef180b9d-fe7f-40f7-a8c8-817c467582fa",
-      "signalId": "96f779b3-0746-4b44-925e-2e152c68ba79",
+      "signalId": "66838bc3-0619-4acd-90a4-71a32f663845",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.412Z"
@@ -21795,14 +23279,21 @@
     },
     {
       "eventId": "efde5ec2-6528-4a1a-ae90-cd4c7611f28f",
-      "signalId": "2a755379-286e-4301-8462-603057fa25d9",
+      "signalId": "c00b3fcd-2b06-4913-8729-9517e404b31c",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.420Z"
     },
     {
+      "eventId": "f02af439-44ef-44b6-a9eb-1252e6b30ab4",
+      "signalId": "decb13ac-c37b-4b8d-9c08-a12424cb2146",
+      "evidenceRole": "supporting",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-12T00:58:10.935Z"
+    },
+    {
       "eventId": "f044cdec-7524-43e4-ac8d-610dafc3b5cc",
-      "signalId": "eed2fe84-fb98-4f40-a7fe-edf1a1608508",
+      "signalId": "c5ea2c43-6557-45cc-ba25-46d035a84709",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.437Z"
@@ -21844,7 +23335,7 @@
     },
     {
       "eventId": "f62ebec5-0029-4b62-a990-618988932294",
-      "signalId": "e4ad5b41-72be-4a0d-bbe5-20d6f3b58448",
+      "signalId": "36d74a1f-4634-4224-b1e0-8a5adc28881c",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.462Z"
@@ -21879,14 +23370,14 @@
     },
     {
       "eventId": "fa765723-4c84-471a-a23b-e5272b86cce3",
-      "signalId": "9ee8d4c7-67bf-46ef-a35e-9c284fdde535",
+      "signalId": "0fb94c32-8f6d-46cb-8c97-77fc4e0f827c",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:05:34.452Z"
     },
     {
       "eventId": "fa87aed3-c07c-4f95-aff3-332417a74348",
-      "signalId": "8ed13067-f0ad-45bd-bae9-5d0a9a16437c",
+      "signalId": "197ab8d4-5dc4-4256-a183-8698312fd698",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-11T16:04:10.587Z"
