@@ -28,7 +28,9 @@ GitHub Actions
     -> data-refresh (每天晚间)
        -> snapshot commit
        -> Pages dispatch
-       -> weekly-brief Issue (仅周日或显式触发)
+       -> weekly renderer (仅周日或显式触发)
+            -> 有公开 Event: weekly-brief Issue
+            -> 零公开 Event: skip
     -> monitor / quality-guard (周一验收)
 ```
 
@@ -72,8 +74,14 @@ GitHub Actions
 
 - 正文固定为“一句话判断 -> 本周关键变化 -> 下周三件事 -> 仍需验证”，避免把运行报表直接铺给读者。
 - Event 按 slug 去重后最多展示 3 条，并在事件内合并受影响主线；没有新证据的主线只用一行汇总。
+- renderer 在当前 ISO 周没有公开 Event 时返回空正文；workflow 只在输出文件非空时设置 `publish_weekly=true`。
 - Scout 先按触发 Event、再按行动类型去重，最多展示 3 条，只保留最小动作和一条统一停止条件。
 - 版本、评测、覆盖与快照时间放入 `<details>`，marker 与公开 DTO 安全边界保持不变。
+
+## GitHub Star 新鲜度
+
+- 静态构建值保证首屏与离线可用；页面加载后立即请求 GitHub 官方仓库 API，并以 `cache: no-store` 覆盖静态值。
+- 六小时本地缓存只在静态值缺失时提供失败兜底，不得阻止实时请求；成功响应标记为 `data-github-stars-source=live`，便于浏览器验收。
 
 ## 回滚
 

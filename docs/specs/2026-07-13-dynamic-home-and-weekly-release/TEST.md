@@ -9,6 +9,8 @@
 - Data Refresh 为每日 cron；Source Audit、Monitor 和 Quality Guard 为每周 cron。
 - 周报 marker、标题、label 与 Issue upsert 保持幂等。
 - 周报不重复按主线展开同一 Event，不生成 `0 个节点` 小节；关键变化和行动各不超过 3 条，覆盖数据位于折叠区。
+- 当前 ISO 周没有公开 Event 时周报 renderer 输出空字符串，workflow 不进入 Issue upsert。
+- Star 脚本不因构建值或本地缓存提前返回，使用 `cache: no-store` 请求官方 API，并在成功后标记 live 数据源。
 - release contract 同时验证 package、CHANGELOG 与网站 Changelog 的 0.10.0。
 
 ## 命令
@@ -30,7 +32,7 @@ npm run release:check
 
 - CI、Publish GitHub release、Deploy static site 成功。
 - 手动运行 source audit，健康摘要 Issue marker 与更新时间更新。
-- 手动运行 data refresh（`publish_weekly=true`），当前周只有一个 `weekly-brief` Issue。
+- 手动运行 data refresh（`publish_weekly=true`）：有公开 Event 时当前周只有一个 `weekly-brief` Issue；零 Event fixture 时不创建或更新 Issue。
 - 普通每日 data refresh 不创建日报 Issue，但每次成功运行都会触发 Pages，使站点生成日期保持最新。
 - Pages 首页、来源观察、来源页和 Changelog 返回 HTTP 200，并包含 0.10.0 内容。
 - 仓库 description、homepage、topics 与 Release 元数据正确。

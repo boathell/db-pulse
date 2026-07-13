@@ -10,3 +10,4 @@
 - [x] 通过 check、build、release check 和浏览器验收。
 - [x] 提交、push、创建 Release，并验证 Actions、Pages、周报 Issue 与仓库元数据。
 - [x] 将 weekly-brief 收敛为去重、限量、可扫读的 GitHub Issue 表达。
+- [x] 增加零关键变化周报门禁，并让顶部 GitHub Star 从官方 API 实时刷新。

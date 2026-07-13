@@ -119,7 +119,7 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Render the weekly intelligence review on the final Sunday refresh
+      - name: Render an eligible weekly intelligence review
         shell: bash
         run: |
           set -euo pipefail
@@ -135,7 +135,11 @@ jobs:
               --product dist/data/product.json \
               --end-date "$report_date" \
               --time-zone Asia/Shanghai > "$RUNNER_TEMP/weekly-brief.md"
-            publish_weekly=true
+            if [[ -s "$RUNNER_TEMP/weekly-brief.md" ]]; then
+              publish_weekly=true
+            else
+              echo "No public Event cleared this week's gate; skipping the weekly Issue."
+            fi
           fi
           echo "publish_weekly=$publish_weekly" >> "$GITHUB_ENV"
           echo "report_week=$report_week" >> "$GITHUB_ENV"

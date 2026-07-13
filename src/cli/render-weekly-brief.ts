@@ -64,6 +64,7 @@ export function renderWeeklyBrief(
         (right.valueScore ?? 0) - (left.valueScore ?? 0) ||
         right.happenedAt.localeCompare(left.happenedAt),
     );
+  if (!events.length) return "";
   const research = events.filter((event) => ["research", "paper"].includes(event.category));
   const scout = input.scout.insights
     .filter((item) => {
@@ -79,9 +80,7 @@ export function renderWeeklyBrief(
   const actions = selectActionableScouts(scout, 3);
   const affectedTracks = new Set(events.flatMap(eventTrackNames));
   const unchangedTracks = strategicTracks.length - affectedTracks.size;
-  const judgment = events.length
-    ? `需要更新。${safe(events[0]?.industryInsight ?? events[0]?.factSummary ?? "", 180)}`
-    : "保持不变。本周没有足以改变当前判断的新证据。";
+  const judgment = `需要更新。${safe(events[0]?.industryInsight ?? events[0]?.factSummary ?? "", 180)}`;
   const lines = [
     weeklyBriefMarker(window.week),
     `# Agent Pulse AI 周报 · ${window.week}`,
@@ -96,7 +95,6 @@ export function renderWeeklyBrief(
     "",
   ];
 
-  if (!leadingEvents.length) lines.push("没有新增关键变化。继续沿用上周判断。", "");
   for (const event of leadingEvents) {
     const tracks = eventTrackNames(event);
     lines.push(

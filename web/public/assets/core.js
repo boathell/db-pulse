@@ -14,7 +14,7 @@ setupHomeDynamics();
 setupScrollReveals();
 setupSignalBrowser();
 setupTrendModules();
-runWhenIdle(setupGithubStarCount, 1800);
+setupGithubStarCount();
 const timeline = document.querySelector("[data-timeline]");
 if (timeline) setupTimeline(timeline);
 setupCardFilters();
@@ -300,7 +300,7 @@ function shuffle(items) {
 function setupGithubStarCount() {
   const button = document.querySelector("[data-github-star-button]");
   const count = button?.querySelector("[data-github-star-count]");
-  if (!button || !count || count.textContent?.trim() !== "—") return;
+  if (!button || !count) return;
 
   let repository;
   try {
@@ -315,9 +315,10 @@ function setupGithubStarCount() {
     return;
   }
 
-  const apply = (stars) => {
+  const apply = (stars, source) => {
     if (!Number.isInteger(stars) || stars < 0) return;
     count.textContent = new Intl.NumberFormat("en-US").format(stars);
+    button.dataset.githubStarsSource = source;
     button.setAttribute(
       "aria-label",
       document.documentElement.lang === "en"
@@ -333,8 +334,7 @@ function setupGithubStarCount() {
       Number.isInteger(cached?.stars) &&
       Date.now() - Number(cached?.fetchedAt) < 6 * 60 * 60 * 1000
     ) {
-      apply(cached.stars);
-      return;
+      if (count.textContent?.trim() === "—") apply(cached.stars, "cache");
     }
   } catch {
     try {
@@ -347,14 +347,18 @@ function setupGithubStarCount() {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 4_000);
   fetch(`https://api.github.com/repos/${repository}`, {
-    headers: { Accept: "application/vnd.github+json" },
+    cache: "no-store",
+    headers: {
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
     signal: controller.signal,
   })
     .then((response) => (response.ok ? response.json() : Promise.reject(new Error("GitHub API"))))
     .then((metadata) => {
       const stars = metadata?.stargazers_count;
       if (!Number.isInteger(stars) || stars < 0) return;
-      apply(stars);
+      apply(stars, "live");
       try {
         localStorage.setItem(cacheKey, JSON.stringify({ stars, fetchedAt: Date.now() }));
       } catch {

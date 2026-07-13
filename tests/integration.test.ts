@@ -284,6 +284,10 @@ describe("SQLite application", () => {
     expect(Buffer.byteLength(coreScript)).toBeLessThan(28_000);
     expect(coreScript).toMatch(/inline\s*:\s*["']center/);
     expect(coreScript).toContain("setupGithubStarCount");
+    expect(coreScript).toContain('cache:"no-store"');
+    expect(coreScript).toContain("githubStarsSource=source");
+    expect(coreScript).toContain('apply(stars,"live")');
+    expect(coreScript).not.toContain('count.textContent?.trim()!=="—")return');
     expect(coreScript).toContain("setupHomeDynamics");
     expect(coreScript).toContain("setupSignalBrowser");
     expect(coreScript).toContain("data-no-scroll-reveal");

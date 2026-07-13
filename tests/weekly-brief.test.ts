@@ -100,12 +100,14 @@ describe("weekly GitHub Issue brief", () => {
     expect(workflow).toContain('"$PUBLISH_WEEKLY" == "true"');
     expect(workflow).toContain('"$weekday" == "7"');
     expect(workflow).toContain('"$hour" -ge 20');
+    expect(workflow).toContain('[[ -s "$RUNNER_TEMP/weekly-brief.md" ]]');
+    expect(workflow).toContain("skipping the weekly Issue");
     expect(workflow).toContain("gh issue edit");
     expect(workflow).not.toContain("daily:issue");
     expect(workflow).not.toContain("agent-pulse-daily-brief");
   });
 
-  it("states that the current view remains unchanged when no evidence clears the gate", () => {
+  it("does not render a weekly Issue when no public Event clears the gate", () => {
     const body = renderWeeklyBrief(
       {
         timeline: { events: [] },
@@ -115,8 +117,6 @@ describe("weekly GitHub Issue brief", () => {
       "2026-07-19",
     );
 
-    expect(body).toContain("一句话判断：保持不变");
-    expect(body).toContain("继续沿用上周判断");
-    expect(body).not.toContain("· 0 个节点");
+    expect(body).toBe("");
   });
 });

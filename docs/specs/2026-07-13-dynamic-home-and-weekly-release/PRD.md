@@ -37,6 +37,7 @@
 - 公开观察 DTO 的每条记录只包含标题、限长纯文本描述、原文 URL、来源、时间、分类、标签和语言等 allowlist 字段。
 - 观察页能呈现当前快照中的全部安全 Signal，并支持增量显示与搜索筛选。
 - Data Refresh 使用每日 cron；Source Audit、Monitor 与 Quality Guard 使用每周 cron，不再存在逐小时高频 cron。
-- 每日 Data Refresh 成功后触发 Pages；只有周日计划任务或显式手动运行才幂等写入当前 ISO 周的 `weekly-brief` Issue。
+- 每日 Data Refresh 成功后触发 Pages；只有周日计划任务或显式手动运行、且当前 ISO 周至少一个公开 Event 通过门禁时，才幂等写入 `weekly-brief` Issue；零关键变化时不生成周报。
 - 周报正文先给一句话判断，同一 Event 只展开一次；关键变化和行动建议各不超过 3 条，空趋势合并表达，运行指标默认折叠。
+- 顶部 GitHub Star 在页面加载时从官方仓库 API 获取实时值；构建值与本地缓存只用于接口失败降级。
 - `npm run check`、`npm run build`、关键浏览器验收、CI、Release、Pages 与线上 HTTP/内容检查全部通过。
