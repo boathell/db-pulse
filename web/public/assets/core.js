@@ -393,6 +393,14 @@ function setupTrendModules() {
       rail.scrollBy({ left: event.key === "ArrowRight" ? 320 : -320, behavior: "smooth" });
     });
   });
+  requestAnimationFrame(() => {
+    root
+      .querySelector('.trend-switcher [aria-current="page"]')
+      ?.scrollIntoView({ behavior: "instant", block: "nearest", inline: "center" });
+  });
+  root.querySelector(".trend-switcher")?.addEventListener("click", (event) => {
+    if (event.target?.closest(".trend-tab")) navigator.vibrate?.(30);
+  });
 }
 
 function setupTimeline(root) {
