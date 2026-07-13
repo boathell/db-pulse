@@ -31,4 +31,11 @@
 - [x] 实现每日公开情报 renderer
 - [x] Data Refresh 幂等创建/更新 GitHub Issue
 - [x] 补齐测试、Changelog 和版本说明
-- [ ] 提交 main 并验证 CI、日报 Issue 与 Pages
+- [x] 提交 main 并验证 CI、日报 Issue 与 Pages
+
+## 发布证据
+
+- 功能提交：`a6682bc`；自动数据提交：`57788b3`；来源审计提交：`60522ac`。
+- CI `29218157978`、Release `29218181163`、Data Refresh `29218166768`、Source Audit `29218167738` 均成功。
+- Pages 对功能提交、增量快照和来源审计快照的部署均成功，最终部署 run 为 `29218280166`。
+- 北京时间当日 AI 日报已创建为 Issue #8，marker 为 `agent-pulse-daily-brief:2026-07-13`；来源健康 Issue #4 保持 OPEN 并更新。
