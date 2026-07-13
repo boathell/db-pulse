@@ -65,6 +65,16 @@ Agent Pulse 不是新闻聚合器，而是一个中国优先、全球覆盖的 A
 - 管理台写入、静态 snapshot 和 GitHub Pages 发布之间必须有可验证闭环。
 - 公开站保持完全静态、隐私安全、可回滚；管理台、token、数据库、原始 payload、本机路径和私有备注永不进入 Pages。
 
+## 发布与 Changelog 流程
+
+- 所有用户可感知的变化必须同时更新仓库根目录的 `CHANGELOG.md` 与网站 Changelog 数据源 `src/catalog/product.ts`；网站不会自动解析根目录 Changelog，二者缺一不可。
+- 开发中的变化写入 `CHANGELOG.md` 的 `[Unreleased]`，并同步写入网站的 `unreleased` 条目；正式发版时再统一版本号、日期、名称、摘要、能力增量和用户可感知变化，禁止把未发布能力伪装成已发布版本。
+- 发布前必须先同步 `main`，再执行 `npm run check` 与 `npm run build`；静态导出、隐私扫描和关键页面验收失败时不得继续发布。
+- `data/snapshot/v1.json` 与 `data/reports/source-health.json` 是受审计的版本化数据，不得通过 `.gitignore` 规避冲突；冲突时应恢复最新快照、重跑对应采集或审计流程，并重新生成公开数据。
+- 推送后必须等待 CI 与 Pages 工作流真实成功，并访问公开站确认 HTTP 200、目标变更和网站 Changelog 均已上线；工作流仍在排队、失败或 Pages 未更新时，不得宣称发布完成。
+- 修改来源审计、自动运营或相关工作流时，必须手动触发一次 `source-audit.yml`，确认自动健康摘要 Issue 保持开启、marker 和审计时间已更新，并继续验证数据提交与 Pages 部署闭环。
+- 定时工作流可能因仓库长期无活动而被 GitHub 自动停用；健康监控必须检查来源审计最近一次成功运行和健康摘要 Issue 的新鲜度，发现超时应立即失败并留下可见证据。
+
 ## 星探精灵
 
 - Scout 是机会与认知助手，不是事实发布器。

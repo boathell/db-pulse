@@ -71,6 +71,7 @@ jobs:
         run: npm run --silent sources:health:issue -- --report data/reports/source-health.json > "$RUNNER_TEMP/source-health-summary.md"
 
       - name: Update the single automated source health issue
+        id: health_issue
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -85,9 +86,27 @@ jobs:
             gh issue edit "$issue_number" --body-file "$RUNNER_TEMP/source-health-summary.md"
             if [[ "$issue_state" == "CLOSED" ]]; then gh issue reopen "$issue_number"; fi
           else
-            gh issue create --title "[Source health] Automated source health summary" \
-              --label "source:health" --body-file "$RUNNER_TEMP/source-health-summary.md"
+            issue_url="$(gh issue create --title "[Source health] Automated source health summary" \
+              --label "source:health" --body-file "$RUNNER_TEMP/source-health-summary.md")"
+            issue_number="${issue_url##*/}"
           fi
+          echo "issue_number=$issue_number" >> "$GITHUB_OUTPUT"
+
+      - name: Verify source health issue freshness
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ steps.health_issue.outputs.issue_number }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$ISSUE_NUMBER"
+          issue_state="$(gh issue view "$ISSUE_NUMBER" --json state --jq '.state')"
+          test "$issue_state" = "OPEN"
+          gh issue view "$ISSUE_NUMBER" --json body --jq '.body' > "$RUNNER_TEMP/source-health-issue.md"
+          grep -F '<!-- agent-pulse-source-health-summary:v1 -->' "$RUNNER_TEMP/source-health-issue.md" >/dev/null
+          finished_at="$(jq -r '.finishedAt' data/reports/source-health.json)"
+          test -n "$finished_at"
+          grep -F "$finished_at" "$RUNNER_TEMP/source-health-issue.md" >/dev/null
 
       - name: Commit report when changed
         id: commit

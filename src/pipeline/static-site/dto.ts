@@ -170,6 +170,7 @@ export interface RoadmapStage {
 }
 
 export interface Release {
+  status?: "unreleased" | "released";
   version: string;
   date: string;
   name: string;

@@ -47,5 +47,7 @@ describe("knowledge source catalog", () => {
     expect(capabilities.length).toBeGreaterThanOrEqual(25);
     expect(capabilities.every((capability) => capability.evidence.length > 10)).toBe(true);
     expect(releases[0]?.capabilities.length).toBeGreaterThanOrEqual(5);
+    expect(releases[0]).toMatchObject({ status: "unreleased", version: "next" });
+    expect(releases[1]).toMatchObject({ version: "0.6.0" });
   });
 });

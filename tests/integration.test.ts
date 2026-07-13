@@ -91,6 +91,7 @@ describe("SQLite application", () => {
     expect(scout.insights[0].evidence[0].slug).toBe("lingbot-vla-2-cross-embodiment");
     const product = JSON.parse(await readFile(join(config.distDir, "data/product.json"), "utf8"));
     expect(product.roadmap).toHaveLength(5);
+    expect(product.releases[0]).toMatchObject({ status: "unreleased", version: "next" });
     expect(product.sourceCoverage.total).toBeGreaterThanOrEqual(100);
     expect(product.sourceCoverage.observing).toBe(0);
     expect(product.evaluation).toMatchObject({
@@ -149,6 +150,15 @@ describe("SQLite application", () => {
     expect(englishActors).toContain('href="../../assets/icons.svg#sun"');
     expect(englishActors).not.toContain('href="../assets/icons.svg#sun"');
     expect(englishActors).toContain('data-timeline-src="../../data/timeline.json"');
+    const changelog = await readFile(join(config.distDir, "changelog/index.html"), "utf8");
+    expect(changelog).toContain('id="unreleased"');
+    expect(changelog).toContain("开发中");
+    expect(changelog).toContain("The Decision Intelligence Loop");
+    const englishChangelog = await readFile(
+      join(config.distDir, "en/changelog/index.html"),
+      "utf8",
+    );
+    expect(englishChangelog).toContain("IN DEVELOPMENT");
     const home = await readFile(join(config.distDir, "index.html"), "utf8");
     expect(home).toContain("GPT-5.6");
     expect(home).toContain("每天 10 分钟，看懂 AI 行业变化并形成判断");

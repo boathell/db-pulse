@@ -769,7 +769,15 @@ function evaluationCard(item: EvaluationDimension, locale: Locale): string {
 }
 
 function releaseDetail(release: Release, open: boolean, locale: Locale): string {
-  return `<article class="release-node" id="v${escapeHtml(release.version.replaceAll(".", "-"))}"><div class="release-marker"><i></i><span>v${escapeHtml(release.version)}</span><time>${escapeHtml(release.date)}</time></div><details${open ? " open" : ""}><summary><div><span>${open ? t("changelog.latest", locale) : t("changelog.release", locale)}</span><h2>${escapeHtml(release.name)}</h2><p>${escapeHtml(release.summary)}</p></div>${icon("chevron-down")}</summary><div class="release-body"><section><h3>${escapeHtml(t("changelog.capabilities", locale))}</h3><div class="capability-pills">${release.capabilities.map((item) => `<span>${icon("check")} ${escapeHtml(item)}</span>`).join("")}</div></section><section><h3>${escapeHtml(t("changelog.changes", locale))}</h3><ol>${release.changes.map((change) => `<li>${escapeHtml(change)}</li>`).join("")}</ol></section></div></details></article>`;
+  const unreleased = release.status === "unreleased";
+  const marker = unreleased ? t("changelog.next", locale) : `v${release.version}`;
+  const label = unreleased
+    ? t("changelog.inDevelopment", locale)
+    : open
+      ? t("changelog.latest", locale)
+      : t("changelog.release", locale);
+  const anchor = unreleased ? "unreleased" : `v${release.version.replaceAll(".", "-")}`;
+  return `<article class="release-node" id="${escapeHtml(anchor)}"><div class="release-marker"><i></i><span>${escapeHtml(marker)}</span><time>${escapeHtml(release.date)}</time></div><details${open ? " open" : ""}><summary><div><span>${escapeHtml(label)}</span><h2>${escapeHtml(release.name)}</h2><p>${escapeHtml(release.summary)}</p></div>${icon("chevron-down")}</summary><div class="release-body"><section><h3>${escapeHtml(t("changelog.capabilities", locale))}</h3><div class="capability-pills">${release.capabilities.map((item) => `<span>${icon("check")} ${escapeHtml(item)}</span>`).join("")}</div></section><section><h3>${escapeHtml(t("changelog.changes", locale))}</h3><ol>${release.changes.map((change) => `<li>${escapeHtml(change)}</li>`).join("")}</ol></section></div></details></article>`;
 }
 
 function sourceLevel(level: string, title: string, copy: string): string {

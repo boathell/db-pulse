@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
   issues: write
 
@@ -38,6 +39,33 @@ jobs:
 
       - name: Restore auditable repository snapshot
         run: npm run db:snapshot -- restore
+
+      - name: Check source audit and health issue liveness
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          latest_success="$(gh run list --workflow source-audit.yml --status success --limit 1 --json updatedAt --jq '.[0].updatedAt // empty')"
+          issue_json="$(gh issue view 4 --json state,updatedAt,body)"
+          issue_state="$(jq -r '.state' <<< "$issue_json")"
+          issue_updated="$(jq -r '.updatedAt' <<< "$issue_json")"
+          issue_body="$(jq -r '.body' <<< "$issue_json")"
+          test "$issue_state" = "OPEN"
+          grep -F '<!-- agent-pulse-source-health-summary:v1 -->' <<< "$issue_body" >/dev/null
+          LATEST_SUCCESS="$latest_success" ISSUE_UPDATED="$issue_updated" node --input-type=module <<'NODE'
+          const maximumAgeMs = 14 * 60 * 60 * 1000;
+          const now = Date.now();
+          for (const [label, value] of Object.entries({
+            "source audit success": process.env.LATEST_SUCCESS,
+            "source health issue": process.env.ISSUE_UPDATED,
+          })) {
+            const timestamp = Date.parse(value ?? "");
+            if (!Number.isFinite(timestamp) || now - timestamp > maximumAgeMs) {
+              throw new Error(`${label} is stale or missing: ${value ?? "missing"}`);
+            }
+          }
+          NODE
 
       - name: Run monitor check
         id: monitor

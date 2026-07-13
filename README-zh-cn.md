@@ -3,14 +3,17 @@
 </p>
 
 <p align="center">
-  <img src="docs/assets/hero.svg" width="100%" alt="Agent Pulse — 证据驱动的 AI 行业决策情报" />
+  <img src="docs/assets/hero.svg" width="100%" alt="Agent Pulse — 证据驱动的 AI 行业认知与决策系统" />
 </p>
 
 <h1 align="center">Agent Pulse</h1>
 
+> **Agent Pulse 是一个面向投资人、CEO、创业者和技术负责人的 AI 行业认知与决策系统：它把分散的官方发布、论文、资本动作、政策变化与社区信号，收敛为可验证的关键事件、趋势判断和下一步行动。**
+
 <p align="center">
-  <strong>Signal, not noise.</strong><br />
-  面向 CEO、投资人、创业者和技术负责人的证据型 AI 行业情报系统：中国优先，全球视野。
+  <a href="https://barretlee.github.io/agent-pulse/"><strong>打开 Agent Pulse</strong></a>
+  · <a href="https://github.com/barretlee/agent-pulse"><strong>⭐ Star 这个项目</strong></a>
+  · <a href="README.md"><strong>English README</strong></a>
 </p>
 
 <p align="center">
@@ -18,109 +21,101 @@
   <a href="https://github.com/barretlee/agent-pulse/actions/workflows/data-refresh.yml"><img src="https://img.shields.io/github/actions/workflow/status/barretlee/agent-pulse/data-refresh.yml?style=flat-square&label=data%20refresh" alt="数据刷新状态" /></a>
   <a href="https://github.com/barretlee/agent-pulse/actions/workflows/source-audit.yml"><img src="https://img.shields.io/github/actions/workflow/status/barretlee/agent-pulse/source-audit.yml?style=flat-square&label=source%20audit" alt="信源审计状态" /></a>
   <a href="https://github.com/barretlee/agent-pulse/releases/latest"><img src="https://img.shields.io/github/v/release/barretlee/agent-pulse?style=flat-square" alt="最新版本" /></a>
-  <a href="https://github.com/barretlee/agent-pulse/stargazers"><img src="https://img.shields.io/github/stars/barretlee/agent-pulse?style=flat-square&logo=github" alt="GitHub Stars" /></a>
+  <a href="https://github.com/barretlee/agent-pulse"><img src="https://img.shields.io/github/stars/barretlee/agent-pulse?style=flat-square&logo=github" alt="GitHub Stars" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/code%20license-MIT-2dd4a8?style=flat-square" alt="MIT 代码许可证" /></a>
 </p>
 
-<p align="center">
-  <a href="https://barretlee.github.io/agent-pulse/"><strong>在线体验</strong></a>
-  · <a href="https://github.com/barretlee/agent-pulse/stargazers"><strong>在 GitHub Star</strong></a>
-  · <a href="docs/ARCHITECTURE.md">架构</a>
-  · <a href="docs/ROADMAP.md">路线图</a>
-  · <a href="CHANGELOG.md">Changelog</a>
-</p>
+## 为什么值得 Star
 
-## 为什么需要 Agent Pulse
+AI 行业从来不缺新闻、链接和观点。真正稀缺的是：快速知道什么发生了实质变化，理解它为什么重要，把它放进行业长期演进中，并形成自己的下一步判断。
 
-AI 行业不缺链接，缺的是事实与观点分离、重复信息收敛、跨平台热度校准，以及能把技术、资本、政策与商业化放进同一条长期主线的认知系统。
+Agent Pulse 希望解决的正是这件事：
 
-Agent Pulse 不是新闻流。它把厂商发布、论文、监管文件、专家分析与传播信号收敛为可审核的行业事件。每个公开事件都努力回答：
+- **30 秒：**知道今天最重要的变化；
+- **3 分钟：**看懂证据、背景和受影响的角色；
+- **10 分钟：**沿事件脉络、反向信号和下一观察点形成判断；
+- **每天回来：**持续跟踪技术、AGI、商业化、投资、中国追赶和模型经济学，而不是重新阅读一遍新闻。
 
-- 发生了什么，原始证据在哪里？
-- 为什么重要，会影响谁？
-- 它延续、加速或改变了哪一条行业主线？
-- CEO、投资人、创业者和技术负责人接下来应该观察什么？
+如果你也希望有一个开放、证据优先的 AI 行业认知产品，欢迎 [Star Agent Pulse](https://github.com/barretlee/agent-pulse)。Star 会帮助更多投资人、创业者和技术负责人发现它，也是支持公开版本持续维护最直接的信号。
+
+## 你能获得什么
+
+| 产品体验 | 它帮助你回答的问题 |
+| --- | --- |
+| **今日判断** | 今天发生了什么，我最应该先关注哪一件？ |
+| **战略主线** | 这是一次孤立发布，还是行业趋势的延续或转折？ |
+| **证据时间轴** | 事情最初如何出现，后来发生了什么，哪些说法已被验证？ |
+| **研究前沿** | 哪些论文正在改变能力、评测、成本或产品方向？ |
+| **中国与全球雷达** | 谁在领先、追赶、受限或加速出海？ |
+| **星探机会** | 现在值得验证什么产品、创业、内容或组织内部实验？ |
+
+[立即体验 Agent Pulse →](https://barretlee.github.io/agent-pulse/)
+
+## 它不是另一个新闻聚合器
+
+每个公开事件都会尽量分清六个层次：
+
+1. **事实**：发生了什么，时间是什么；
+2. **证据**：对应的官方发布、论文、监管文件或原始资料；
+3. **背景**：此前发生过什么，这次真正改变了什么；
+4. **影响**：对技术、业务、资本和政策分别意味着什么；
+5. **判断**：当前应该如何理解，并明确保留不确定性；
+6. **下一信号**：什么证据会加强、削弱或推翻当前判断。
 
 ```text
-一手事实 + 独立验证 + 传播信号
-                  │
-                  ▼
-      规范化 → 去重 → 聚类 → 审核 → 评分
-                  │
-                  ▼
- 技术 / AGI / 投资 / 商业化 / 中国追赶 / 模型经济学
-                  │
-                  ▼
-       行业判断 · 下一信号 · 行动 · 证据链
+官方发布 + 论文 + 监管文件 + 专家与传播信号
+                         │
+                         ▼
+      采集 → 规范化 → 去重 → 聚类 → 绑定证据
+                         │
+                         ▼
+         审核 → 战略主线 → 下一信号 → 公开事件
 ```
 
-## 产品能力
+聚合站只能提供候选发现和传播线索，不能成为重大事实的唯一证据。外部文字不会作为可信 HTML 执行，私有运营数据也不会进入公开静态站。
 
-- **30 秒决策简报**：直接展示最值得判断的近期事件，清楚区分事实、重要性、影响对象、下一信号和原始证据。
-- **战略主线**：技术、AGI、商业化、投资、中国追赶和模型经济学不是普通标签，而是拥有阶段、转折和证据节点的长期时间轴。
-- **证据时间轴**：沿时间扫读事件，并下钻一手来源、独立佐证、系统分析和置信度限制。
-- **中国牌桌角色雷达**：把模型厂商、云、芯片、开发者生态和应用大厂放进同一个全球竞争背景中观察。
-- **决策工具**：提供证据绑定的星探机会、角色追踪、官方模型获取入口、能力核算和诚实的系统评测。
-- **Control Room**：管理信源健康、采集、分诊、事件审核、发布门禁、模型资源、星探和静态导出；私有管理能力不会进入 GitHub Pages。
+## 真实运行，也诚实展示边界
 
-## 当前真实水位
+这个仓库不是产品 Mockup。它包含线上产品真实使用的信源目录、采集器、证据模型、质量门禁、审核工作流、静态渲染、信源健康自动化和 GitHub Pages 发布链路。
 
-项目当前约为 **Stage 1.9 / 5**，正在进入 Stage 2 底座建设。下面是带日期的验证快照，不是永久不变的营销数字。
+最近一次完整验证完成于 **2026-07-13**：
 
-| 指标 | 2026-07-12 验证状态 |
+| 指标 | 验证状态 |
 | --- | ---: |
-| 已分类信源目录 | 258 |
-| 最近一次全量审计 healthy | 131 |
-| 严格实时有效信源 | 104 |
-| E3 隔离观察信源 | 99 |
-| E4 生产 canary | 5；评测快照中 4 个 healthy |
-| 公开事件 | 44 |
-| 包含一手证据的公开事件 | 36 |
-| 拥有多个独立来源的公开事件 | 4 |
-| 校准后系统评分 | 30 / 100；raw 42；充分证据覆盖 20% |
+| 纳入监测的信源 | 260 |
+| 最近一次全量审计 healthy | 138 |
+| 隔离观察信源 | 106 |
+| 生产信源 | 5 |
+| 已公开的证据型事件 | 50 |
+| 仓库快照中的规范化一手信号 | 1,959 |
 
-E0 目录存在、E1 可访问、E2 单次有效、E3 隔离观察和 E4 生产验证是不同水位。目录规模或一次抓取成功不会被包装成生产覆盖。详见[数据源与评分](docs/SOURCES.md)、[能力图谱](docs/CAPABILITIES.md)和机器生成的[信源健康报告](data/reports/source-health-100.json)。
+完整数据可以查看机器生成的[信源健康报告](data/reports/source-health.json)、[数据源与评分原则](docs/SOURCES.md)和[能力图谱](docs/CAPABILITIES.md)。
 
-当前缺口也会明确展示：绝大多数来源尚未完成七天生产观察窗；只有 4 个公开事件拥有独立多源证据；Claim 级证据、跨语言语义聚类、完整月度回溯、MySQL 实机 CI 和真实用户结果反馈仍未完成。
+当前不足也会明确写出来：生产晋级仍需要真实观察周期；不少历史事件还需要更多独立证据；Claim 级证据、跨语言语义聚类、MySQL 实机集成验证和用户结果反馈尚未完成。planned 或 experimental 能力不会被包装成已经交付。
 
-## 信源与证据原则
-
-Agent Pulse 按以下顺序优先使用：
-
-1. 官方 API、RSS/Atom、监管披露、论文和 GitHub Releases；
-2. 官方公开 JSON 或稳定 metadata；
-3. 独立专业验证；
-4. 聚合站只用于候选发现与传播线索；
-5. robots、服务条款和访问边界允许时，低频获取公开页面的必要 metadata。
-
-系统不会绕过登录、付费墙、验证码、WAF 或平台限制。聚合器不能成为重大事实的唯一证据。新来源必须经过 `draft → shadow → E3 observation → 人工 E4 晋级`，不会因为公开 Issue 或单次探测成功就直接成为事实来源。
-
-提交新信源前请阅读[信源贡献指南](docs/CONTRIBUTING_SOURCES.md)。评分方式、生命周期和 adapter 已知限制见[数据源与评分](docs/SOURCES.md)。
-
-## 架构
+## 系统如何工作
 
 ```text
-官网 / 论文 / 监管 / 专家与传播信号
-                  │
-         SourceAdapter 统一边界
-                  │
-      拉取 → 规范化 → 质量门禁 → 去重
-                  │
-        隔离观察 / Event 事件聚类
-                  │
-      证据绑定 → 人审 → 发布就绪门禁
-            ┌─────┴─────┐
-            ▼           ▼
-     私有 Control Room   隐私安全静态导出
-                              │
-                         GitHub Pages
+信源与发现线索
+      │
+SourceAdapter 统一边界
+      │
+安全拉取 → 规范化 → 质量门禁 → 去重
+      │
+隔离观察 / Event 聚类
+      │
+证据绑定 → 发布就绪审核
+      │
+  ┌───┴───┐
+  ▼       ▼
+Control Room   隐私安全静态站 → GitHub Pages
 ```
 
-默认数据库为 SQLite。项目存在 MySQL 方言路径，但只有完成真实 MySQL 集成验证后才会宣称兼容。公开 Pages 只包含 allowlist 静态 DTO；数据库、原始 payload、凭证、代理配置和私有备注不会导出。
+默认数据库是零配置的 SQLite。项目存在 MySQL 方言路径，但在完成真实集成测试前不会宣称 MySQL 已兼容。公开 Pages 只包含 allowlist DTO；数据库、凭证、原始 payload、代理设置和私有备注不会导出。
 
-更多文档：[架构](docs/ARCHITECTURE.md) · [能力图谱](docs/CAPABILITIES.md) · [State 1–5 路线图](docs/ROADMAP.md)
+进一步阅读：[系统架构](docs/ARCHITECTURE.md)、[产品路线图](docs/ROADMAP.md)、[版本记录](CHANGELOG.md)。
 
-## 快速开始
+## 本地运行
 
 需要 Node.js 22 或更高版本。
 
@@ -137,49 +132,37 @@ npm run dev
 访问：
 
 - 公开站：<http://127.0.0.1:8899/>
-- Control Room：<http://127.0.0.1:8899/admin/>
+- 私有 Control Room：<http://127.0.0.1:8899/admin/>
 - 健康检查：<http://127.0.0.1:8899/api/health>
 
-本地开发可以不设置 `ADMIN_TOKEN`；所有非开发环境必须使用至少 16 位的随机 token，并把管理服务放在私有网络或额外访问控制之后。
-
-### 常用命令
+常用命令：
 
 ```bash
-npm run dev                   # 启动本地站点与 Control Room
 npm run collect               # 采集、去重、聚类与评分
 npm run sources:audit         # 非破坏性全量信源审计
-npm run monitor               # 生成信源健康与覆盖报告
-npm run evolve -- --once      # 运行一轮有界、可审计的进化循环
+npm run ops:reconcile         # 协调信源健康与来源雷达状态
+npm run scout:generate -- 5   # 生成新的证据型星探候选
 npm run export                # 在 dist/ 生成静态站
-npm run check                 # lint、typecheck、测试与导出
-npm run build                 # 编译服务端 TypeScript
+npm run check                 # lint、typecheck、测试与静态导出
 ```
 
-## 版本与演进
-
-- **v0.6.0 — The Intelligence Atlas**：上线高密度多页体验、Issue 治理的来源提案、串行数据写入、动态仓库元数据与明确的内容版权边界。
-- **v0.5.1 — Snapshot Parity**：恢复本地、定时刷新和 Pages 构建之间的来源健康、运行记录、评测与公开星探一致性。
-- **v0.5.0 — The Evidence Engine**：扩张信源网络，建立隔离观察和可逆分诊，修正虚高评测，并把公开体验重构为一手证据优先。
-
-完整记录见 [Changelog](CHANGELOG.md) 和 [GitHub Releases](https://github.com/barretlee/agent-pulse/releases)。路线图会明确区分 planned、experimental 与 operational；设计文档和预留字段不会被描述成已经交付。
+本地开发可以不设置 `ADMIN_TOKEN`。所有非开发环境都必须使用高强度 token，并把 Control Room 放在私有访问控制之后。
 
 ## 参与贡献
 
-欢迎贡献信源 adapter、fixture、失败隔离测试、证据质量能力和更清晰的产品表达。
+最有价值的贡献包括：稳定的信源 adapter、parser fixture、论文与 benchmark 覆盖、证据质量改进、失败隔离测试，以及更清晰的产品表达。
 
-- 代码修改请阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
-- 信源建议和内容纠错请阅读[信源贡献指南](docs/CONTRIBUTING_SOURCES.md)。
-- 请遵守[社区行为准则](CODE_OF_CONDUCT.md)。
-- 安全问题请按 [SECURITY.md](SECURITY.md) 私下报告。
+- 代码修改：[CONTRIBUTING.md](CONTRIBUTING.md)
+- 信源建议与内容纠错：[信源贡献指南](docs/CONTRIBUTING_SOURCES.md)
+- 社区规则：[社区行为准则](CODE_OF_CONDUCT.md)
+- 安全问题：[SECURITY.md](SECURITY.md)
 
-如果 Agent Pulse 帮助你用更少噪声理解 AI 行业，欢迎[给项目一个 Star](https://github.com/barretlee/agent-pulse/stargazers)。这是支持证据优先路线继续演进的最直接信号。
+如果 Agent Pulse 帮助你用更少的信息负担形成更清晰的判断，欢迎 [⭐ Star 这个项目](https://github.com/barretlee/agent-pulse)，也欢迎直接复制 README 顶部的一句话介绍进行分享。
 
-## 版权、责任边界与许可证
+## 许可证与责任边界
 
-[MIT License](LICENSE) 默认适用于 Agent Pulse 源代码和项目原创仓库文档，文件另有说明的除外。它**不授予**第三方文章、论文、Release Notes、商标、图片、Feed 或其他来源材料的使用权；Agent Pulse 原创编辑分析和导出的情报内容也不会自动适用 MIT。
+[MIT License](LICENSE) 适用于 Agent Pulse 源代码和项目原创仓库文档，文件另有说明的除外。它不授予第三方文章、论文、Release Notes、商标、图片、Feed 或其他来源材料的使用权。公开情报只包含有限 metadata、来源归属、canonical 链接和 Agent Pulse 原创收敛。
 
-公开数据只应包含必要 metadata、有限摘录、来源归属、canonical 链接和 Agent Pulse 原创收敛。来源权利人可以通过仓库的内容纠错 Issue Form 申请更正署名、修正或下架。详见[版权、来源与责任边界](docs/LEGAL.md)及[第三方声明](THIRD_PARTY_NOTICES.md)。
-
-Agent Pulse 提供研究与决策辅助信息，不构成投资、法律、采购或其他专业建议。重大决策前请核验链接的一手来源。
+详见[版权、来源与责任边界](docs/LEGAL.md)和[第三方声明](THIRD_PARTY_NOTICES.md)。Agent Pulse 提供研究与决策辅助信息，不构成投资、法律、采购或其他专业建议。
 
 [MIT](LICENSE) © 2026 Barret Lee
