@@ -1,22 +1,17 @@
 import { isIP } from "node:net";
 import { z } from "zod";
 
-export const SOURCE_PROPOSAL_MARKER = "<!-- agent-pulse-source-proposal:v1 -->";
+export const SOURCE_PROPOSAL_MARKER = "<!-- db-pulse-source-proposal:v1 -->";
 
 const sourceCategories = [
-  "frontier-lab",
-  "china-lab",
-  "research-eval",
-  "open-source",
-  "agent-devtool",
-  "robotics",
-  "infra-chip-cloud",
+  "database-vendor",
+  "open-source-database",
+  "cloud-database",
+  "policy-standard",
+  "research-benchmark",
   "capital-business",
-  "model-economics",
-  "policy",
-  "expert",
-  "media",
-  "community-heat",
+  "professional-media",
+  "database-community",
 ] as const;
 
 const sourceRoles = ["primary", "research", "expert", "media", "heat", "policy"] as const;
@@ -111,7 +106,7 @@ const HEADINGS = {
   cadence: "Expected cadence",
   licenseNote: "License, robots, and attribution",
   evidenceUrls: "First-party evidence URLs",
-  rationale: "Why should Agent Pulse track it?",
+  rationale: "Why should DB Pulse track it?",
 } as const;
 
 export function parseSourceProposalIssue(body: string): SourceProposalInput {
@@ -237,7 +232,7 @@ export function upsertSourceProposal(
 
 export function formatProposalValidation(result: SourceProposalValidation): string {
   const lines = [
-    "<!-- agent-pulse-source-proposal-validation:v1 -->",
+    "<!-- db-pulse-source-proposal-validation:v1 -->",
     result.valid
       ? "## Source proposal validation: passed"
       : "## Source proposal validation: blocked",

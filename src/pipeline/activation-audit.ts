@@ -2,6 +2,7 @@ import type { Kysely } from "kysely";
 import { sourceCatalog } from "../catalog/sources.js";
 import { Repository } from "../db/repository.js";
 import type { DatabaseSchema } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { transitionSource } from "../domain/source-lifecycle.js";
 import { releaseObservationTriage } from "../pipeline/observation.js";
 
@@ -26,7 +27,7 @@ export async function findUnqualifiedActivations(
 ): Promise<UnqualifiedActivation[]> {
   const repository = new Repository(db);
   const [sources, checks] = await Promise.all([
-    repository.listSources(),
+    repository.listPublicSources(),
     repository.listSourceChecks(undefined, 2_000),
   ]);
   const checksBySource = new Map<string, typeof checks>();
@@ -76,6 +77,7 @@ export async function reconcileUnqualifiedActivations(
         updated_at: timestamp,
       })
       .where("id", "=", candidate.sourceId)
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute();
   }
   return { movedToShadow: candidates.length, slugs: candidates.map((item) => item.slug) };
@@ -89,6 +91,7 @@ export async function reconcileAutoActivations(
     .selectFrom("sources")
     .selectAll()
     .where("lifecycle_status", "=", "shadow")
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .execute();
 
   const activated: string[] = [];
@@ -116,6 +119,7 @@ export async function reconcileAutoActivations(
           updated_at: timestamp,
         })
         .where("id", "=", source.id)
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
         .execute();
       await releaseObservationTriage(db, source.id);
       activated.push(source.slug);

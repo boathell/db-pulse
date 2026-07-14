@@ -34,8 +34,8 @@ async function addSource(
     adapter: patch.adapter ?? "rss",
     tier: patch.tier ?? 2,
     role: patch.role ?? "primary",
-    region: patch.region ?? "GLOBAL",
-    language: patch.language ?? "en",
+    region: patch.region ?? "CN",
+    language: patch.language ?? "zh-CN",
     authority_score: patch.authority_score ?? 80,
     enabled: patch.enabled ?? 1,
     config_json: patch.config_json ?? JSON.stringify({ url: patch.homepage_url }),
@@ -44,7 +44,8 @@ async function addSource(
     last_success_at: null,
     last_error: null,
     lifecycle_status: patch.lifecycle_status ?? "active",
-    source_category: patch.source_category ?? "frontier-lab",
+    source_category: patch.source_category ?? "database-vendor",
+    content_domain: patch.content_domain ?? "database-cn",
   });
   return (await repository.getSource(id)) as SourceRow;
 }
@@ -53,64 +54,64 @@ describe("source proposal discovery", () => {
   it("builds proposals from first-party hints and removes aggregator-owned URLs", async () => {
     const { db, repository } = await setup();
     const aihot = await addSource(repository, {
-      slug: "aihot-test",
-      name: "AI HOT",
-      homepage_url: "https://aihot.virxact.com",
+      slug: "database-radar-test",
+      name: "Database Radar",
+      homepage_url: "https://database-radar.example",
       role: "aggregator",
       source_category: "aggregator",
     });
     const huggingnews = await addSource(repository, {
-      slug: "huggingnews-test",
-      name: "HuggingNews",
-      homepage_url: "https://huggingnews.com",
+      slug: "database-news-test",
+      name: "Database News",
+      homepage_url: "https://database-news.example",
       role: "aggregator",
       source_category: "aggregator",
     });
     await addSource(repository, {
-      slug: "known-lab",
-      name: "Known Lab",
-      homepage_url: "https://known.ai",
+      slug: "known-database",
+      name: "Known Database",
+      homepage_url: "https://known-db.cn",
       config_json: JSON.stringify({
-        url: "https://known.ai/feed",
-        identityHosts: ["identity-known.ai"],
+        url: "https://known-db.cn/feed",
+        identityHosts: ["identity-known-db.cn"],
       }),
     });
     const before = await sourceCount(db);
     const now = new Date().toISOString();
 
     await addDiscovery(db, aihot.id, {
-      discoveryUrl: "https://aihot.virxact.com/p/launch-one",
-      originUrl: "https://newlab.ai/blog/launch-one?utm_source=aihot",
+      discoveryUrl: "https://database-radar.example/p/launch-one",
+      originUrl: "https://newdb.cn/blog/launch-one?utm_source=radar",
       originKind: "official",
-      originName: "New Lab",
-      title: "New Lab launches its first reasoning model",
+      originName: "New Database",
+      title: "New Database launches a distributed SQL storage engine",
       publishedAt: now,
     });
     await addDiscovery(db, huggingnews.id, {
-      discoveryUrl: "https://huggingnews.com/story/new-lab",
-      originUrl: "https://newlab.ai/research/reasoning-two",
+      discoveryUrl: "https://database-news.example/story/new-database",
+      originUrl: "https://newdb.cn/research/transaction-two",
       originKind: "official",
-      originName: "New Lab",
-      title: "New Lab publishes a reasoning system card",
+      originName: "New Database",
+      title: "New Database publishes a transaction and recovery architecture paper",
       publishedAt: now,
     });
     await addDiscovery(db, aihot.id, {
-      discoveryUrl: "https://aihot.virxact.com/p/self-link",
-      originUrl: "https://aihot.virxact.com/p/self-link",
+      discoveryUrl: "https://database-radar.example/p/self-link",
+      originUrl: "https://database-radar.example/p/self-link",
       originKind: "media",
     });
     await addDiscovery(db, aihot.id, {
-      discoveryUrl: "https://aihot.virxact.com/p/social-link",
-      originUrl: "https://x.com/newlab/status/1",
+      discoveryUrl: "https://database-radar.example/p/social-link",
+      originUrl: "https://x.com/newdb/status/1",
       originKind: "social",
     });
     await addDiscovery(db, aihot.id, {
-      discoveryUrl: "https://aihot.virxact.com/p/known-link",
-      originUrl: "https://identity-known.ai/releases/one",
+      discoveryUrl: "https://database-radar.example/p/known-link",
+      originUrl: "https://identity-known-db.cn/releases/one",
       originKind: "official",
     });
     await addDiscovery(db, huggingnews.id, {
-      discoveryUrl: "https://huggingnews.com/story/no-first-party-link",
+      discoveryUrl: "https://database-news.example/story/no-first-party-link",
       originUrl: null,
       originKind: "aggregator_story",
     });
@@ -125,9 +126,10 @@ describe("source proposal discovery", () => {
     });
     expect(report.candidates).toHaveLength(1);
     expect(report.candidates[0]).toMatchObject({
-      slug: "newlab",
-      name: "New Lab",
-      homepageUrl: "https://newlab.ai",
+      slug: "newdb",
+      name: "New Database",
+      homepageUrl: "https://newdb.cn",
+      region: "CN",
       signalCount: 2,
       uniqueEvidenceCount: 2,
       aggregatorCount: 2,
@@ -135,15 +137,15 @@ describe("source proposal discovery", () => {
       suggestedTier: 3,
     });
     expect(report.candidates[0]?.originalTitles).toEqual([
-      "New Lab launches its first reasoning model",
-      "New Lab publishes a reasoning system card",
+      "New Database launches a distributed SQL storage engine",
+      "New Database publishes a transaction and recovery architecture paper",
     ]);
     expect(report.candidates[0]?.evidenceUrls).toEqual([
-      "https://newlab.ai/blog/launch-one",
-      "https://newlab.ai/research/reasoning-two",
+      "https://newdb.cn/blog/launch-one",
+      "https://newdb.cn/research/transaction-two",
     ]);
-    expect(JSON.stringify(report.candidates[0])).not.toContain("aihot.virxact.com/p/");
-    expect(JSON.stringify(report.candidates[0])).not.toContain("huggingnews.com/story/");
+    expect(JSON.stringify(report.candidates[0])).not.toContain("database-radar.example/p/");
+    expect(JSON.stringify(report.candidates[0])).not.toContain("database-news.example/story/");
   });
 
   it("only creates a disabled draft after an explicit save and skips duplicates", async () => {
@@ -158,16 +160,17 @@ describe("source proposal discovery", () => {
     const now = new Date().toISOString();
     await addDiscovery(db, aggregator.id, {
       discoveryUrl: "https://aggregator.example/story/one",
-      originUrl: "https://proposal.ai/releases/one",
+      originUrl: "https://proposal-db.cn/releases/one",
       originKind: "official",
-      originName: "Proposal AI",
+      originName: "Proposal Database",
+      title: "Proposal Database releases a distributed query engine",
       publishedAt: now,
     });
 
     const report = await discoverNewSources(db, { minSignals: 1 });
     expect(report.candidates).toHaveLength(1);
     expect(
-      await db.selectFrom("sources").select("slug").where("slug", "=", "proposal").execute(),
+      await db.selectFrom("sources").select("slug").where("slug", "=", "proposal-db").execute(),
     ).toHaveLength(0);
 
     await expect(saveDiscoveredSources(db, report.candidates)).resolves.toEqual({
@@ -177,13 +180,14 @@ describe("source proposal discovery", () => {
     const saved = await db
       .selectFrom("sources")
       .selectAll()
-      .where("slug", "=", "proposal")
+      .where("slug", "=", "proposal-db")
       .executeTakeFirstOrThrow();
     expect(saved).toMatchObject({
       enabled: 0,
       lifecycle_status: "draft",
       maintenance_status: "proposal",
       source_category: "company",
+      content_domain: "database-cn",
     });
     expect(JSON.parse(saved.state_json)).toMatchObject({
       proposal: true,
@@ -192,6 +196,40 @@ describe("source proposal discovery", () => {
     await expect(saveDiscoveredSources(db, report.candidates)).resolves.toEqual({
       created: 0,
       skipped: 1,
+    });
+  });
+
+  it("rejects AI-only sources that do not directly change database workloads", async () => {
+    const { db, repository } = await setup();
+    const aggregator = await addSource(repository, {
+      slug: "database-industry-radar",
+      name: "数据库行业雷达",
+      homepage_url: "https://database-radar.cn",
+      role: "aggregator",
+      source_category: "aggregator",
+    });
+    const now = new Date().toISOString();
+    await addDiscovery(db, aggregator.id, {
+      discoveryUrl: "https://database-radar.cn/story/ai-one",
+      originUrl: "https://generic-ai.cn/releases/one",
+      originKind: "official",
+      originName: "Generic AI",
+      title: "通用大模型发布新的多模态生成能力",
+      publishedAt: now,
+    });
+    await addDiscovery(db, aggregator.id, {
+      discoveryUrl: "https://database-radar.cn/story/ai-two",
+      originUrl: "https://generic-ai.cn/releases/two",
+      originKind: "official",
+      originName: "Generic AI",
+      title: "通用大模型发布新的图像生成能力",
+      publishedAt: now,
+    });
+
+    await expect(discoverNewSources(db)).resolves.toMatchObject({
+      candidates: [],
+      newCandidates: 0,
+      policyRejected: 1,
     });
   });
 });
@@ -226,9 +264,9 @@ async function addDiscovery(
       handles_json: "[]",
       title: patch.title ?? "Discovery title",
       summary: "Discovery summary",
-      language: "en",
+      language: "zh-CN",
       published_at: timestamp,
-      category: "model",
+      category: "database-release",
       tags_json: "[]",
       metrics_json: "{}",
       raw_meta_json: "{}",

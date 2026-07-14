@@ -1,6 +1,7 @@
 import type { Kysely } from "kysely";
 import { Repository } from "../db/repository.js";
 import type { DatabaseSchema, EventRow } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { eventabilityScore } from "./cluster.js";
 
 export interface ReviewNoiseCandidate {
@@ -20,10 +21,25 @@ export async function findReviewNoiseCandidates(
       .selectAll()
       .where("status", "=", "review")
       .where("manual_override", "=", 0)
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
-    db.selectFrom("event_signals").select(["event_id", "signal_id"]).execute(),
-    db.selectFrom("signals").selectAll().execute(),
-    db.selectFrom("sources").selectAll().execute(),
+    db
+      .selectFrom("event_signals")
+      .innerJoin("events", "events.id", "event_signals.event_id")
+      .select(["event_signals.event_id", "event_signals.signal_id"])
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
+    db
+      .selectFrom("signals")
+      .innerJoin("sources", "sources.id", "signals.source_id")
+      .selectAll("signals")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
+    db
+      .selectFrom("sources")
+      .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
   ]);
   const linksByEvent = groupLinks(links);
   const signalsById = new Map(signals.map((signal) => [signal.id, signal]));
@@ -64,6 +80,7 @@ export async function reconcileReviewNoise(
         .selectFrom("events")
         .selectAll()
         .where("id", "=", candidate.eventId)
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
         .executeTakeFirst();
       if (!event) continue;
       await repository.deferSignal(
@@ -72,7 +89,11 @@ export async function reconcileReviewNoise(
         candidate.eventabilityScore,
         { suppressedEvent: event, reversible: true },
       );
-      await trx.deleteFrom("events").where("id", "=", candidate.eventId).execute();
+      await trx
+        .deleteFrom("events")
+        .where("id", "=", candidate.eventId)
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+        .execute();
       sourceCounts[candidate.sourceSlug] = (sourceCounts[candidate.sourceSlug] ?? 0) + 1;
     }
   });

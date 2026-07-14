@@ -28,6 +28,11 @@ async function setup() {
 describe("autonomous quality operations", () => {
   it("matches known source discoveries and creates only disabled draft proposals", async () => {
     const { db, repository } = await setup();
+    await db
+      .updateTable("sources")
+      .set({ source_category: "aggregator", role: "aggregator" })
+      .where("slug", "=", "modb")
+      .execute();
     const sources = await repository.listSources();
     const aggregator = sources.find((source) => source.source_category === "aggregator");
     const roots = sources
@@ -47,8 +52,8 @@ describe("autonomous quality operations", () => {
       new URL("automated-discovery", known?.homepage_url).toString(),
       now,
     );
-    await addDiscovery(db, aggregator?.id ?? "missing", "https://newautolab.example/a", now);
-    await addDiscovery(db, aggregator?.id ?? "missing", "https://newautolab.example/b", now);
+    await addDiscovery(db, aggregator?.id ?? "missing", "https://new-database.cn/a", now);
+    await addDiscovery(db, aggregator?.id ?? "missing", "https://new-database.cn/b", now);
 
     const result = await triageSourceRadar(db);
 
@@ -57,7 +62,7 @@ describe("autonomous quality operations", () => {
     const proposal = await db
       .selectFrom("sources")
       .selectAll()
-      .where("homepage_url", "=", "https://newautolab.example")
+      .where("homepage_url", "=", "https://new-database.cn")
       .executeTakeFirstOrThrow();
     expect(proposal).toMatchObject({ lifecycle_status: "draft", enabled: 0 });
     expect(
@@ -69,8 +74,42 @@ describe("autonomous quality operations", () => {
     ).toMatchObject({ count: 2 });
   });
 
+  it("leaves legacy AI discovery rows outside DB Pulse radar triage", async () => {
+    const { db } = await setup();
+    const legacyAggregator = await db
+      .selectFrom("sources")
+      .select("id")
+      .where("slug", "=", "ccf-database")
+      .executeTakeFirstOrThrow();
+    await db
+      .updateTable("sources")
+      .set({
+        content_domain: "ai-industry",
+        source_category: "aggregator",
+        role: "aggregator",
+      })
+      .where("id", "=", legacyAggregator.id)
+      .execute();
+    const now = new Date().toISOString();
+    await addDiscovery(db, legacyAggregator.id, "https://legacy-ai.example/release", now);
+
+    await expect(triageSourceRadar(db)).resolves.toMatchObject({ checked: 0, remaining: 0 });
+    await expect(
+      db
+        .selectFrom("source_discoveries")
+        .select("status")
+        .where("aggregator_source_id", "=", legacyAggregator.id)
+        .executeTakeFirstOrThrow(),
+    ).resolves.toEqual({ status: "pending" });
+  });
+
   it("removes aggregator-only clues without first-party identity from the pending queue", async () => {
     const { db, repository } = await setup();
+    await db
+      .updateTable("sources")
+      .set({ source_category: "aggregator", role: "aggregator" })
+      .where("slug", "=", "modb")
+      .execute();
     const aggregator = (await repository.listSources()).find(
       (source) => source.source_category === "aggregator",
     );
@@ -90,11 +129,11 @@ describe("autonomous quality operations", () => {
         origin_kind: "aggregator_story",
         origin_name: null,
         handles_json: "[]",
-        title: "Aggregator-only clue",
-        summary: "No first-party identity is available.",
-        language: "en",
+        title: "仅有聚合页的数据库线索",
+        summary: "缺少可验证的数据库官方原始身份入口。",
+        language: "zh-CN",
         published_at: now,
-        category: "model",
+        category: "database-release",
         tags_json: "[]",
         metrics_json: "{}",
         raw_meta_json: "{}",
@@ -124,10 +163,14 @@ describe("autonomous quality operations", () => {
   it("degrades and quarantines production sources from consecutive audit evidence", async () => {
     const { db, repository } = await setup();
     const sources = await repository.listSources();
-    const activeSources = sources.filter((source) => source.lifecycle_status === "active");
+    for (const source of sources.slice(0, 2)) {
+      await repository.updateSource(source.id, { lifecycle_status: "active", enabled: 1 });
+    }
+    const refreshedSources = await repository.listSources();
+    const activeSources = refreshedSources.filter((source) => source.lifecycle_status === "active");
     const active = activeSources[0];
     const degraded = activeSources[1];
-    const shadow = sources.find((source) => source.lifecycle_status === "shadow");
+    const shadow = refreshedSources.find((source) => source.lifecycle_status === "shadow");
     expect(active).toBeTruthy();
     expect(degraded).toBeTruthy();
     expect(shadow).toBeTruthy();
@@ -177,11 +220,11 @@ async function addDiscovery(
       origin_kind: "official",
       origin_name: null,
       handles_json: "[]",
-      title: `Discovery ${id}`,
-      summary: "First-party source discovery.",
-      language: "en",
+      title: `数据库分布式查询引擎发现 ${id}`,
+      summary: "来自中国数据库行业的第一方来源发现。",
+      language: "zh-CN",
       published_at: timestamp,
-      category: "model",
+      category: "database-release",
       tags_json: "[]",
       metrics_json: "{}",
       raw_meta_json: "{}",

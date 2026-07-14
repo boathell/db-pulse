@@ -2,6 +2,14 @@ import { randomUUID, timingSafeEqual } from "node:crypto";
 import type { Kysely } from "kysely";
 import { titleSimilarity } from "../domain/clustering.js";
 import {
+  isCompleteEventLocalization,
+  PUBLIC_ACTOR_SLUGS,
+  PUBLIC_CONTENT_DOMAIN,
+  PUBLIC_TRACK_SLUGS,
+  PUBLIC_VIEW_SLUG,
+  type PublicLocale,
+} from "../domain/content-domain.js";
+import {
   type CollectedSignal,
   type OriginReference,
   type PublicEvent,
@@ -77,7 +85,21 @@ export class Repository {
   constructor(private readonly db: Kysely<DatabaseSchema>) {}
 
   async listSources(): Promise<SourceRow[]> {
+    return this.listPublicSources();
+  }
+
+  async listAllSources(): Promise<SourceRow[]> {
     return this.db.selectFrom("sources").selectAll().orderBy("tier").orderBy("name").execute();
+  }
+
+  async listPublicSources(): Promise<SourceRow[]> {
+    return this.db
+      .selectFrom("sources")
+      .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .orderBy("tier")
+      .orderBy("name")
+      .execute();
   }
 
   async getSource(id: string): Promise<SourceRow | undefined> {
@@ -88,6 +110,7 @@ export class Repository {
     return this.db
       .selectFrom("sources")
       .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .where((expression) =>
         expression.or([expression("id", "=", identifier), expression("slug", "=", identifier)]),
       )
@@ -98,6 +121,7 @@ export class Repository {
     return this.db
       .selectFrom("sources")
       .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .where((expression) =>
         expression.or([
           expression.and([
@@ -121,16 +145,17 @@ export class Repository {
       .where("slug", "=", input.slug)
       .executeTakeFirst();
     const timestamp = now();
+    const domainInput = { ...input, content_domain: input.content_domain ?? PUBLIC_CONTENT_DOMAIN };
     if (existing) {
       await this.db
         .updateTable("sources")
-        .set({ ...input, id: existing.id, updated_at: timestamp })
+        .set({ ...domainInput, id: existing.id, updated_at: timestamp })
         .where("id", "=", existing.id)
         .execute();
     } else {
       await this.db
         .insertInto("sources")
-        .values({ ...input, created_at: timestamp, updated_at: timestamp })
+        .values({ ...domainInput, created_at: timestamp, updated_at: timestamp })
         .execute();
     }
   }
@@ -168,6 +193,11 @@ export class Repository {
         cadence: input.cadence,
         license_note: input.license_note,
         quality_score: input.quality_score,
+        owner: input.owner,
+        robots_policy: input.robots_policy,
+        freshness_slo_hours: input.freshness_slo_hours,
+        adapter_version: input.adapter_version,
+        content_domain: input.content_domain,
         updated_at: timestamp,
       })
       .where("id", "=", existing.id)
@@ -279,6 +309,7 @@ export class Repository {
       .selectAll("source_checks")
       .select(["sources.slug as source_slug", "sources.name as source_name"]);
     if (sourceId) query = query.where("source_checks.source_id", "=", sourceId);
+    else query = query.where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN);
     return query
       .orderBy("source_checks.finished_at", "desc")
       .limit(Math.min(Math.max(limit, 1), 2_000))
@@ -315,13 +346,17 @@ export class Repository {
       ])
       .where("sources.role", "!=", "aggregator")
       .where("sources.source_category", "!=", "aggregator")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .orderBy("signals.published_at", "desc")
       .orderBy("signals.collected_at", "desc")
       .execute();
   }
 
   async listScoutInsights(status?: string) {
-    let query = this.db.selectFrom("scout_insights").selectAll();
+    let query = this.db
+      .selectFrom("scout_insights")
+      .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN);
     if (status) query = query.where("status", "=", status);
     return query.orderBy("total_score", "desc").orderBy("generated_at", "desc").execute();
   }
@@ -334,6 +369,7 @@ export class Repository {
     return this.db
       .selectFrom("scout_insights")
       .select("id")
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .where("cooldown_key", "=", cooldownKey)
       .where("generated_at", ">=", since)
       .executeTakeFirst();
@@ -342,7 +378,7 @@ export class Repository {
   async insertScoutInsight(
     input: Omit<
       import("./types.js").ScoutInsightTable,
-      "id" | "created_at" | "updated_at" | "published_at"
+      "id" | "created_at" | "updated_at" | "published_at" | "content_domain"
     >,
     eventId: string,
   ): Promise<string> {
@@ -354,6 +390,7 @@ export class Repository {
         .values({
           ...input,
           id,
+          content_domain: PUBLIC_CONTENT_DOMAIN,
           published_at: input.status === "published" ? timestamp : null,
           created_at: timestamp,
           updated_at: timestamp,
@@ -373,7 +410,12 @@ export class Repository {
     return id;
   }
 
-  async updateScoutInsight(id: string, patch: Partial<import("./types.js").ScoutInsightTable>) {
+  async updateScoutInsight(
+    id: string,
+    patch: Partial<Omit<import("./types.js").ScoutInsightTable, "content_domain">> & {
+      content_domain?: string;
+    },
+  ) {
     await this.db
       .updateTable("scout_insights")
       .set({ ...patch, updated_at: now() })
@@ -382,7 +424,9 @@ export class Repository {
   }
 
   async publicScoutInsights() {
-    const insights = await this.listScoutInsights("published");
+    const insights = (await this.listScoutInsights("published")).filter(
+      (insight) => insight.content_domain === PUBLIC_CONTENT_DOMAIN,
+    );
     const uniqueInsights = [...insights]
       .sort(
         (left, right) =>
@@ -406,6 +450,7 @@ export class Repository {
           .innerJoin("events", "events.id", "scout_evidence.event_id")
           .select(["events.slug", "events.title", "events.fact_summary as factSummary"])
           .where("scout_evidence.insight_id", "=", insight.id)
+          .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
           .execute();
         return {
           slug: insight.slug,
@@ -577,7 +622,8 @@ export class Repository {
         "matched.id as matchedId",
         "matched.slug as matchedSlug",
         "matched.name as matchedName",
-      ]);
+      ])
+      .where("aggregator.content_domain", "=", PUBLIC_CONTENT_DOMAIN);
     if (status) query = query.where("source_discoveries.status", "=", status);
     const rows = await query
       .orderBy("source_discoveries.last_seen_at", "desc")
@@ -615,7 +661,9 @@ export class Repository {
   async discoveryStatusSummary(): Promise<Record<DiscoveryStatus | "total", number>> {
     const rows = await this.db
       .selectFrom("source_discoveries")
+      .innerJoin("sources", "sources.id", "source_discoveries.aggregator_source_id")
       .select(["status", ({ fn }) => fn.countAll<number>().as("count")])
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .groupBy("status")
       .execute();
     const summary: Record<DiscoveryStatus | "total", number> = {
@@ -940,6 +988,7 @@ export class Repository {
       .where("signal_triage.signal_id", "is", null)
       .where("sources.role", "!=", "aggregator")
       .where("sources.source_category", "!=", "aggregator")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .orderBy("signals.published_at", "desc")
       .limit(limit)
       .execute();
@@ -987,8 +1036,10 @@ export class Repository {
     return this.db
       .selectFrom("signal_triage")
       .innerJoin("signals", "signals.id", "signal_triage.signal_id")
+      .innerJoin("sources", "sources.id", "signals.source_id")
       .selectAll("signals")
       .where("signal_triage.status", "=", "deferred")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .where("signals.published_at", ">=", new Date(center - radius).toISOString())
       .where("signals.published_at", "<=", new Date(center + radius).toISOString())
       .orderBy("signals.published_at", "desc")
@@ -997,6 +1048,15 @@ export class Repository {
   }
 
   async listEvents(status?: string): Promise<EventRow[]> {
+    let query = this.db
+      .selectFrom("events")
+      .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN);
+    if (status) query = query.where("status", "=", status);
+    return query.orderBy("featured", "desc").orderBy("happened_at", "desc").execute();
+  }
+
+  async listAllEvents(status?: string): Promise<EventRow[]> {
     let query = this.db.selectFrom("events").selectAll();
     if (status) query = query.where("status", "=", status);
     return query.orderBy("featured", "desc").orderBy("happened_at", "desc").execute();
@@ -1007,7 +1067,10 @@ export class Repository {
   }
 
   async insertEvent(event: NewEventRow): Promise<void> {
-    await this.db.insertInto("events").values(event).execute();
+    await this.db
+      .insertInto("events")
+      .values({ ...event, content_domain: event.content_domain ?? PUBLIC_CONTENT_DOMAIN })
+      .execute();
   }
 
   async updateEvent(id: string, patch: Partial<NewEventRow>): Promise<void> {
@@ -1043,38 +1106,53 @@ export class Repository {
       .execute();
   }
 
-  async publicEvents(): Promise<PublicEvent[]> {
+  async publicEvents(locale: PublicLocale = "zh-CN"): Promise<PublicEvent[]> {
     const events = await this.listEvents("published");
-    return Promise.all(events.map((event) => this.toPublicEvent(event)));
+    return Promise.all(events.map((event) => this.toPublicEvent(event, locale)));
   }
 
-  async toPublicEvent(event: EventRow): Promise<PublicEvent> {
-    const evidence = await this.db
-      .selectFrom("event_signals")
-      .innerJoin("signals", "signals.id", "event_signals.signal_id")
-      .innerJoin("sources", "sources.id", "signals.source_id")
-      .select([
-        "signals.title as title",
-        "signals.canonical_url as url",
-        "signals.published_at as publishedAt",
-        "sources.name as source",
-        "event_signals.evidence_role as role",
-      ])
-      .where("event_signals.event_id", "=", event.id)
-      .orderBy("event_signals.relevance_score", "desc")
-      .limit(8)
-      .execute();
+  async toPublicEvent(event: EventRow, locale: PublicLocale = "zh-CN"): Promise<PublicEvent> {
+    const [evidence, localization] = await Promise.all([
+      this.db
+        .selectFrom("event_signals")
+        .innerJoin("signals", "signals.id", "event_signals.signal_id")
+        .innerJoin("sources", "sources.id", "signals.source_id")
+        .select([
+          "signals.title as title",
+          "signals.canonical_url as url",
+          "signals.published_at as publishedAt",
+          "sources.name as source",
+          "event_signals.evidence_role as role",
+        ])
+        .where("event_signals.event_id", "=", event.id)
+        .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+        .orderBy("event_signals.relevance_score", "desc")
+        .limit(8)
+        .execute(),
+      this.db
+        .selectFrom("event_localizations")
+        .selectAll()
+        .where("event_id", "=", event.id)
+        .where("locale", "=", "en")
+        .executeTakeFirst(),
+    ]);
+    if (!isCompleteEventLocalization(localization)) {
+      throw new Error(
+        `Published database Event has incomplete English localization: ${event.slug}`,
+      );
+    }
+    const localized = locale === "en" ? localization : undefined;
 
     return {
       id: event.id,
       slug: event.slug,
-      title: event.title,
-      factSummary: event.fact_summary,
-      summary: event.summary,
-      technicalInsight: event.technical_insight,
-      industryInsight: event.industry_insight,
-      futureOutlook: event.future_outlook,
-      businessValue: event.business_value,
+      title: localized?.title ?? event.title,
+      factSummary: localized?.fact_summary ?? event.fact_summary,
+      summary: localized?.summary ?? event.summary,
+      technicalInsight: localized?.technical_insight ?? event.technical_insight,
+      industryInsight: localized?.industry_insight ?? event.industry_insight,
+      futureOutlook: localized?.future_outlook ?? event.future_outlook,
+      businessValue: localized?.business_value ?? event.business_value,
       category: event.category,
       company: event.company,
       keywords: parseJson(event.keywords_json, []),
@@ -1107,20 +1185,25 @@ export class Repository {
         this.db
           .selectFrom("sources")
           .select(({ fn }) => fn.countAll<number>().as("count"))
+          .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
           .executeTakeFirstOrThrow(),
         this.db
           .selectFrom("signals")
+          .innerJoin("sources", "sources.id", "signals.source_id")
           .select(({ fn }) => fn.countAll<number>().as("count"))
+          .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
           .executeTakeFirstOrThrow(),
         this.db
           .selectFrom("events")
           .select(({ fn }) => fn.countAll<number>().as("count"))
           .where("status", "in", ["draft", "review"])
+          .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
           .executeTakeFirstOrThrow(),
         this.db
           .selectFrom("events")
           .select(({ fn }) => fn.countAll<number>().as("count"))
           .where("status", "=", "published")
+          .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
           .executeTakeFirstOrThrow(),
         this.db
           .selectFrom("jobs")
@@ -1131,11 +1214,13 @@ export class Repository {
           .selectFrom("sources")
           .select(({ fn }) => fn.countAll<number>().as("count"))
           .where("lifecycle_status", "in", ["degraded", "quarantined"])
+          .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
           .executeTakeFirstOrThrow(),
         this.db
           .selectFrom("scout_insights")
           .select(({ fn }) => fn.countAll<number>().as("count"))
           .where("status", "in", ["inbox", "considering"])
+          .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
           .executeTakeFirstOrThrow(),
       ]);
     return {
@@ -1153,6 +1238,7 @@ export class Repository {
     Array<{
       sourceId: string;
       sourceSlug: string;
+      sourceOwner: string;
       authorityScore: number;
       tier: number;
       role: string;
@@ -1168,6 +1254,7 @@ export class Repository {
       .select([
         "sources.id as sourceId",
         "sources.slug as sourceSlug",
+        "sources.owner as sourceOwner",
         "sources.authority_score as authorityScore",
         "sources.tier as tier",
         "sources.role as role",
@@ -1176,10 +1263,12 @@ export class Repository {
         "signals.published_at as publishedAt",
       ])
       .where("event_signals.event_id", "=", eventId)
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute();
     return rows.map((row) => ({
       sourceId: row.sourceId,
       sourceSlug: row.sourceSlug,
+      sourceOwner: row.sourceOwner,
       authorityScore: row.authorityScore,
       tier: row.tier,
       role: row.role,
@@ -1198,6 +1287,16 @@ export class Repository {
       .execute();
   }
 
+  async listPublicTracks() {
+    return this.db
+      .selectFrom("tracks")
+      .selectAll()
+      .where("enabled", "=", 1)
+      .where("slug", "in", [...PUBLIC_TRACK_SLUGS])
+      .orderBy("order_index")
+      .execute();
+  }
+
   async listActors() {
     return this.db
       .selectFrom("actors")
@@ -1208,13 +1307,40 @@ export class Repository {
       .execute();
   }
 
+  async listPublicActors() {
+    const [actors, observations] = await Promise.all([
+      this.db
+        .selectFrom("actors")
+        .selectAll()
+        .where("enabled", "=", 1)
+        .where("slug", "in", [...PUBLIC_ACTOR_SLUGS])
+        .orderBy("table_score", "desc")
+        .orderBy("name")
+        .execute(),
+      this.db
+        .selectFrom("event_actors")
+        .innerJoin("events", "events.id", "event_actors.event_id")
+        .innerJoin("actors", "actors.id", "event_actors.actor_id")
+        .select(["actors.slug", ({ fn }) => fn.countAll<number>().as("count")])
+        .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+        .where("events.status", "=", "published")
+        .groupBy("actors.slug")
+        .execute(),
+    ]);
+    const counts = new Map(observations.map((item) => [item.slug, Number(item.count)]));
+    return actors.map((actor) => ({
+      ...actor,
+      observed_event_count: counts.get(actor.slug) ?? 0,
+    }));
+  }
+
   async listResources() {
     return this.db
-      .selectFrom("model_resources")
+      .selectFrom("database_resources")
       .selectAll()
       .where("enabled", "=", 1)
       .orderBy("provider")
-      .orderBy("model")
+      .orderBy("product")
       .execute();
   }
 
@@ -1224,6 +1350,7 @@ export class Repository {
       .selectAll()
       .where("is_default", "=", 1)
       .where("status", "=", "published")
+      .where("slug", "=", PUBLIC_VIEW_SLUG)
       .executeTakeFirst();
   }
 

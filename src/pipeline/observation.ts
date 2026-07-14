@@ -19,7 +19,7 @@ export async function observationEligibility(
 ): Promise<ObservationEligibility[]> {
   const repository = new Repository(db);
   const [sources, checks] = await Promise.all([
-    repository.listSources(),
+    repository.listPublicSources(),
     repository.latestSourceChecks(),
   ]);
   const checksBySource = new Map(checks.map((check) => [check.source_id, check]));

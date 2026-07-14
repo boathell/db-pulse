@@ -69,7 +69,7 @@ async function main() {
 
 function printReport(report: Awaited<ReturnType<typeof generateMonitorReport>>) {
   console.log("\n═══════════════════════════════════════════");
-  console.log("  Agent Pulse — System Health Report");
+  console.log("  DB Pulse — System Health Report");
   console.log(`  Generated: ${report.timestamp}`);
   console.log("═══════════════════════════════════════════");
 

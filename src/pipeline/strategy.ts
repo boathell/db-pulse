@@ -217,14 +217,14 @@ export function generateEvolutionPlan(
   actions.push({
     id: `action-${++id}`,
     category: "enhance-clustering",
-    title: "增强跨语言聚类能力",
+    title: "增强数据库中英双语聚类能力",
     description:
-      "当前聚类主要基于中文和英文标题相似度。增加跨语言 embeddings 和实体链接，使同一事件的英文、中文、日文报道能自动聚合。",
+      "当前聚类主要基于中文和英文标题相似度。增加数据库产品、版本、兼容模式和部署形态实体链接，使同一国内事件的中英文证据能自动聚合。",
     priority: "next",
     estimatedEffort: "L",
     impactArea: "clustering",
-    rationale: "AI 行业是全球性的，跨语言聚类是全球化认知系统的基础。",
-    successMetric: "跨语言事件聚合召回率 >= 70%",
+    rationale: "数据库产品资料常同时存在中英文版本，双语聚类是完整证据链的基础。",
+    successMetric: "数据库中英双语事件聚合召回率 >= 70%",
     dependencies: [],
   });
 

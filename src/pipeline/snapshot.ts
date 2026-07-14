@@ -2,14 +2,20 @@ import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, join } from "node:path";
 import type { Kysely, Transaction } from "kysely";
 import { parseJson } from "../db/repository.js";
-import type { DatabaseSchema } from "../db/types.js";
+import type { DatabaseSchema, EventRow } from "../db/types.js";
+import {
+  isCompleteEventLocalization,
+  PUBLIC_CONTENT_DOMAIN,
+  PUBLIC_DATASET_ID,
+} from "../domain/content-domain.js";
 import { canonicalizeUrl, sha256 } from "../domain/url.js";
 
-export const SNAPSHOT_SCHEMA_VERSION = 1;
-export const DEFAULT_SNAPSHOT_PATH = join("data", "snapshot", "v1.json");
+export const SNAPSHOT_SCHEMA_VERSION = 2;
+export const DEFAULT_SNAPSHOT_PATH = join("data", "snapshot", "v2.json");
 
 interface RepositorySnapshot {
   schemaVersion: number;
+  datasetId: string;
   sources: Array<Record<string, unknown>>;
   sourceChecks?: Array<Record<string, unknown>>;
   sourceRuns?: Array<Record<string, unknown>>;
@@ -19,6 +25,7 @@ interface RepositorySnapshot {
   signalTriage?: Array<Record<string, unknown>>;
   discoveries: Array<Record<string, unknown>>;
   events: Array<Record<string, unknown>>;
+  eventLocalizations?: Array<Record<string, unknown>>;
   eventSignals: Array<Record<string, unknown>>;
   eventTracks?: Array<Record<string, unknown>>;
   eventActors?: Array<Record<string, unknown>>;
@@ -80,32 +87,46 @@ async function buildRepositorySnapshot(db: Kysely<DatabaseSchema>): Promise<Repo
     eventActorRows,
     eventMergeRows,
   ] = await Promise.all([
-    db.selectFrom("sources").selectAll().execute(),
+    db
+      .selectFrom("sources")
+      .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
     db
       .selectFrom("source_checks")
       .innerJoin("sources", "sources.id", "source_checks.source_id")
       .selectAll("source_checks")
       .select("sources.slug as sourceSlug")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
     db
       .selectFrom("signals")
       .innerJoin("sources", "sources.id", "signals.source_id")
       .selectAll("signals")
       .select("sources.slug as sourceSlug")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
     db
       .selectFrom("signal_observations")
       .innerJoin("sources", "sources.id", "signal_observations.source_id")
       .selectAll("signal_observations")
       .select("sources.slug as sourceSlug")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
     db
       .selectFrom("signal_observation_occurrences")
       .innerJoin("sources", "sources.id", "signal_observation_occurrences.source_id")
       .selectAll("signal_observation_occurrences")
       .select("sources.slug as sourceSlug")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
-    db.selectFrom("signal_triage").selectAll().execute(),
+    db
+      .selectFrom("signal_triage")
+      .innerJoin("signals", "signals.id", "signal_triage.signal_id")
+      .innerJoin("sources", "sources.id", "signals.source_id")
+      .selectAll("signal_triage")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
     db
       .selectFrom("source_discoveries")
       .innerJoin(
@@ -116,38 +137,64 @@ async function buildRepositorySnapshot(db: Kysely<DatabaseSchema>): Promise<Repo
       .leftJoin("sources as matched", "matched.id", "source_discoveries.matched_source_id")
       .selectAll("source_discoveries")
       .select(["aggregator.slug as aggregatorSlug", "matched.slug as matchedSourceSlug"])
+      .where("aggregator.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
-    db.selectFrom("events").selectAll().execute(),
-    db.selectFrom("event_signals").selectAll().execute(),
+    db
+      .selectFrom("events")
+      .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
+    db
+      .selectFrom("event_signals")
+      .innerJoin("events", "events.id", "event_signals.event_id")
+      .innerJoin("signals", "signals.id", "event_signals.signal_id")
+      .innerJoin("sources", "sources.id", "signals.source_id")
+      .selectAll("event_signals")
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
     db
       .selectFrom("event_tracks")
       .innerJoin("tracks", "tracks.id", "event_tracks.track_id")
       .selectAll("event_tracks")
       .select("tracks.slug as trackSlug")
+      .innerJoin("events", "events.id", "event_tracks.event_id")
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
     db
       .selectFrom("event_actors")
       .innerJoin("actors", "actors.id", "event_actors.actor_id")
       .selectAll("event_actors")
       .select("actors.slug as actorSlug")
+      .innerJoin("events", "events.id", "event_actors.event_id")
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
     db
       .selectFrom("event_merges")
-      .innerJoin("events", "events.id", "event_merges.target_event_id")
+      .innerJoin("events as target", "target.id", "event_merges.target_event_id")
+      .innerJoin("events as source", "source.id", "event_merges.source_event_id")
       .selectAll("event_merges")
-      .select("events.slug as targetEventSlug")
+      .select("target.slug as targetEventSlug")
+      .where("target.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .where("source.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
   ]);
   const sourceSlugById = new Map(sourceRows.map((source) => [source.id, source.slug]));
-  const [sourceRunRows, scoutRows, scoutEvidenceRows] = await Promise.all([
+  const [sourceRunRows, scoutRows, scoutEvidenceRows, eventLocalizationRows] = await Promise.all([
     db
       .selectFrom("source_runs")
       .innerJoin("sources", "sources.id", "source_runs.source_id")
       .selectAll("source_runs")
       .select("sources.slug as sourceSlug")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .orderBy("source_runs.started_at", "desc")
       .execute(),
-    db.selectFrom("scout_insights").selectAll().where("status", "=", "published").execute(),
+    db
+      .selectFrom("scout_insights")
+      .selectAll()
+      .where("status", "=", "published")
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
     db
       .selectFrom("scout_evidence")
       .innerJoin("scout_insights", "scout_insights.id", "scout_evidence.insight_id")
@@ -160,13 +207,28 @@ async function buildRepositorySnapshot(db: Kysely<DatabaseSchema>): Promise<Repo
         "scout_evidence.created_at as createdAt",
       ])
       .where("scout_insights.status", "=", "published")
+      .where("scout_insights.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
+    db
+      .selectFrom("event_localizations")
+      .innerJoin("events", "events.id", "event_localizations.event_id")
+      .selectAll("event_localizations")
+      .select("events.slug as eventSlug")
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
   ]);
   const snapshot: RepositorySnapshot = {
     schemaVersion: SNAPSHOT_SCHEMA_VERSION,
+    datasetId: PUBLIC_DATASET_ID,
     sources: sourceRows
       .map((source) => ({
         slug: source.slug,
+        contentDomain: PUBLIC_CONTENT_DOMAIN,
+        owner: source.owner,
+        robotsPolicy: source.robots_policy,
+        freshnessSloHours: source.freshness_slo_hours,
+        adapterVersion: source.adapter_version,
         enabled: source.enabled,
         observationEnabled: source.observation_enabled,
         lifecycleStatus: source.lifecycle_status,
@@ -343,6 +405,7 @@ async function buildRepositorySnapshot(db: Kysely<DatabaseSchema>): Promise<Repo
       .map((event) => ({
         id: event.id,
         slug: event.slug,
+        contentDomain: PUBLIC_CONTENT_DOMAIN,
         title: event.title,
         factSummary: event.fact_summary,
         summary: event.summary,
@@ -367,6 +430,23 @@ async function buildRepositorySnapshot(db: Kysely<DatabaseSchema>): Promise<Repo
         updatedAt: event.updated_at,
       }))
       .sort(byString("slug")),
+    eventLocalizations: eventLocalizationRows
+      .map((localization) => ({
+        eventSlug: localization.eventSlug,
+        locale: localization.locale,
+        title: localization.title,
+        factSummary: localization.fact_summary,
+        summary: localization.summary,
+        technicalInsight: localization.technical_insight,
+        industryInsight: localization.industry_insight,
+        futureOutlook: localization.future_outlook,
+        businessValue: localization.business_value,
+        createdAt: localization.created_at,
+        updatedAt: localization.updated_at,
+      }))
+      .sort((left, right) =>
+        `${left.eventSlug}:${left.locale}`.localeCompare(`${right.eventSlug}:${right.locale}`),
+      ),
     eventSignals: eventSignalRows
       .map((link) => ({
         eventId: link.event_id,
@@ -499,6 +579,11 @@ async function restoreSnapshot(
           optionalString(value.lastVerifiedAt),
         ),
         state_json: incomingIsNewer ? JSON.stringify(value.state ?? {}) : current.state_json,
+        content_domain: PUBLIC_CONTENT_DOMAIN,
+        owner: requiredString(value, "owner"),
+        robots_policy: requiredString(value, "robotsPolicy"),
+        freshness_slo_hours: requiredNumber(value, "freshnessSloHours"),
+        adapter_version: requiredString(value, "adapterVersion"),
       })
       .where("id", "=", sourceId)
       .execute();
@@ -831,6 +916,7 @@ async function restoreSnapshot(
       published_at: optionalString(value.publishedAt),
       created_at: requiredString(value, "createdAt"),
       updated_at: optionalString(value.updatedAt) ?? requiredString(value, "createdAt"),
+      content_domain: PUBLIC_CONTENT_DOMAIN,
     };
     if (existing && shouldReplaceEvent(existing, value, row.updated_at))
       await db.updateTable("events").set(row).where("id", "=", id).execute();
@@ -841,6 +927,46 @@ async function restoreSnapshot(
         .execute();
     eventIdMap.set(snapshotId, id);
     eventIdMap.set(slug, id);
+  }
+
+  for (const value of snapshot.eventLocalizations ?? []) {
+    const eventId = eventIdMap.get(requiredString(value, "eventSlug"));
+    if (!eventId) continue;
+    const locale = requiredString(value, "locale");
+    const row = {
+      title: requiredString(value, "title"),
+      fact_summary: requiredString(value, "factSummary"),
+      summary: requiredString(value, "summary"),
+      technical_insight: requiredString(value, "technicalInsight"),
+      industry_insight: requiredString(value, "industryInsight"),
+      future_outlook: requiredString(value, "futureOutlook"),
+      business_value: requiredString(value, "businessValue"),
+      updated_at: optionalString(value.updatedAt) ?? requiredString(value, "createdAt"),
+    };
+    const existing = await db
+      .selectFrom("event_localizations")
+      .select("event_id")
+      .where("event_id", "=", eventId)
+      .where("locale", "=", locale)
+      .executeTakeFirst();
+    if (existing) {
+      await db
+        .updateTable("event_localizations")
+        .set(row)
+        .where("event_id", "=", eventId)
+        .where("locale", "=", locale)
+        .execute();
+    } else {
+      await db
+        .insertInto("event_localizations")
+        .values({
+          event_id: eventId,
+          locale,
+          created_at: requiredString(value, "createdAt"),
+          ...row,
+        })
+        .execute();
+    }
   }
 
   for (const value of snapshot.signalTriage ?? []) {
@@ -1063,6 +1189,7 @@ async function restoreSnapshot(
       published_at: optionalString(value.publishedAt),
       created_at: requiredString(value, "createdAt"),
       updated_at: requiredString(value, "createdAt"),
+      content_domain: PUBLIC_CONTENT_DOMAIN,
     };
     if (existing) await db.updateTable("scout_insights").set(row).where("id", "=", id).execute();
     else
@@ -1175,8 +1302,32 @@ function validateSnapshot(value: RepositorySnapshot): void {
   if (!value || value.schemaVersion !== SNAPSHOT_SCHEMA_VERSION) {
     throw new Error(`Unsupported repository snapshot schema: ${value?.schemaVersion ?? "missing"}`);
   }
+  if (value.datasetId !== PUBLIC_DATASET_ID) {
+    throw new Error(`Unsupported repository snapshot dataset: ${value.datasetId ?? "missing"}`);
+  }
   for (const key of ["sources", "signals", "discoveries", "events", "eventSignals"] as const) {
     if (!Array.isArray(value[key])) throw new Error(`Invalid repository snapshot field: ${key}`);
+  }
+  for (const row of [...value.sources, ...value.events]) {
+    if (row.contentDomain !== PUBLIC_CONTENT_DOMAIN) {
+      throw new Error(`Repository snapshot contains a non-public content domain`);
+    }
+  }
+  const localizations = value.eventLocalizations ?? [];
+  if (!Array.isArray(localizations)) {
+    throw new Error("Invalid repository snapshot field: eventLocalizations");
+  }
+  const completeEnglishEvents = new Set(
+    localizations
+      .filter((row) => row.locale === "en" && isCompleteEventLocalization(row))
+      .map((row) => requiredString(row, "eventSlug")),
+  );
+  for (const event of value.events) {
+    if (event.status === "published" && !completeEnglishEvents.has(requiredString(event, "slug"))) {
+      throw new Error(
+        `Published snapshot Event is missing complete English localization: ${requiredString(event, "slug")}`,
+      );
+    }
   }
 }
 
@@ -1229,7 +1380,7 @@ function earliestTimestamp(...values: string[]): string {
 }
 
 function shouldReplaceEvent(
-  existing: DatabaseSchema["events"],
+  existing: EventRow,
   incoming: Record<string, unknown>,
   incomingUpdatedAt: string,
 ): boolean {
@@ -1258,6 +1409,7 @@ function snapshotCounts(snapshot: RepositorySnapshot) {
     signalTriage: snapshot.signalTriage?.length ?? 0,
     discoveries: snapshot.discoveries.length,
     events: snapshot.events.length,
+    eventLocalizations: snapshot.eventLocalizations?.length ?? 0,
     eventSignals: snapshot.eventSignals.length,
     eventTracks: snapshot.eventTracks?.length ?? 0,
     eventActors: snapshot.eventActors?.length ?? 0,
@@ -1278,6 +1430,7 @@ function emptyCounts() {
     signalTriage: 0,
     discoveries: 0,
     events: 0,
+    eventLocalizations: 0,
     eventSignals: 0,
     eventTracks: 0,
     eventActors: 0,

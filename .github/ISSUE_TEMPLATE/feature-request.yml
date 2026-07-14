@@ -52,7 +52,7 @@ body:
     id: evidence
     attributes:
       label: Examples or evidence
-      description: Add screenshots, links, comparable products, or affected Agent Pulse records. Remove secrets and private data.
+      description: Add screenshots, links, comparable products, or affected DB Pulse records. Remove secrets and private data.
 
   - type: checkboxes
     id: checks

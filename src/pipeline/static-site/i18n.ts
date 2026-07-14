@@ -25,10 +25,10 @@ const translations: Record<string, Record<Locale, string>> = {
 
   // ─── Brand ─────────────────────────────────────────────────
   "brand.subtitle": {
-    "zh-CN": "AI 行业判断系统",
-    en: "AI Industry Intelligence",
+    "zh-CN": "中国数据库行业判断系统",
+    en: "China Database Industry Intelligence",
   },
-  "brand.aria": { "zh-CN": "Agent Pulse 首页", en: "Agent Pulse Home" },
+  "brand.aria": { "zh-CN": "DB Pulse 首页", en: "DB Pulse Home" },
   "brand.switchLang": { "zh-CN": "EN", en: "中文" },
 
   // ─── Skip link & helpers ───────────────────────────────────
@@ -39,7 +39,10 @@ const translations: Record<string, Record<Locale, string>> = {
   "ui.mobileNav": { "zh-CN": "移动导航", en: "Mobile navigation" },
 
   // ─── Footer ────────────────────────────────────────────────
-  "footer.tagline": { "zh-CN": "用证据看清 AI 行业变化。", en: "See AI clearly through evidence." },
+  "footer.tagline": {
+    "zh-CN": "用证据看清中国数据库行业变化。",
+    en: "See China's database industry through evidence.",
+  },
   "footer.lines": { "zh-CN": "主线", en: "Strategic Lines" },
   "footer.timeline": { "zh-CN": "事件时间线", en: "Timeline" },
   "footer.scout": { "zh-CN": "行动参考", en: "Action Ideas" },
@@ -145,8 +148,8 @@ const translations: Record<string, Record<Locale, string>> = {
   },
   "home.manifestoDesc": {
     "zh-CN":
-      "从一手事实出发，沿模型能力、Agent、产品商业、基础设施、资本与全球创新主线，找到真正会改变决策的行业转折。",
-    en: "Start with primary facts. Follow models, agents, products, infrastructure, capital, and global innovation to find the inflections that change decisions.",
+      "从一手事实出发，沿内核架构、分布式与云、实时分析、稳定运维、商业落地和政策标准，找到真正会改变数据库决策的行业转折。",
+    en: "Start with primary facts. Follow architecture, distributed and cloud databases, analytics, operations, adoption, and policy to find decision-changing inflections.",
   },
   "home.principle1": { "zh-CN": "一手来源优先", en: "Primary sources first" },
   "home.principle2": {
@@ -282,20 +285,20 @@ const translations: Record<string, Record<Locale, string>> = {
     "zh-CN": "这会改变哪个控制点？",
     en: "Which control point does this change?",
   },
-  "lines.lensInvestor": { "zh-CN": "投资负责人", en: "Investor" },
-  "lines.lensInvestorQ": {
-    "zh-CN": "价值向哪一层迁移？",
-    en: "Which layer is value migrating to?",
+  "lines.lensDBA": { "zh-CN": "DBA", en: "DBA" },
+  "lines.lensDBAQ": {
+    "zh-CN": "哪些稳定性与运维证据必须补齐？",
+    en: "Which reliability and operations evidence is still missing?",
   },
-  "lines.lensCTO": { "zh-CN": "技术负责人", en: "CTO" },
-  "lines.lensCTOQ": {
-    "zh-CN": "能力与工程边界如何变化？",
-    en: "How are capabilities and engineering boundaries shifting?",
+  "lines.lensArchitect": { "zh-CN": "数据架构师", en: "Data Architect" },
+  "lines.lensArchitectQ": {
+    "zh-CN": "架构边界和迁移路径如何验证？",
+    en: "How should the architecture boundary and migration path be validated?",
   },
-  "lines.lensPM": { "zh-CN": "产品负责人", en: "Product Lead" },
-  "lines.lensPMQ": {
-    "zh-CN": "下一验证信号是什么？",
-    en: "What's the next validation signal?",
+  "lines.lensPractitioner": { "zh-CN": "数据库从业者", en: "Database Practitioner" },
+  "lines.lensPractitionerQ": {
+    "zh-CN": "下一个最小验证动作是什么？",
+    en: "What is the next minimum validation step?",
   },
   "lines.noJudgment": {
     "zh-CN": "当前证据不足，暂不形成强判断。",
@@ -382,8 +385,8 @@ const translations: Record<string, Record<Locale, string>> = {
   "event.evidenceCount": { "zh-CN": "{count} 条证据", en: "{count} pieces of evidence" },
   "event.developmentTitle": { "zh-CN": "发展脉络", en: "Development" },
   "event.developmentDesc": {
-    "zh-CN": "同一事件的事实更新按时间聚合；最后的当前判断属于 Agent Pulse 分析。",
-    en: "Updates to the same event are grouped chronologically. The current assessment is Agent Pulse analysis.",
+    "zh-CN": "同一事件的事实更新按时间聚合；最后的当前判断属于 DB Pulse 分析。",
+    en: "Updates to the same event are grouped chronologically. The current assessment is DB Pulse analysis.",
   },
   "event.developmentOrigin": { "zh-CN": "首次出现", en: "First Report" },
   "event.developmentOfficial": { "zh-CN": "官方更新", en: "Official Update" },
@@ -397,8 +400,8 @@ const translations: Record<string, Record<Locale, string>> = {
     en: "Research preprint: method and results await independent replication",
   },
   "event.researchNoticeDesc": {
-    "zh-CN": "以下内容区分论文报告、Agent Pulse 分析与后续验证项，不把单篇预印本直接视为行业共识。",
-    en: "The brief separates reported findings, Agent Pulse analysis, and open validation items. A single preprint is not treated as industry consensus.",
+    "zh-CN": "以下内容区分论文报告、DB Pulse 分析与后续验证项，不把单篇论文直接视为行业共识。",
+    en: "The brief separates reported findings, DB Pulse analysis, and open validation items. A single paper is not treated as industry consensus.",
   },
 
   // ─── Scout ─────────────────────────────────────────────────
@@ -424,8 +427,8 @@ const translations: Record<string, Record<Locale, string>> = {
   // ─── Actors ────────────────────────────────────────────────
   "actors.heroTitle": { "zh-CN": "关键角色", en: "Key Actors" },
   "actors.heroDesc": {
-    "zh-CN": "按公司与机构查看其领域、规模和公开入口。",
-    en: "Browse companies and institutions by focus, scale, and official links.",
+    "zh-CN": "按厂商、开源项目、机构、政策主体与已核验专家查看其领域、规模和公开入口。",
+    en: "Browse vendors, open-source projects, institutions, policy bodies, and verified experts by focus, scale, and official links.",
   },
   "actors.statusActors": { "zh-CN": "{count} 个角色", en: "{count} actors" },
   "actors.statusChina": { "zh-CN": "{count} 个中国角色", en: "{count} China-based actors" },
@@ -437,16 +440,16 @@ const translations: Record<string, Record<Locale, string>> = {
   "actors.website": { "zh-CN": "官方网站", en: "Official Website" },
 
   // ─── Resources ─────────────────────────────────────────────
-  "resources.heroTitle": { "zh-CN": "模型成本", en: "Model Costs" },
+  "resources.heroTitle": { "zh-CN": "选型与成本", en: "Selection & Cost" },
   "resources.heroDesc": {
-    "zh-CN": "把价格、单位、核验时点和官方入口放在一起；第三方比价只作参考。",
-    en: "Price, unit, verification date, and official links on one screen. Third-party comparisons are for reference only.",
+    "zh-CN": "把部署、许可、兼容性、定价口径、核验时点和官方入口放在一起，不生成产品排名。",
+    en: "Compare deployment, licensing, compatibility, pricing models, verification dates, and official links without product rankings.",
   },
   "resources.statusCount": { "zh-CN": "{count} 个资源", en: "{count} resources" },
   "resources.statusCheck": { "zh-CN": "购买前重新核验", en: "Re-verify before purchase" },
   "resources.legalNote": {
-    "zh-CN": "价格代表页面标注的核验时点，不构成采购、投资或财务建议。",
-    en: "Prices reflect the verification date noted on each listing and do not constitute purchasing, investment, or financial advice.",
+    "zh-CN": "选型与价格信息只代表标注核验时点，不构成采购、投资或财务建议。",
+    en: "Selection and pricing information reflects the stated verification date and is not purchasing, investment, or financial advice.",
   },
   "resources.official": { "zh-CN": "官方", en: "Official" },
   "resources.reference": { "zh-CN": "参考", en: "Reference" },
@@ -596,8 +599,8 @@ const translations: Record<string, Record<Locale, string>> = {
     en: "Copyright & Citations",
   },
   "legal.heroDesc": {
-    "zh-CN": "Agent Pulse 发布必要 metadata、有限短摘录和原创分析，不镜像第三方正文。",
-    en: "Agent Pulse publishes necessary metadata, limited short excerpts, and original analysis. It does not mirror third-party content.",
+    "zh-CN": "DB Pulse 发布必要 metadata、有限短摘录和原创分析，不镜像第三方正文。",
+    en: "DB Pulse publishes necessary metadata, limited short excerpts, and original analysis. It does not mirror third-party content.",
   },
   "legal.statusCode": { "zh-CN": "代码 MIT", en: "Code MIT" },
   "legal.statusThirdParty": { "zh-CN": "第三方权利保留", en: "Third-party rights reserved" },
@@ -644,8 +647,8 @@ const translations: Record<string, Record<Locale, string>> = {
   },
   "legal.disclaimerDesc": {
     "zh-CN":
-      "评分是系统估计，预测和机会是假设。模型价格、来源状态与行业判断只代表标注时点，使用者应核验原始证据并独立决策。",
-    en: "Scores are system estimates. Forecasts and opportunities are hypotheses. Model prices, source status, and industry judgments reflect the noted date. Users should verify original evidence and decide independently.",
+      "评分是系统估计，预测和机会是假设。数据库价格、来源状态与行业判断只代表标注时点，使用者应核验原始证据并独立决策。",
+    en: "Scores are system estimates. Forecasts and opportunities are hypotheses. Database prices, source status, and industry judgments reflect the noted date. Users should verify original evidence and decide independently.",
   },
   "legal.iconsTitle": {
     "zh-CN": "图标许可",
@@ -662,7 +665,7 @@ const translations: Record<string, Record<Locale, string>> = {
   },
 
   // ─── 404 ───────────────────────────────────────────────────
-  "notFound.title": { "zh-CN": "页面未找到 · Agent Pulse", en: "Page Not Found · Agent Pulse" },
+  "notFound.title": { "zh-CN": "页面未找到 · DB Pulse", en: "Page Not Found · DB Pulse" },
   "notFound.desc": {
     "zh-CN": "这个页面不存在或已经移动。",
     en: "This page doesn't exist or has moved.",
@@ -707,20 +710,20 @@ const translations: Record<string, Record<Locale, string>> = {
   "scoutKind.cognitive": { "zh-CN": "认知假设", en: "Cognitive Hypothesis" },
 
   // ─── Category names ────────────────────────────────────────
-  "category.model": { "zh-CN": "模型能力", en: "Model Capability" },
+  "category.model": { "zh-CN": "数据库能力", en: "Database Capability" },
   "category.research": { "zh-CN": "研究进展", en: "Research Progress" },
   "category.product": { "zh-CN": "产品发布", en: "Product Launch" },
   "category.commercialization": { "zh-CN": "商业化", en: "Commercialization" },
   "category.investment": { "zh-CN": "资本动作", en: "Capital Move" },
   "category.policy": { "zh-CN": "政策监管", en: "Policy & Regulation" },
-  "category.infrastructure": { "zh-CN": "算力基础设施", en: "Compute Infrastructure" },
+  "category.infrastructure": { "zh-CN": "数据库基础设施", en: "Database Infrastructure" },
   "category.talent": { "zh-CN": "组织人才", en: "Talent & Organization" },
   "category.general": { "zh-CN": "行业事件", en: "Industry Event" },
 
   // ─── Tool tabs ─────────────────────────────────────────────
   "tab.scout": { "zh-CN": "行动参考", en: "Action Ideas" },
   "tab.actors": { "zh-CN": "关键角色", en: "Key Actors" },
-  "tab.resources": { "zh-CN": "模型成本", en: "Model Costs" },
+  "tab.resources": { "zh-CN": "选型与成本", en: "Selection & Cost" },
   "tab.product": { "zh-CN": "判断方法", en: "Method" },
   "tab.selectFilter": { "zh-CN": "选择筛选开始", en: "Select a filter to start" },
 

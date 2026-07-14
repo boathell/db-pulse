@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="620" viewBox="0 0 1440 620" role="img" aria-labelledby="title desc">
-  <title id="title">Agent Pulse</title>
-  <desc id="desc">Evidence-backed AI industry intelligence with strategic narratives and verifiable sources</desc>
+  <title id="title">DB Pulse</title>
+  <desc id="desc">Evidence-backed China database industry intelligence with strategic narratives and verifiable sources</desc>
   <defs>
     <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#080b12"/><stop offset="1" stop-color="#111827"/></linearGradient>
     <radialGradient id="glow"><stop stop-color="#8b5cf6" stop-opacity=".65"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></radialGradient>
@@ -11,11 +11,11 @@
   <g stroke="#1f2937" opacity=".75"><path d="M0 100h1440M0 200h1440M0 300h1440M0 400h1440M0 500h1440"/><path d="M120 0v620M240 0v620M360 0v620M480 0v620M600 0v620M720 0v620M840 0v620M960 0v620M1080 0v620M1200 0v620M1320 0v620"/></g>
   <g transform="translate(90 85)">
     <g fill="none" stroke="#8b5cf6"><circle cx="24" cy="24" r="23"/><path stroke-width="4" stroke-linecap="round" d="M16 29v-9M24 34V14M32 27v-6"/></g>
-    <text x="62" y="21" fill="#f4f2ec" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="3">AGENT PULSE</text>
-    <text x="62" y="42" fill="#8e98a8" font-family="monospace" font-size="10" letter-spacing="2">AI INDUSTRY INTELLIGENCE</text>
+    <text x="62" y="21" fill="#f4f2ec" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="3">DB PULSE</text>
+    <text x="62" y="42" fill="#8e98a8" font-family="monospace" font-size="10" letter-spacing="2">CHINA DATABASE INTELLIGENCE</text>
     <text x="0" y="155" fill="#f4f2ec" font-family="Arial,sans-serif" font-size="70" font-weight="700" letter-spacing="-4">See the main lines.</text>
     <text x="0" y="230" fill="#a78bfa" font-family="Arial,sans-serif" font-size="70" font-weight="700" letter-spacing="-4">Find the inflections.</text>
-    <text x="2" y="285" fill="#94a3b8" font-family="Arial,sans-serif" font-size="20">Models · Agents · Products · Infrastructure · Capital · Global innovation</text>
+    <text x="2" y="285" fill="#94a3b8" font-family="Arial,sans-serif" font-size="20">Kernels · Cloud-native · Analytics · Operations · Adoption · Policy</text>
     <g transform="translate(2 342)"><rect width="210" height="48" rx="24" fill="#f4f2ec"/><text x="24" y="30" fill="#080b12" font-family="Arial,sans-serif" font-size="13" font-weight="700">SIGNAL, NOT NOISE →</text></g>
   </g>
   <g transform="translate(1000 120)">

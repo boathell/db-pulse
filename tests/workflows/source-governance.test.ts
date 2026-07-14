@@ -11,8 +11,10 @@ describe("GitHub source governance workflows", () => {
       workflow("source-audit.yml"),
       workflow("data-refresh.yml"),
     ]);
-    expect(audit).toContain("group: agent-pulse-repository-data-main");
-    expect(refresh).toContain("group: agent-pulse-repository-data-main");
+    expect(audit).toContain("group: db-pulse-repository-data-main");
+    expect(refresh).toContain("group: db-pulse-repository-data-main");
+    expect(audit).toContain("data/snapshot/v2.json");
+    expect(refresh).toContain("data/snapshot/v2.json");
     expect(audit.indexOf("npm run db:snapshot -- restore")).toBeLessThan(
       audit.indexOf("npm run sources:audit"),
     );
@@ -31,6 +33,8 @@ describe("GitHub source governance workflows", () => {
     expect(refresh.indexOf("npm run db:snapshot -- merge")).toBeLessThan(
       refresh.indexOf("npm run db:snapshot -- write"),
     );
+    expect(audit.match(/npm run privacy:scan/g)).toHaveLength(2);
+    expect(refresh.match(/npm run privacy:scan/g)).toHaveLength(2);
     expect(audit).not.toContain("git push --force");
     expect(refresh).not.toContain("git push --force");
     expect(audit).toContain("npm run observe:sources -- --confirm");
@@ -62,6 +66,7 @@ describe("GitHub source governance workflows", () => {
     expect(pages).toContain("GITHUB_OPEN_ISSUES=");
     expect(pages).toContain("GITHUB_METADATA_FETCHED_AT=");
     expect(pages.indexOf("gh api")).toBeLessThan(pages.indexOf("npm run export"));
+    expect(pages.indexOf("npm run export")).toBeLessThan(pages.indexOf("npm run privacy:scan"));
   });
 
   it("refreshes daily and deploys Pages after each successful refresh", async () => {

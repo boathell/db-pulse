@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: agent-pulse-quality-guard-main
+  group: db-pulse-quality-guard-main
   cancel-in-progress: true
 
 jobs:

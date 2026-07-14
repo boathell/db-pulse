@@ -35,6 +35,6 @@ describe("collection scope", () => {
       ),
     ).toBe(true);
     expect(plan.summary.skippedByReason["maintenance:manual"]).toBeGreaterThan(0);
-    expect(plan.summary.skippedByReason["maintenance:restricted"]).toBeGreaterThan(0);
+    expect(plan.summary.total).toBe(48);
   });
 });

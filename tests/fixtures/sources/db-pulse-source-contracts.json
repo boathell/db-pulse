@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "datasetId": "db-pulse-cn-v1",
+  "contracts": {
+    "web-scraper": {
+      "successFixture": "database-release-page.html",
+      "driftFixture": "database-source-drift.html",
+      "recoveryFixture": "database-release-page.html"
+    },
+    "github-releases": {
+      "successFixture": "database-releases.atom",
+      "driftFixture": "source-schema-drift.xml",
+      "recoveryFixture": "database-releases.atom"
+    },
+    "manual": {
+      "successFixture": "manual-source-boundary.json",
+      "driftFixture": null,
+      "recoveryFixture": null
+    }
+  },
+  "sources": [
+    {
+      "slug": "dameng-official",
+      "mode": "web-scraper",
+      "endpoint": "https://www.dameng.com/list_103.html"
+    },
+    {
+      "slug": "dameng-docs",
+      "mode": "manual",
+      "endpoint": "https://eco.dameng.com/document/dm/zh-cn/start/index.html"
+    },
+    {
+      "slug": "kingbase-official",
+      "mode": "web-scraper",
+      "endpoint": "https://www.kingbase.com.cn/news"
+    },
+    { "slug": "kingbase-docs", "mode": "manual", "endpoint": "https://help.kingbase.com.cn/" },
+    { "slug": "gbase-official", "mode": "web-scraper", "endpoint": "https://www.gbase.cn/" },
+    { "slug": "gbase-docs", "mode": "manual", "endpoint": "https://www.gbase.cn/document" },
+    { "slug": "goldendb-official", "mode": "web-scraper", "endpoint": "https://www.goldendb.com/" },
+    { "slug": "goldendb-news", "mode": "manual", "endpoint": "https://www.goldendb.com/news" },
+    {
+      "slug": "oceanbase-official",
+      "mode": "web-scraper",
+      "endpoint": "https://www.oceanbase.com/blog"
+    },
+    {
+      "slug": "oceanbase-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/oceanbase/oceanbase/releases.atom"
+    },
+    {
+      "slug": "tidb-official",
+      "mode": "web-scraper",
+      "endpoint": "https://docs.pingcap.com/tidb/stable/release-notes/"
+    },
+    {
+      "slug": "tidb-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/pingcap/tidb/releases.atom"
+    },
+    {
+      "slug": "opengauss-official",
+      "mode": "web-scraper",
+      "endpoint": "https://opengauss.org/zh/news/"
+    },
+    {
+      "slug": "opengauss-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/opengauss-mirror/openGauss-server/releases.atom"
+    },
+    {
+      "slug": "gaussdb-official",
+      "mode": "web-scraper",
+      "endpoint": "https://support.huaweicloud.com/productdesc-gaussdb/gaussdb_01_0001.html"
+    },
+    {
+      "slug": "gaussdb-docs",
+      "mode": "manual",
+      "endpoint": "https://support.huaweicloud.com/gaussdb/"
+    },
+    {
+      "slug": "polardb-official",
+      "mode": "web-scraper",
+      "endpoint": "https://help.aliyun.com/zh/polardb/polardb-for-xscale/release-notes-11"
+    },
+    {
+      "slug": "polardb-x-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/polardb/polardbx-sql/releases.atom"
+    },
+    {
+      "slug": "tdsql-official",
+      "mode": "web-scraper",
+      "endpoint": "https://cloud.tencent.com/document/product/1376/125147"
+    },
+    {
+      "slug": "tdsql-docs",
+      "mode": "manual",
+      "endpoint": "https://cloud.tencent.com/document/product/1376"
+    },
+    {
+      "slug": "vastbase-official",
+      "mode": "web-scraper",
+      "endpoint": "https://www.vastdata.com.cn/"
+    },
+    { "slug": "vastbase-docs", "mode": "manual", "endpoint": "https://docs.vastdata.com.cn/" },
+    {
+      "slug": "sequoiadb-official",
+      "mode": "web-scraper",
+      "endpoint": "https://www.sequoiadb.com/cn/news"
+    },
+    { "slug": "sequoiadb-docs", "mode": "manual", "endpoint": "https://doc.sequoiadb.com/" },
+    {
+      "slug": "matrixone-official",
+      "mode": "web-scraper",
+      "endpoint": "https://docs.matrixorigin.cn/en/v26.3.0.13/MatrixOne/Release-Notes/v22.0.6.0/"
+    },
+    {
+      "slug": "matrixone-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/matrixorigin/matrixone/releases.atom"
+    },
+    {
+      "slug": "doris-official",
+      "mode": "web-scraper",
+      "endpoint": "https://doris.apache.org/zh-CN/releases/all-release/"
+    },
+    {
+      "slug": "doris-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/apache/doris/releases.atom"
+    },
+    {
+      "slug": "starrocks-official",
+      "mode": "web-scraper",
+      "endpoint": "https://docs.starrocks.io/zh/docs/release_notes/"
+    },
+    {
+      "slug": "starrocks-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/StarRocks/starrocks/releases.atom"
+    },
+    {
+      "slug": "tdengine-official",
+      "mode": "web-scraper",
+      "endpoint": "https://docs.tdengine.com/release-history/"
+    },
+    {
+      "slug": "tdengine-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/taosdata/TDengine/releases.atom"
+    },
+    {
+      "slug": "nebulagraph-official",
+      "mode": "web-scraper",
+      "endpoint": "https://docs.nebula-graph.com.cn/3.8.0/20.appendix/release-notes/"
+    },
+    {
+      "slug": "nebulagraph-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/vesoft-inc/nebula/releases.atom"
+    },
+    {
+      "slug": "milvus-official",
+      "mode": "web-scraper",
+      "endpoint": "https://milvus.io/docs/zh/release_notes.md"
+    },
+    {
+      "slug": "milvus-releases",
+      "mode": "github-releases",
+      "endpoint": "https://github.com/milvus-io/milvus/releases.atom"
+    },
+    {
+      "slug": "nda-policy",
+      "mode": "web-scraper",
+      "endpoint": "https://www.nda.gov.cn/sjj/ywpd/szkjyjcss/0110/20250106095112713400492_pc.html"
+    },
+    {
+      "slug": "miit-policy",
+      "mode": "web-scraper",
+      "endpoint": "https://www.miit.gov.cn/zwgk/zcwj/"
+    },
+    {
+      "slug": "tc260-standard",
+      "mode": "web-scraper",
+      "endpoint": "https://www.tc260.org.cn/portal/article/2/20250915154109"
+    },
+    {
+      "slug": "caict-database",
+      "mode": "web-scraper",
+      "endpoint": "https://www.caict.ac.cn/kxyj/qwfb/bps/"
+    },
+    { "slug": "ccf-database", "mode": "manual", "endpoint": "https://www.ccf.org.cn/" },
+    { "slug": "ccf-dasfaa", "mode": "manual", "endpoint": "https://www.dasfaa.net/" },
+    { "slug": "dbtest-lab", "mode": "manual", "endpoint": "https://www.cesi.cn/" },
+    { "slug": "gitlink-database", "mode": "manual", "endpoint": "https://www.gitlink.org.cn/" },
+    {
+      "slug": "sse-dameng-listing",
+      "mode": "web-scraper",
+      "endpoint": "https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20240611_10758581.shtml"
+    },
+    { "slug": "modb", "mode": "manual", "endpoint": "https://www.modb.pro/" },
+    { "slug": "dtcc", "mode": "manual", "endpoint": "https://dtcc.it168.com/" },
+    {
+      "slug": "infoq-cn-database",
+      "mode": "manual",
+      "endpoint": "https://www.infoq.cn/topic/database"
+    }
+  ]
+}

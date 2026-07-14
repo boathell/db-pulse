@@ -8,6 +8,7 @@ import {
   eventFacetBucket,
   eventFingerprint,
 } from "../domain/clustering.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { rescoreEvent } from "./cluster.js";
 
 export interface EventMergeCandidate {
@@ -34,11 +35,18 @@ export async function findEventMergeCandidates(
   db: Kysely<DatabaseSchema>,
 ): Promise<EventMergeCandidate[]> {
   const [events, evidence] = await Promise.all([
-    db.selectFrom("events").selectAll().where("status", "!=", "hidden").execute(),
+    db
+      .selectFrom("events")
+      .selectAll()
+      .where("status", "!=", "hidden")
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
     db
       .selectFrom("event_signals")
+      .innerJoin("events", "events.id", "event_signals.event_id")
       .innerJoin("signals", "signals.id", "event_signals.signal_id")
       .select(["event_signals.event_id as eventId", "signals.source_id as sourceId"])
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
   ]);
   const evidenceByEvent = new Map<string, { count: number; sourceIds: Set<string> }>();

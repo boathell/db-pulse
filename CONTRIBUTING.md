@@ -1,31 +1,23 @@
 # Contributing
 
-Thanks for helping make AI industry intelligence more useful and less noisy.
+Thanks for helping make China database industry intelligence more useful, verifiable, and less noisy.
 
 ## Before opening a PR
 
-1. Read `AGENTS.md` and the active spec package under `docs/specs/`.
-2. Open an issue before schema, ranking, workflow or public information-architecture changes.
-3. Keep collectors behind the `SourceAdapter` contract.
-4. Never add a source that requires bypassing access controls.
-5. Do not commit private data, tokens, cookies, raw payload dumps or database files.
+1. Read `AGENTS.md` and the applicable package under `docs/specs/`.
+2. Use docs-first changes for schema, source lifecycle, ranking, publishing, or cross-layer behavior.
+3. Keep collectors behind the `SourceAdapter` contract; new sources start in `draft` or `shadow`.
+4. Do not bypass login, WAF, CAPTCHA, paywalls, robots, or license boundaries.
+5. Never commit tokens, cookies, databases, raw payloads, local paths, or personal data.
 
 ## Development
 
 ```bash
-npm install
+npm ci
 npm run db:migrate
 npm run db:seed
 npm run check
+npm run build
 ```
 
-## Pull request checklist
-
-- Tests cover the new behavior or bug fix.
-- New source metadata includes tier, role, region, language, authority and acquisition method.
-- Public output remains static and privacy-safe.
-- Facts, inferences and heat signals remain distinguishable.
-- Documentation is updated if behavior or operator workflow changes.
-
-Code, comments and commits should be in English. Product copy may be Chinese.
-
+Every user-visible change must update both `CHANGELOG.md` and `src/catalog/product.ts`. Code, identifiers, comments, and commits use English by default; product documentation and interface copy use Chinese by default.

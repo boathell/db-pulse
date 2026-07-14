@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/pages.yml"
-      - "data/snapshot/v1.json"
+      - "data/snapshot/v2.json"
       - "package.json"
       - "package-lock.json"
       - "src/**"
@@ -27,7 +27,7 @@ jobs:
     timeout-minutes: 20
     env:
       DATABASE_URL: sqlite:./var/pages.db
-      PUBLIC_SITE_URL: https://barretlee.github.io/agent-pulse/
+      PUBLIC_SITE_URL: https://boathell.github.io/db-pulse/
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
@@ -50,6 +50,8 @@ jobs:
           echo "GITHUB_METADATA_FETCHED_AT=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
       - name: Export static site from restored data
         run: npm run export -- --skip-seed
+      - name: Scan static output for privacy and legacy content
+        run: npm run privacy:scan
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:

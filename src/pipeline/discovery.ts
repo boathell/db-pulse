@@ -10,6 +10,7 @@ import { randomUUID } from "node:crypto";
 import { isIP } from "node:net";
 import type { Kysely } from "kysely";
 import type { DatabaseSchema } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import type { OriginKind, OriginReference } from "../domain/types.js";
 import { rootDomain } from "./utils.js";
 
@@ -82,6 +83,9 @@ const ORIGIN_KINDS = new Set<OriginKind>([
   "unknown",
 ]);
 
+const DATABASE_DISCOVERY_PATTERN =
+  /database|dbms|distributed sql|oltp|olap|htap|lakehouse|vector store|query engine|storage engine|transaction|replication|数据库|分布式 sql|事务|查询引擎|存储引擎|湖仓|向量检索|图数据库|时序数据库|数据库运维|数据架构/i;
+
 const SHARED_IDENTITY_HOSTS = [
   "github.com",
   "github.io",
@@ -122,6 +126,7 @@ export async function discoverNewSources(
   const existingSources = await db
     .selectFrom("sources")
     .select(["id", "slug", "name", "homepage_url", "config_json", "role", "source_category"])
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .execute();
   const catalog = buildCatalogIdentity(existingSources);
   const observations: EvidenceObservation[] = [];
@@ -145,6 +150,7 @@ export async function discoverNewSources(
       "aggregator.region as aggregator_region",
     ])
     .where("source_discoveries.origin_url", "is not", null)
+    .where("aggregator.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .orderBy("source_discoveries.last_seen_at", "desc")
     .limit(2_000)
     .execute();
@@ -192,6 +198,7 @@ export async function discoverNewSources(
     .innerJoin("sources", "sources.id", "signals.source_id")
     .select([
       "signals.id",
+      "signals.title",
       "signals.canonical_url",
       "signals.raw_meta_json",
       "signals.language",
@@ -200,6 +207,7 @@ export async function discoverNewSources(
     ])
     .where("sources.source_category", "!=", "aggregator")
     .where("sources.role", "!=", "aggregator")
+    .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .orderBy("signals.published_at", "desc")
     .limit(1_000)
     .execute();
@@ -216,12 +224,14 @@ export async function discoverNewSources(
         existingSourceMatches++;
         continue;
       }
+      const title = cleanTitle(signal.title);
       observations.push({
         id: `signal:${signal.id}:${parsed.url}`,
         url: parsed.url,
         host: parsed.host,
         root: parsed.root,
         kind: "unknown",
+        ...(title ? { title } : {}),
         language: normalizeLanguage(signal.language),
         region: inferRegion(parsed.host, signal.language, signal.source_region),
         publishedAt: signal.published_at,
@@ -238,6 +248,10 @@ export async function discoverNewSources(
   for (const [root, group] of groups) {
     if (group.observations.length < minSignals) {
       belowThreshold++;
+      continue;
+    }
+    if (!isDatabaseDiscovery(group)) {
+      policyRejected++;
       continue;
     }
     const slug = domainToSlug(root);
@@ -322,6 +336,7 @@ export async function saveDiscoveredSources(
   const existingSources = await db
     .selectFrom("sources")
     .select(["slug", "homepage_url", "config_json", "role", "source_category"])
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .execute();
   const catalog = buildCatalogIdentity(existingSources);
 
@@ -378,6 +393,11 @@ export async function saveDiscoveredSources(
           "Proposal only; verify ownership, robots, terms, and attribution before shadow collection.",
         quality_score: Math.min(70, Math.max(30, proposalScore)),
         last_verified_at: null,
+        owner: cleanCandidateName(candidate.name) ?? displayName(parsed.root),
+        robots_policy: "review-required",
+        freshness_slo_hours: 168,
+        adapter_version: "1.0.0",
+        content_domain: PUBLIC_CONTENT_DOMAIN,
         created_at: timestamp,
         updated_at: timestamp,
       })
@@ -451,6 +471,11 @@ function groupObservations(observations: EvidenceObservation[]): Map<string, Dom
     groups.set(observation.root, group);
   }
   return groups;
+}
+
+function isDatabaseDiscovery(group: DomainGroup): boolean {
+  const text = [...group.titles, ...group.names.keys(), ...group.urls.keys()].join(" ");
+  return DATABASE_DISCOVERY_PATTERN.test(text);
 }
 
 function scoreCandidate(group: DomainGroup): number {

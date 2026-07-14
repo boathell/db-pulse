@@ -1,12 +1,12 @@
 const themes = ["paper", "midnight", "signal"];
-const savedTheme = localStorage.getItem("agent-pulse-theme");
+const savedTheme = localStorage.getItem("db-pulse-theme");
 if (themes.includes(savedTheme)) document.documentElement.dataset.theme = savedTheme;
 
 document.querySelector("[data-theme-toggle]")?.addEventListener("click", () => {
   const current = document.documentElement.dataset.theme || "paper";
   const next = themes[(themes.indexOf(current) + 1) % themes.length];
   document.documentElement.dataset.theme = next;
-  localStorage.setItem("agent-pulse-theme", next);
+  localStorage.setItem("db-pulse-theme", next);
 });
 
 setupEventDrawer();
@@ -322,12 +322,12 @@ function setupGithubStarCount() {
     button.setAttribute(
       "aria-label",
       document.documentElement.lang === "en"
-        ? `Star Agent Pulse on GitHub, ${stars} stars`
-        : `在 GitHub 为 Agent Pulse 点赞，当前 ${stars} 个 Star`,
+        ? `Star DB Pulse on GitHub, ${stars} stars`
+        : `在 GitHub 为 DB Pulse 点赞，当前 ${stars} 个 Star`,
     );
   };
 
-  const cacheKey = `agent-pulse-github-stars:${repository}`;
+  const cacheKey = `db-pulse-github-stars:${repository}`;
   try {
     const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
     if (
@@ -340,33 +340,9 @@ function setupGithubStarCount() {
     try {
       localStorage.removeItem(cacheKey);
     } catch {
-      // Ignore blocked storage and continue with a live request.
+      // Ignore blocked storage; the next static build refreshes repository metadata.
     }
   }
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 4_000);
-  fetch(`https://api.github.com/repos/${repository}`, {
-    cache: "no-store",
-    headers: {
-      Accept: "application/vnd.github+json",
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-    signal: controller.signal,
-  })
-    .then((response) => (response.ok ? response.json() : Promise.reject(new Error("GitHub API"))))
-    .then((metadata) => {
-      const stars = metadata?.stargazers_count;
-      if (!Number.isInteger(stars) || stars < 0) return;
-      apply(stars, "live");
-      try {
-        localStorage.setItem(cacheKey, JSON.stringify({ stars, fetchedAt: Date.now() }));
-      } catch {
-        // A blocked cache must not prevent the public counter from updating.
-      }
-    })
-    .catch(() => {})
-    .finally(() => clearTimeout(timeout));
 }
 
 function setupTrendModules() {

@@ -12,7 +12,7 @@ export function fingerprintPublicContent(payloads: unknown[]): string {
 
 export async function runPublicContentFingerprintCli(args = process.argv.slice(2)): Promise<void> {
   const dataDir = resolve(valueFor(args, "--dir") ?? "dist/data");
-  const files = ["timeline.json", "signals.json", "scout.json", "product.json"];
+  const files = ["timeline.json", "timeline.en.json", "signals.json", "scout.json", "product.json"];
   if (args.includes("--include-sources")) files.push("sources.json");
   const payloads = await Promise.all(
     files.map(async (file) => JSON.parse(await readFile(resolve(dataDir, file), "utf8"))),

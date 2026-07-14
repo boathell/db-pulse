@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import type { Kysely } from "kysely";
 import { capabilities, productVersion } from "../catalog/product.js";
 import type { DatabaseSchema } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { eventReadinessSummary } from "./readiness.js";
 
 export interface EvaluationDimension {
@@ -90,17 +91,35 @@ export async function evaluateSystem(db: Kysely<DatabaseSchema>) {
   const startedAt = new Date().toISOString();
   const [allSources, runs, checks, events, eventEvidence, scout, signalProvenance, readiness] =
     await Promise.all([
-      db.selectFrom("sources").selectAll().execute(),
-      db.selectFrom("source_runs").selectAll().orderBy("started_at", "desc").limit(2_000).execute(),
+      db
+        .selectFrom("sources")
+        .selectAll()
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+        .execute(),
+      db
+        .selectFrom("source_runs")
+        .innerJoin("sources", "sources.id", "source_runs.source_id")
+        .selectAll("source_runs")
+        .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+        .orderBy("source_runs.started_at", "desc")
+        .limit(2_000)
+        .execute(),
       db
         .selectFrom("source_checks")
-        .selectAll()
-        .orderBy("finished_at", "desc")
+        .innerJoin("sources", "sources.id", "source_checks.source_id")
+        .selectAll("source_checks")
+        .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+        .orderBy("source_checks.finished_at", "desc")
         .limit(5_000)
         .execute(),
-      db.selectFrom("events").selectAll().execute(),
+      db
+        .selectFrom("events")
+        .selectAll()
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+        .execute(),
       db
         .selectFrom("event_signals")
+        .innerJoin("events", "events.id", "event_signals.event_id")
         .innerJoin("signals", "signals.id", "event_signals.signal_id")
         .innerJoin("sources", "sources.id", "signals.source_id")
         .select([
@@ -110,12 +129,19 @@ export async function evaluateSystem(db: Kysely<DatabaseSchema>) {
           "sources.role as role",
           "sources.source_category as sourceCategory",
         ])
+        .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+        .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
         .execute(),
-      db.selectFrom("scout_insights").selectAll().execute(),
+      db
+        .selectFrom("scout_insights")
+        .selectAll()
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+        .execute(),
       db
         .selectFrom("signals")
         .innerJoin("sources", "sources.id", "signals.source_id")
         .select(["signals.id", "sources.role", "sources.source_category as sourceCategory"])
+        .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
         .execute(),
       eventReadinessSummary(db),
     ]);
@@ -505,6 +531,7 @@ export async function latestEvaluation(db: Kysely<DatabaseSchema>) {
   const row = await db
     .selectFrom("evaluation_runs")
     .selectAll()
+    .where("release_version", "=", productVersion)
     .orderBy("finished_at", "desc")
     .executeTakeFirst();
   if (!row) return null;

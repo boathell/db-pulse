@@ -1,18 +1,18 @@
 name: Source proposal
-description: Propose a public, high-value source for the Agent Pulse observation catalog
+description: Propose a public, high-value source for the DB Pulse observation catalog
 title: "[Source]: "
 labels: ["source:proposal"]
 body:
   - type: markdown
     attributes:
       value: |
-        <!-- agent-pulse-source-proposal:v1 -->
+        <!-- db-pulse-source-proposal:v1 -->
         Thanks for helping improve the evidence network. Submissions are untrusted proposals: they can only become disabled drafts through a reviewed pull request and can never activate a source automatically.
   - type: input
     id: name
     attributes:
       label: Source name
-      placeholder: OpenAI News
+      placeholder: OceanBase Release Notes
     validations:
       required: true
   - type: input
@@ -20,7 +20,7 @@ body:
     attributes:
       label: Canonical owner
       description: The organization or person that owns and publishes this source.
-      placeholder: OpenAI
+      placeholder: OceanBase
     validations:
       required: true
   - type: input
@@ -56,19 +56,14 @@ body:
     attributes:
       label: Coverage category
       options:
-        - frontier-lab
-        - china-lab
-        - research-eval
-        - open-source
-        - agent-devtool
-        - robotics
-        - infra-chip-cloud
+        - database-vendor
+        - open-source-database
+        - cloud-database
+        - policy-standard
+        - research-benchmark
         - capital-business
-        - model-economics
-        - policy
-        - expert
-        - media
-        - community-heat
+        - professional-media
+        - database-community
     validations:
       required: true
   - type: dropdown
@@ -91,7 +86,7 @@ body:
     attributes:
       label: Topics
       description: One to twelve comma-separated topics.
-      placeholder: foundation-model, agent, safety
+      placeholder: distributed-sql, release, reliability
     validations:
       required: true
   - type: dropdown
@@ -121,7 +116,7 @@ body:
   - type: textarea
     id: rationale
     attributes:
-      label: Why should Agent Pulse track it?
+      label: Why should DB Pulse track it?
       description: Describe the decision value and what coverage gap it closes.
     validations:
       required: true

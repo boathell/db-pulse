@@ -28,11 +28,17 @@ async function setup() {
 describe("aggregator provenance debt", () => {
   it("purges only unattached aggregator signals", async () => {
     const db = await setup();
+    await db
+      .updateTable("sources")
+      .set({ source_category: "aggregator", role: "aggregator" })
+      .where("slug", "=", "modb")
+      .execute();
     const source = await db
       .selectFrom("sources")
       .select("id")
-      .where("slug", "=", "aihot")
+      .where("slug", "=", "modb")
       .executeTakeFirstOrThrow();
+    await db.deleteFrom("signals").where("source_id", "=", source.id).execute();
     const event = await db.selectFrom("events").select("id").limit(1).executeTakeFirstOrThrow();
     const attachedId = await insertAggregatorSignal(db, source.id, "attached");
     await insertAggregatorSignal(db, source.id, "unattached");

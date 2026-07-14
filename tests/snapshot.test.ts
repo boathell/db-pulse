@@ -1,4 +1,4 @@
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -7,6 +7,7 @@ import { createDatabase } from "../src/db/database.js";
 import { migrateToLatest } from "../src/db/migrate.js";
 import { Repository } from "../src/db/repository.js";
 import { seedDatabase } from "../src/db/seed.js";
+import { PUBLIC_DATASET_ID } from "../src/domain/content-domain.js";
 import { restoreRepositorySnapshot, writeRepositorySnapshot } from "../src/pipeline/snapshot.js";
 
 const databases: ReturnType<typeof createDatabase>[] = [];
@@ -15,277 +16,124 @@ afterEach(async () => {
   while (databases.length) await databases.pop()?.destroy();
 });
 
-describe("repository data snapshot", () => {
-  it("is deterministic, strips sensitive URL parameters and restores into a fresh database", async () => {
-    const config = loadConfig({ NODE_ENV: "test", DATABASE_URL: "sqlite::memory:" });
-    const sourceDb = createDatabase(config);
-    databases.push(sourceDb);
-    await migrateToLatest(sourceDb, config);
-    await seedDatabase(sourceDb);
-    const repository = new Repository(sourceDb);
-    const openai = (await repository.listSources()).find((source) => source.slug === "openai");
-    expect(openai).toBeDefined();
-    const jobId = await repository.startJob("collect", openai?.id ?? null);
-    const runId = await repository.startSourceRun(openai?.id ?? "", jobId);
-    await repository.finishSourceRun(runId, {
-      status: "succeeded",
-      attemptCount: 1,
-      durationMs: 100,
-      collected: 10,
-      created: 8,
-      skipped: 2,
-      httpStatus: 200,
-      responseBytes: 1_024,
-    });
-    const secondRunId = await repository.startSourceRun(openai?.id ?? "", jobId);
-    await repository.finishSourceRun(secondRunId, {
-      status: "not_modified",
-      attemptCount: 1,
-      durationMs: 50,
-      collected: 0,
-      created: 0,
-      skipped: 0,
-      httpStatus: 304,
-      responseBytes: 0,
-    });
-    await repository.finishJob(jobId, { collected: 10, created: 8, skipped: 2, errors: [] });
-    await repository.insertSourceCheck({
-      id: "snapshot-source-check",
-      source_id: openai?.id ?? "",
-      job_id: null,
-      status: "healthy",
-      adapter: "rss",
-      adapter_version: "1",
-      access_status: "reachable",
-      fetch_status: "succeeded",
-      parse_status: "succeeded",
-      schema_status: "valid",
-      policy_status: "allowed_metadata",
-      http_status: 200,
-      final_url: "https://openai.com/feed.xml?api_key=must-not-leak",
-      content_type: "application/atom+xml",
-      response_bytes: 1_024,
-      item_count: 10,
-      duplicate_count: 1,
-      duplicate_ratio_bps: 1_000,
-      quality_score: 80,
-      latest_item_at: "2026-07-11T08:00:00.000Z",
-      freshness_hours: 12,
-      error_type: null,
-      error_code: null,
-      error_summary: null,
-      repair_action: "none",
-      proxy_hint: "not_required",
-      proxy_used: 0,
-      retention_decision: "keep",
-      recommended_lifecycle: "active",
-      sample_json: JSON.stringify({ secret: "must-not-leak" }),
-      started_at: "2026-07-11T08:00:00.000Z",
-      finished_at: "2026-07-11T08:00:01.000Z",
-      duration_ms: 1_000,
-    });
-    const snapshotSignal = await repository.insertSignal(openai?.id ?? "", {
-      externalId: "snapshot-sensitive-url",
-      url: "https://openai.com/index/snapshot-test?api_key=must-not-leak&utm_source=test",
-      title: "Snapshot persistence test signal",
-      summary: `A stable signal used to validate repository snapshot restore from /Users/alice/private/workspace. ${"context ".repeat(400)}`,
-      language: "en",
-      publishedAt: "2026-07-11T08:00:00.000Z",
-      category: "test",
-      tags: ["snapshot"],
-      metrics: { platforms: ["official"] },
-      rawMeta: { ignored: true },
-    });
-    await repository.insertSignal(openai?.id ?? "", {
-      externalId: "snapshot-repeat-observation",
-      url: "https://openai.com/index/snapshot-test",
-      title: "Snapshot persistence test signal",
-      summary: "The source observed the canonical item again.",
-      language: "en",
-      publishedAt: "2026-07-11T08:00:00.000Z",
-      category: "test",
-      tags: ["repeat"],
-      metrics: {},
-      rawMeta: {},
-    });
-    const deepmind = (await repository.listSources()).find((source) => source.slug === "deepmind");
-    await repository.insertSignal(deepmind?.id ?? "", {
-      externalId: "snapshot-second-observation",
-      url: "https://openai.com/index/snapshot-test?utm_medium=syndication",
-      title: "Snapshot persistence test signal",
-      summary: "The same canonical item was independently observed by another source.",
-      language: "en",
-      publishedAt: "2026-07-11T08:00:00.000Z",
-      category: "test",
-      tags: ["cross-source"],
-      metrics: { platforms: ["syndication"] },
-      rawMeta: {},
-    });
-    await repository.deferSignal(snapshotSignal?.id ?? "", "snapshot-triage-fixture", 42, {
-      reversible: true,
-    });
+async function database() {
+  const config = loadConfig({ NODE_ENV: "test", DATABASE_URL: "sqlite::memory:" });
+  const db = createDatabase(config);
+  databases.push(db);
+  await migrateToLatest(db, config);
+  await seedDatabase(db);
+  return { db, config };
+}
 
-    const root = await mkdtemp(join(tmpdir(), "agent-pulse-snapshot-"));
-    const first = await writeRepositorySnapshot(sourceDb, root);
-    const second = await writeRepositorySnapshot(sourceDb, root);
+describe("DB Pulse repository snapshot v2", () => {
+  it("exports only database-cn rows, bilingual Events, and a stable dataset identity", async () => {
+    const { db } = await database();
+    const source = await db.selectFrom("sources").selectAll().executeTakeFirstOrThrow();
+    const event = await db.selectFrom("events").selectAll().executeTakeFirstOrThrow();
+    await db
+      .insertInto("sources")
+      .values({
+        ...source,
+        id: "legacy-ai-source",
+        slug: "legacy-ai-source",
+        name: "Legacy AI source",
+        content_domain: "ai-industry",
+      })
+      .execute();
+    await db
+      .insertInto("events")
+      .values({
+        ...event,
+        id: "legacy-ai-event",
+        slug: "legacy-ai-event",
+        title: "Legacy AI event",
+        content_domain: "ai-industry",
+      })
+      .execute();
+
+    const root = await mkdtemp(join(tmpdir(), "db-pulse-snapshot-"));
+    const first = await writeRepositorySnapshot(db, root);
+    const second = await writeRepositorySnapshot(db, root);
     expect(first.changed).toBe(true);
     expect(second).toMatchObject({ changed: false, sha256: first.sha256 });
-    const serialized = await readFile(join(root, "data/snapshot/v1.json"), "utf8");
-    expect(serialized).not.toContain("must-not-leak");
-    expect(serialized).not.toContain("raw_meta_json");
-    expect(serialized).not.toContain("/Users/");
-    expect(serialized).toContain("[local-path]");
-    const snapshot = JSON.parse(serialized);
-    const persisted = snapshot.signals.find(
-      (signal: { title: string }) => signal.title === "Snapshot persistence test signal",
-    );
-    expect(persisted.summary.length).toBeLessThanOrEqual(320);
-    expect(first.counts.signalTriage).toBe(1);
-    expect(first.counts.sourceChecks).toBe(1);
-    expect(first.counts.sourceRuns).toBe(2);
-    expect(first.counts.signalObservations).toBeGreaterThanOrEqual(2);
-    expect(first.counts.scoutInsights).toBe(1);
 
-    const targetDb = createDatabase(config);
-    databases.push(targetDb);
-    await migrateToLatest(targetDb, config);
-    await seedDatabase(targetDb);
-    const targetRepository = new Repository(targetDb);
-    const targetOpenai = (await targetRepository.listSources()).find(
-      (source) => source.slug === "openai",
+    const serialized = await readFile(join(root, "data/snapshot/v2.json"), "utf8");
+    const snapshot = JSON.parse(serialized) as {
+      schemaVersion: number;
+      datasetId: string;
+      sources: Array<{ slug: string; contentDomain: string }>;
+      events: Array<{ slug: string; contentDomain: string }>;
+      eventLocalizations: Array<{ locale: string }>;
+    };
+    expect(snapshot).toMatchObject({ schemaVersion: 2, datasetId: PUBLIC_DATASET_ID });
+    expect(snapshot.sources).toHaveLength(48);
+    expect(snapshot.events.length).toBeGreaterThanOrEqual(36);
+    expect(snapshot.sources.every((row) => row.contentDomain === "database-cn")).toBe(true);
+    expect(snapshot.events.every((row) => row.contentDomain === "database-cn")).toBe(true);
+    expect(snapshot.eventLocalizations).toHaveLength(snapshot.events.length);
+    expect(snapshot.eventLocalizations.every((row) => row.locale === "en")).toBe(true);
+    expect(serialized).not.toContain("legacy-ai-source");
+    expect(serialized).not.toContain("legacy-ai-event");
+  });
+
+  it("restores the DB Pulse dataset and rejects AI or mismatched snapshots", async () => {
+    const source = await database();
+    const root = await mkdtemp(join(tmpdir(), "db-pulse-restore-"));
+    await writeRepositorySnapshot(source.db, root);
+
+    const target = await database();
+    const restored = await restoreRepositorySnapshot(target.db, root);
+    expect(restored.restored).toBe(true);
+    const repository = new Repository(target.db);
+    expect((await repository.publicEvents()).length).toBeGreaterThanOrEqual(36);
+    expect(await repository.publicEvents("en")).toHaveLength(
+      (await repository.publicEvents()).length,
     );
-    await targetRepository.updateSource(targetOpenai?.id ?? "", {
-      last_collected_at: "2027-01-01T00:00:00.000Z",
-      last_verified_at: "2027-01-01T00:00:00.000Z",
-      success_count: 99,
-      health_score: 99,
-    });
-    const localSummary = `A newer and deliberately more complete local summary. ${"local detail ".repeat(80)}`;
-    await targetRepository.insertSignal(targetOpenai?.id ?? "", {
-      externalId: "local-existing-signal",
-      url: "https://openai.com/index/snapshot-test",
-      title: "Snapshot persistence test signal with local detail",
-      summary: localSummary,
-      language: "en",
-      publishedAt: "2026-07-11T08:00:00.000Z",
-      category: "test",
-      tags: ["local"],
-      metrics: { platforms: ["local"] },
-      rawMeta: { privateLocalDetail: true },
-    });
-    await targetRepository.insertSignal(targetOpenai?.id ?? "", {
-      externalId: "local-repeat-observation",
-      url: "https://openai.com/index/snapshot-test",
-      title: "Snapshot persistence test signal with local detail",
-      summary: localSummary,
-      language: "en",
-      publishedAt: "2026-07-11T08:00:00.000Z",
-      category: "test",
-      tags: ["local-repeat"],
-      metrics: {},
-      rawMeta: {},
-    });
-    const catalogSignal = await targetRepository.insertSignal(targetOpenai?.id ?? "", {
-      externalId: "new-catalog-signal",
-      url: "https://openai.com/index/new-catalog-signal",
-      title: "New catalog signal added after the snapshot",
-      summary: "Restore must merge rather than delete newer catalog evidence.",
-      language: "en",
-      publishedAt: "2026-07-12T08:00:00.000Z",
-      category: "test",
-      tags: ["catalog"],
-      metrics: {},
-      rawMeta: {},
-    });
-    const catalogEvent = (await targetRepository.listEvents())[0];
-    expect(catalogEvent).toBeDefined();
-    await targetRepository.attachSignal(
-      catalogEvent?.id ?? "",
-      catalogSignal?.id ?? "",
-      "primary",
-      100,
+
+    const snapshotPath = join(root, "data/snapshot/v2.json");
+    const valid = JSON.parse(await readFile(snapshotPath, "utf8"));
+    const mismatch = structuredClone(valid);
+    mismatch.datasetId = "agent-pulse-ai-v1";
+    await writeFile(snapshotPath, `${JSON.stringify(mismatch)}\n`);
+    await expect(restoreRepositorySnapshot(target.db, root)).rejects.toThrow(
+      "Unsupported repository snapshot dataset",
     );
-    const restored = await restoreRepositorySnapshot(targetDb, root);
-    expect(restored).toMatchObject({ restored: true, counts: first.counts });
-    const restoredSignal = await targetDb
-      .selectFrom("signals")
-      .selectAll()
-      .where("canonical_url", "=", "https://openai.com/index/snapshot-test")
-      .executeTakeFirst();
-    expect(restoredSignal?.canonical_url).toBe("https://openai.com/index/snapshot-test");
-    expect(restoredSignal?.summary).toBe(localSummary);
-    expect(restoredSignal?.raw_meta_json).toContain("privateLocalDetail");
-    expect(
-      await targetDb
-        .selectFrom("sources")
-        .select(["last_verified_at", "success_count", "health_score"])
-        .where("id", "=", targetOpenai?.id ?? "")
-        .executeTakeFirst(),
-    ).toEqual({
-      last_verified_at: "2027-01-01T00:00:00.000Z",
-      success_count: 99,
-      health_score: 99,
-    });
-    expect(
-      await targetDb
-        .selectFrom("signal_observations")
-        .select(({ fn }) => fn.countAll<number>().as("count"))
-        .where("signal_id", "=", restoredSignal?.id ?? "")
-        .executeTakeFirstOrThrow(),
-    ).toEqual({ count: 2 });
-    expect(
-      await targetDb
-        .selectFrom("signal_observations")
-        .select(({ fn }) => fn.sum<number>("observation_count").as("count"))
-        .where("signal_id", "=", restoredSignal?.id ?? "")
-        .executeTakeFirstOrThrow(),
-    ).toEqual({ count: 4 });
-    expect(
-      await targetDb
-        .selectFrom("signal_observation_occurrences")
-        .select(({ fn }) => fn.countAll<number>().as("count"))
-        .where("signal_id", "=", restoredSignal?.id ?? "")
-        .executeTakeFirstOrThrow(),
-    ).toEqual({ count: 4 });
-    expect(
-      await targetDb
-        .selectFrom("signal_triage")
-        .select(["reason", "eventability_score"])
-        .where("signal_id", "=", restoredSignal?.id ?? "")
-        .executeTakeFirst(),
-    ).toEqual({ reason: "snapshot-triage-fixture", eventability_score: 42 });
-    expect(
-      await targetDb
-        .selectFrom("event_signals")
-        .select("signal_id")
-        .where("signal_id", "=", catalogSignal?.id ?? "")
-        .executeTakeFirst(),
-    ).toBeDefined();
-    expect(
-      await targetDb
-        .selectFrom("source_checks")
-        .select(["status", "final_url", "sample_json"])
-        .where("id", "=", "snapshot-source-check")
-        .executeTakeFirst(),
-    ).toEqual({
-      status: "healthy",
-      final_url: "https://openai.com/feed.xml",
-      sample_json: "{}",
-    });
-    expect(
-      await targetDb
-        .selectFrom("source_runs")
-        .select(["status", "collected_count", "created_count"])
-        .where("id", "=", runId)
-        .executeTakeFirst(),
-    ).toEqual({ status: "succeeded", collected_count: 10, created_count: 8 });
-    expect(
-      await targetDb
-        .selectFrom("source_runs")
-        .select("status")
-        .where("id", "=", secondRunId)
-        .executeTakeFirst(),
-    ).toEqual({ status: "not_modified" });
-    expect(await targetRepository.publicScoutInsights()).toHaveLength(1);
+
+    const oldSchema = structuredClone(valid);
+    oldSchema.schemaVersion = 1;
+    await writeFile(snapshotPath, `${JSON.stringify(oldSchema)}\n`);
+    await expect(restoreRepositorySnapshot(target.db, root)).rejects.toThrow(
+      "Unsupported repository snapshot schema",
+    );
+
+    const wrongDomain = structuredClone(valid);
+    wrongDomain.events[0].contentDomain = "ai-industry";
+    await writeFile(snapshotPath, `${JSON.stringify(wrongDomain)}\n`);
+    await expect(restoreRepositorySnapshot(target.db, root)).rejects.toThrow(
+      "non-public content domain",
+    );
+
+    const missingEnglish = structuredClone(valid);
+    const publishedSlug = missingEnglish.events.find(
+      (event: { status: string }) => event.status === "published",
+    ).slug;
+    missingEnglish.eventLocalizations = missingEnglish.eventLocalizations.filter(
+      (localization: { eventSlug: string; locale: string }) =>
+        localization.eventSlug !== publishedSlug || localization.locale !== "en",
+    );
+    await writeFile(snapshotPath, `${JSON.stringify(missingEnglish)}\n`);
+    await expect(restoreRepositorySnapshot(target.db, root)).rejects.toThrow(
+      "missing complete English localization",
+    );
+    expect((await repository.publicEvents()).length).toBeGreaterThanOrEqual(36);
+  });
+
+  it("keeps the audited snapshot stable across repeated catalog seeding", async () => {
+    const { db } = await database();
+    const root = await mkdtemp(join(tmpdir(), "db-pulse-seed-idempotence-"));
+    const first = await writeRepositorySnapshot(db, root);
+    await seedDatabase(db);
+    const second = await writeRepositorySnapshot(db, root);
+    expect(second).toMatchObject({ changed: false, sha256: first.sha256 });
   });
 });

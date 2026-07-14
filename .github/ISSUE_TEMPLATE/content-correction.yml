@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for helping keep Agent Pulse accurate and responsible. This is a public Issue. Do not include private personal data, credentials, confidential documents, or security-sensitive details. Use the private process in SECURITY.md when necessary.
+        Thank you for helping keep DB Pulse accurate and responsible. This is a public Issue. Do not include private personal data, credentials, confidential documents, or security-sensitive details. Use the private process in SECURITY.md when necessary.
 
   - type: dropdown
     id: request_type
@@ -27,9 +27,9 @@ body:
   - type: input
     id: agent_pulse_url
     attributes:
-      label: Agent Pulse URL or record identifier
+      label: DB Pulse URL or record identifier
       description: Link to the affected page, event, source, or record.
-      placeholder: https://barretlee.github.io/agent-pulse/...
+      placeholder: https://boathell.github.io/db-pulse/...
     validations:
       required: true
 

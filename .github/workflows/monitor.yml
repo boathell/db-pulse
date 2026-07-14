@@ -12,12 +12,12 @@ permissions:
   issues: write
 
 concurrency:
-  group: agent-pulse-monitor-main
+  group: db-pulse-monitor-main
   cancel-in-progress: true
 
 env:
   DATABASE_URL: sqlite:./var/monitor-check.db
-  PUBLIC_SITE_URL: https://barretlee.github.io/agent-pulse/
+  PUBLIC_SITE_URL: https://boathell.github.io/db-pulse/
 
 jobs:
   check:
@@ -96,8 +96,8 @@ jobs:
           report="$RUNNER_TEMP/monitor.json"
           body="$RUNNER_TEMP/monitor-issue.md"
           {
-            echo '<!-- agent-pulse-monitor:v1 -->'
-            echo '# Agent Pulse 自动监控告警'
+            echo '<!-- db-pulse-monitor:v1 -->'
+            echo '# DB Pulse 自动监控告警'
             echo
             echo "- 时间：$(jq -r '.timestamp' "$report")"
             echo "- 系统分：$(jq -r '.systemScore' "$report") / 100"
@@ -116,5 +116,5 @@ jobs:
           if [[ -n "$issue" ]]; then
             gh issue edit "$issue" --body-file "$body"
           else
-            gh issue create --title "[Monitor] Agent Pulse critical health incident" --label "monitor:critical" --body-file "$body"
+            gh issue create --title "[Monitor] DB Pulse critical health incident" --label "monitor:critical" --body-file "$body"
           fi

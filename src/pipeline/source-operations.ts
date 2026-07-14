@@ -24,7 +24,7 @@ export async function sourceOperationReadiness(
 ): Promise<Map<string, SourceOperations>> {
   const repository = new Repository(db);
   const [sources, checks, observation] = await Promise.all([
-    repository.listSources(),
+    repository.listPublicSources(),
     db
       .selectFrom("source_checks")
       .select(["source_id", "status", "finished_at"])

@@ -1,20 +1,17 @@
 cff-version: 1.2.0
-message: "If you use Agent Pulse in research or analysis, please cite the software and the specific evidence pages you consulted."
-title: "Agent Pulse"
-abstract: "An evidence-backed, China-first AI industry intelligence system for strategic narratives, source governance, and decision support."
+message: "If you use DB Pulse in research or analysis, cite the software and the specific evidence pages consulted."
+title: "DB Pulse"
+abstract: "An evidence-backed China database industry intelligence and decision system."
 type: software
 authors:
-  - family-names: "Lee"
-    given-names: "Barret"
-repository-code: "https://github.com/barretlee/agent-pulse"
-url: "https://barretlee.github.io/agent-pulse/"
+  - family-names: "boathell"
+repository-code: "https://github.com/boathell/db-pulse"
+url: "https://boathell.github.io/db-pulse/"
 license: MIT
-version: 0.5.1
-date-released: 2026-07-12
+version: 0.1.0
 keywords:
-  - artificial intelligence
-  - industry intelligence
+  - databases
+  - China database industry
   - decision intelligence
   - evidence timeline
   - source governance
-  - China AI

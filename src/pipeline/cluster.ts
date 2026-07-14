@@ -8,6 +8,7 @@ import {
   titleSimilarity,
   titleTokens,
 } from "../domain/clustering.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { scoreEvent } from "../domain/scoring.js";
 import type { SignalMetrics } from "../domain/types.js";
 import { slugify } from "../domain/url.js";
@@ -18,7 +19,7 @@ export async function clusterSignals(
   const repository = new Repository(db);
   const [signals, sources] = await Promise.all([
     repository.listUnclusteredSignals(),
-    repository.listSources(),
+    repository.listPublicSources(),
   ]);
   const sourcesById = new Map(sources.map((source) => [source.id, source]));
   signals.sort(
@@ -80,10 +81,10 @@ export async function clusterSignals(
         title: signal.title,
         fact_summary: signal.summary || signal.title,
         summary: signal.summary || signal.title,
-        technical_insight: "待编辑：这项变化对能力、成本或工程路线意味着什么？",
-        industry_insight: "待编辑：这项变化会如何影响竞争结构与产业分工？",
+        technical_insight: "待编辑：这项变化对内核、工作负载、兼容、稳定性或成本意味着什么？",
+        industry_insight: "待编辑：这项变化会如何影响数据库选型、迁移、交付或产业分工？",
         future_outlook: "待编辑：接下来要观察哪些可验证信号？",
-        business_value: "待编辑：CEO、投资负责人或业务负责人应采取什么动作？",
+        business_value: "待编辑：CEO、DBA、数据架构师或数据库从业者应采取什么动作？",
         category: signal.category,
         company: inferCompany(signal.title),
         keywords_json: JSON.stringify([...titleTokens(signal.title)].slice(0, 8)),
@@ -99,6 +100,7 @@ export async function clusterSignals(
         published_at: null,
         created_at: timestamp,
         updated_at: timestamp,
+        content_domain: PUBLIC_CONTENT_DOMAIN,
       } satisfies EventRow;
       await repository.insertEvent(event);
       events.push(event);
@@ -147,14 +149,11 @@ export function eventabilityScore(signal: SignalRow, source?: SourceRow): number
   else if (source.role === "research") score += 10;
   if (
     [
-      "frontier-lab",
-      "china-lab",
-      "company",
-      "open-source",
-      "agent-devtool",
-      "policy",
-      "infra-chip-cloud",
-      "research-eval",
+      "database-vendor",
+      "open-source-database",
+      "cloud-database",
+      "policy-standard",
+      "research-benchmark",
     ].includes(source.source_category)
   )
     score += 15;
@@ -180,7 +179,7 @@ export function isDecisionRelevantResearch(signal: SignalRow): boolean {
       content,
     );
   const hasDecisionDomain =
-    /large language model|\bLLMs?\b|agent|reasoning|long[- ]context|coding|code model|multimodal|vision[- ]language|training|inference|alignment|robot|memory|context compression|tool use|causal|智能体|推理|长上下文|编码|多模态|训练|推理|对齐|机器人|记忆|上下文压缩|工具使用|因果/i.test(
+    /database|distributed sql|transaction|query|optimizer|storage|replication|lakehouse|olap|oltp|htap|vector|graph|time[- ]series|数据库|分布式|事务|查询|优化器|存储|复制|湖仓|向量|图数据库|时序/i.test(
       content,
     );
   return signal.summary.trim().length >= 160 && hasResearchContribution && hasDecisionDomain;
@@ -196,7 +195,7 @@ export async function rescoreEvent(repository: Repository, event: EventRow): Pro
       (item) =>
         item.tier === 1 && item.role !== "aggregator" && item.sourceCategory !== "aggregator",
     ).length,
-    independentSourceCount: new Set(context.map((item) => item.sourceId)).size,
+    independentSourceCount: independentEvidenceOwnerCount(context),
     metrics: context.map((item) => item.metrics as SignalMetrics),
     ageHours,
     impactHint: event.impact_score,
@@ -210,26 +209,42 @@ export async function rescoreEvent(repository: Repository, event: EventRow): Pro
   });
 }
 
+export function independentEvidenceOwnerCount(
+  context: Array<{ sourceId: string; sourceOwner?: string | null }>,
+): number {
+  return new Set(
+    context.map((item) => item.sourceOwner?.trim().toLocaleLowerCase() || item.sourceId),
+  ).size;
+}
+
 function uniqueSlug(title: string, timestamp: string): string {
   return `${slugify(title)}-${timestamp.slice(0, 10)}`.slice(0, 250);
 }
 
 function inferCompany(title: string): string {
   const companies = [
-    "OpenAI",
-    "Anthropic",
-    "Google",
-    "Meta",
-    "Microsoft",
-    "Apple",
-    "DeepSeek",
-    "Qwen",
-    "Kimi",
-    "MiniMax",
-    "智谱",
-    "阿里",
-    "腾讯",
-    "字节",
+    "Dameng",
+    "Kingbase",
+    "GBase",
+    "GoldenDB",
+    "OceanBase",
+    "TiDB",
+    "openGauss",
+    "GaussDB",
+    "PolarDB",
+    "TDSQL",
+    "Vastbase",
+    "SequoiaDB",
+    "MatrixOne",
+    "Apache Doris",
+    "StarRocks",
+    "TDengine",
+    "NebulaGraph",
+    "Milvus",
+    "达梦",
+    "人大金仓",
+    "国家数据局",
+    "TC260",
   ];
   return (
     companies.find((company) => title.toLowerCase().includes(company.toLowerCase())) ?? "industry"

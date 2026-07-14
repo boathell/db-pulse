@@ -1,5 +1,6 @@
 import type { Kysely } from "kysely";
 import type { DatabaseSchema } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { eventReadinessSummary } from "./readiness.js";
 
 export interface PipelineFunnelReport {
@@ -41,23 +42,49 @@ export async function generatePipelineFunnel(
   db: Kysely<DatabaseSchema>,
 ): Promise<PipelineFunnelReport> {
   const [signals, clustered, triage, provenance, events, evidence, readiness] = await Promise.all([
-    db.selectFrom("signals").selectAll().execute(),
-    db.selectFrom("event_signals").select("signal_id").distinct().execute(),
+    db
+      .selectFrom("signals")
+      .innerJoin("sources", "sources.id", "signals.source_id")
+      .selectAll("signals")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
+    db
+      .selectFrom("event_signals")
+      .innerJoin("events", "events.id", "event_signals.event_id")
+      .innerJoin("signals", "signals.id", "event_signals.signal_id")
+      .innerJoin("sources", "sources.id", "signals.source_id")
+      .select("event_signals.signal_id")
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .distinct()
+      .execute(),
     db
       .selectFrom("signal_triage")
+      .innerJoin("signals", "signals.id", "signal_triage.signal_id")
+      .innerJoin("sources", "sources.id", "signals.source_id")
       .select(({ fn }) => fn.countAll<number>().as("count"))
       .where("status", "=", "deferred")
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .executeTakeFirstOrThrow(),
     db
       .selectFrom("signals")
       .innerJoin("sources", "sources.id", "signals.source_id")
       .select(["signals.id", "sources.role", "sources.source_category as sourceCategory"])
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
-    db.selectFrom("events").selectAll().execute(),
+    db
+      .selectFrom("events")
+      .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
     db
       .selectFrom("event_signals")
+      .innerJoin("events", "events.id", "event_signals.event_id")
       .innerJoin("signals", "signals.id", "event_signals.signal_id")
+      .innerJoin("sources", "sources.id", "signals.source_id")
       .select(["event_signals.event_id as eventId", "signals.source_id as sourceId"])
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
     eventReadinessSummary(db),
   ]);

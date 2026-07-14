@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   validate:
-    if: contains(github.event.issue.body, '<!-- agent-pulse-source-proposal:v1 -->')
+    if: contains(github.event.issue.body, '<!-- db-pulse-source-proposal:v1 -->')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -61,7 +61,7 @@ jobs:
         run: |
           set -euo pipefail
           comment_id="$(gh api "repos/$GITHUB_REPOSITORY/issues/$ISSUE_NUMBER/comments" --paginate \
-            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("agent-pulse-source-proposal-validation:v1"))) | .id' | head -n 1)"
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("db-pulse-source-proposal-validation:v1"))) | .id' | head -n 1)"
           if [[ -n "$comment_id" ]]; then
             gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" \
               -F "body=@$RUNNER_TEMP/source-proposal-validation.md" >/dev/null

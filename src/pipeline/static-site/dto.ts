@@ -45,30 +45,35 @@ export interface PublicActor {
   domains: string[];
   tableScore: number;
   websiteUrl: string;
+  observed?: boolean;
 }
 
-export interface PublicResource {
+export interface PublicDatabaseResource {
   slug: string;
   provider: string;
-  model: string;
-  type: string;
-  audience: string;
+  product: string;
+  engineType: string;
+  versionNote: string;
+  editions: string[];
+  deploymentModes: string[];
+  licenseModels: string[];
+  compatibility: string[];
+  pricingModel: string;
+  pricingNote: string;
   region: string;
-  currency: string;
-  inputPrice: number | null;
-  outputPrice: number | null;
-  unit: string;
-  planName: string;
   purchaseUrl: string;
-  sourceUrl: string;
-  comparisonUrl: string | null;
-  riskLevel: string;
+  documentationUrl: string;
+  evidenceUrl: string;
+  evidenceStatus: string;
   verifiedAt: string;
 }
+
+export type PublicResource = PublicDatabaseResource;
 
 export interface PublicSource {
   slug: string;
   name: string;
+  owner?: string;
   homepageUrl: string;
   category: string;
   region: string;
@@ -81,6 +86,9 @@ export interface PublicSource {
   observationEnabled: boolean;
   qualityScore: number;
   cadence: string;
+  robotsPolicy?: string;
+  freshnessSloHours?: number;
+  adapterVersion?: string;
   healthStatus: "healthy" | "degraded" | "failed" | "skipped" | "unchecked";
   lastCheckedAt: string | null;
   latestItemAt: string | null;
@@ -172,7 +180,7 @@ export interface NarrativeStage {
 }
 
 export interface DecisionLens {
-  role: "ceo" | "investor" | "cto" | "product";
+  role: "ceo" | "dba" | "data-architect" | "practitioner";
   question: string;
   answer: string;
   implications: string[];
@@ -233,6 +241,10 @@ export interface Release {
   summary: string;
   capabilities: string[];
   changes: string[];
+  nameEn?: string;
+  summaryEn?: string;
+  capabilitiesEn?: string[];
+  changesEn?: string[];
 }
 
 export interface EvaluationDimension {
@@ -287,6 +299,7 @@ export interface StaticSiteModel {
   siteUrl: string;
   generatedAt: string;
   events: EnrichedEvent[];
+  eventsEn: EnrichedEvent[];
   tracks: PublicTrack[];
   actors: PublicActor[];
   resources: PublicResource[];
@@ -295,6 +308,7 @@ export interface StaticSiteModel {
   influencers: PublicInfluencer[];
   scout: PublicScoutInsight[];
   narratives: IndustryNarratives;
+  narrativesEn: IndustryNarratives;
   product: ProductData;
   github: GithubData;
 }

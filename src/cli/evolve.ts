@@ -441,7 +441,7 @@ export async function runEvolutionIteration(
     finishedAt: finished.toISOString(),
     durationMs: Math.max(0, finished.getTime() - started.getTime()),
     objective:
-      "在不自动改变来源生命周期或发布事实的前提下，采集、收敛并评估 AI 行业情报，形成可复核的下一轮改进策略。",
+      "在不自动改变来源生命周期或发布事实的前提下，采集、收敛并评估中国数据库行业情报，形成可复核的下一轮改进策略。",
     initialization: input.initialization,
     policies: {
       automaticSourceLifecycleChanges: false,
@@ -513,7 +513,7 @@ export async function databaseIsEmpty(db: EvolutionDatabase): Promise<boolean> {
     countRows(db, "settings"),
     countRows(db, "tracks"),
     countRows(db, "actors"),
-    countRows(db, "model_resources"),
+    countRows(db, "database_resources"),
     countRows(db, "views"),
     countRows(db, "scout_insights"),
     countRows(db, "evaluation_runs"),
@@ -599,7 +599,7 @@ async function countRows(
     | "settings"
     | "tracks"
     | "actors"
-    | "model_resources"
+    | "database_resources"
     | "views"
     | "scout_insights"
     | "evaluation_runs",
@@ -667,7 +667,7 @@ function errorMessage(error: unknown): string {
 }
 
 function printHelp(): void {
-  console.log(`Agent Pulse evolution runner
+  console.log(`DB Pulse evolution runner
 
 Usage:
   npm run evolve -- --once

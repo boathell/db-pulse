@@ -43,6 +43,7 @@ beforeAll(async () => {
       license_note TEXT NOT NULL DEFAULT '',
       quality_score INTEGER NOT NULL DEFAULT 50,
       last_verified_at TEXT,
+      content_domain TEXT NOT NULL DEFAULT 'database-cn',
       created_at TEXT NOT NULL DEFAULT (datetime('now')),
       updated_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
@@ -78,7 +79,7 @@ async function seedTestSources(repo: Repository): Promise<void> {
       failures: 0,
       region: "GLOBAL",
       language: "en",
-      category: "frontier-lab",
+      category: "database-vendor",
       enabled: 1,
     },
     {
@@ -88,7 +89,7 @@ async function seedTestSources(repo: Repository): Promise<void> {
       failures: 0,
       region: "CN",
       language: "zh-CN",
-      category: "china-lab",
+      category: "open-source-database",
       enabled: 1,
     },
     {
@@ -98,7 +99,7 @@ async function seedTestSources(repo: Repository): Promise<void> {
       failures: 3,
       region: "GLOBAL",
       language: "en",
-      category: "media",
+      category: "professional-media",
       enabled: 1,
     },
     {
@@ -108,7 +109,7 @@ async function seedTestSources(repo: Repository): Promise<void> {
       failures: 7,
       region: "GLOBAL",
       language: "en",
-      category: "expert",
+      category: "database-community",
       enabled: 0,
     },
     {
@@ -118,7 +119,7 @@ async function seedTestSources(repo: Repository): Promise<void> {
       failures: 0,
       region: "CN",
       language: "zh-CN",
-      category: "policy",
+      category: "policy-standard",
       enabled: 0,
     },
     {
@@ -138,7 +139,7 @@ async function seedTestSources(repo: Repository): Promise<void> {
       failures: 10,
       region: "GLOBAL",
       language: "en",
-      category: "media",
+      category: "research-benchmark",
       enabled: 0,
     },
   ];

@@ -25,7 +25,7 @@ describe("signal eventability triage", () => {
   it("defers an isolated media commentary instead of creating timeline noise", async () => {
     const { db, repository } = await setup();
     const media = (await repository.listSources()).find(
-      (source) => source.slug === "techcrunch-ai",
+      (source) => source.slug === "infoq-cn-database",
     );
     expect(media).toBeTruthy();
     await repository.updateSource(media?.id ?? "missing", {
@@ -33,9 +33,9 @@ describe("signal eventability triage", () => {
       enabled: 1,
     });
     const inserted = await repository.insertSignal(media?.id ?? "missing", {
-      url: "https://techcrunch.com/fixture/opinion-only",
-      title: "A broad opinion about the future of AI",
-      summary: "Commentary without a concrete release, transaction, policy, or research milestone.",
+      url: "https://www.infoq.cn/article/fixture-opinion-only",
+      title: "A broad opinion about the future of databases",
+      summary: "Commentary without a concrete release, adoption, policy, or research milestone.",
       language: "en",
       publishedAt: "2026-07-12T00:00:00.000Z",
       category: "industry",
@@ -58,17 +58,24 @@ describe("signal eventability triage", () => {
     ).toMatchObject({ status: "deferred", reason: "insufficient_eventability" });
   });
 
-  it("creates a review event for a concrete first-party model launch", async () => {
+  it("creates a review event for a concrete first-party database launch", async () => {
     const { db, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "openai");
+    const source = (await repository.listSources()).find(
+      (item) => item.slug === "oceanbase-official",
+    );
+    await repository.updateSource(source?.id ?? "missing", {
+      lifecycle_status: "active",
+      enabled: 1,
+    });
     await repository.insertSignal(source?.id ?? "missing", {
-      url: "https://openai.com/index/fixture-model-launch/",
-      title: "OpenAI launches Fixture-1 model",
-      summary: "A concrete first-party model launch with product and technical implications.",
+      url: "https://www.oceanbase.com/blog/fixture-database-launch/",
+      title: "FixtureDB 1.0 database release launches with recovery improvements",
+      summary:
+        "A concrete first-party database launch with architecture and operations implications.",
       language: "en",
       publishedAt: "2026-07-12T00:00:00.000Z",
-      category: "model-release",
-      tags: ["model", "release"],
+      category: "database-release",
+      tags: ["database", "release"],
       metrics: {},
       rawMeta: { quality: { score: 80 } },
     });
@@ -77,22 +84,25 @@ describe("signal eventability triage", () => {
 
     expect(result).toMatchObject({ created: 1, deferred: 0 });
     expect(
-      (await repository.listEvents("review")).some((event) => event.title.includes("Fixture-1")),
+      (await repository.listEvents("review")).some((event) => event.title.includes("FixtureDB")),
     ).toBe(true);
   });
 
   it("keeps healthy shadow-source signals in observation until activation", async () => {
     const { db, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "apple-ml");
+    const source = (await repository.listSources()).find(
+      (item) => item.slug === "opengauss-official",
+    );
     expect(source?.lifecycle_status).toBe("shadow");
     const inserted = await repository.insertSignal(source?.id ?? "missing", {
-      url: "https://machinelearning.apple.com/research/fixture-observation",
-      title: "Apple releases Fixture Observation model",
-      summary: "A concrete official release that remains non-production during shadow observation.",
+      url: "https://opengauss.org/zh/news/fixture-observation",
+      title: "openGauss releases Fixture Observation database version",
+      summary:
+        "A concrete official database release that remains non-production during shadow observation.",
       language: "en",
       publishedAt: "2026-07-12T01:00:00.000Z",
-      category: "model-release",
-      tags: ["model", "release"],
+      category: "database-release",
+      tags: ["database", "release"],
       metrics: {},
       rawMeta: { quality: { score: 90 } },
     });
@@ -113,17 +123,20 @@ describe("signal eventability triage", () => {
 
   it("creates a review event for a decision-relevant research contribution", async () => {
     const { db, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "arxiv-ai");
-    expect(source?.lifecycle_status).toBe("active");
+    const source = (await repository.listSources()).find((item) => item.slug === "ccf-database");
+    await repository.updateSource(source?.id ?? "missing", {
+      lifecycle_status: "active",
+      enabled: 1,
+    });
     await repository.insertSignal(source?.id ?? "missing", {
-      url: "https://arxiv.org/abs/2607.99991",
-      title: "FixtureLongBench: A benchmark for difficulty-aware long-context reasoning",
+      url: "https://www.ccf.org.cn/fixture/benchmark-1",
+      title: "FixtureDBBench: A benchmark for workload-aware distributed SQL evaluation",
       summary:
-        "This paper introduces a benchmark and controlled evaluation method for long-context reasoning in large language models. It varies retrieval difficulty, reasoning depth, and context length independently, then evaluates multiple frontier systems with reproducible artifacts. The study finds that accuracy degrades sharply as difficulty rises even when the relevant evidence remains inside the context window, which changes how teams should assess models for high-stakes document and agent workflows.",
+        "This paper introduces a controlled benchmark for distributed SQL systems. It varies transaction contention, data skew, failure injection, and query concurrency independently, then evaluates recovery and throughput with reproducible artifacts. The results change how teams should compare database systems for critical production workloads.",
       language: "en",
       publishedAt: "2026-07-12T00:00:00.000Z",
       category: "research",
-      tags: ["benchmark", "long-context", "reasoning"],
+      tags: ["benchmark", "distributed-sql", "recovery"],
       metrics: {},
       rawMeta: { quality: { score: 88 } },
     });
@@ -133,17 +146,21 @@ describe("signal eventability triage", () => {
     expect(result).toMatchObject({ created: 1, deferred: 0 });
     expect(
       (await repository.listEvents("review")).some((event) =>
-        event.title.includes("FixtureLongBench"),
+        event.title.includes("FixtureDBBench"),
       ),
     ).toBe(true);
   });
 
   it("defers a thin research listing without a clear contribution", async () => {
     const { db, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "arxiv-ai");
+    const source = (await repository.listSources()).find((item) => item.slug === "ccf-database");
+    await repository.updateSource(source?.id ?? "missing", {
+      lifecycle_status: "active",
+      enabled: 1,
+    });
     await repository.insertSignal(source?.id ?? "missing", {
-      url: "https://arxiv.org/abs/2607.99992",
-      title: "Some observations about intelligent systems",
+      url: "https://www.ccf.org.cn/fixture/benchmark-2",
+      title: "Some observations about database systems",
       summary: "A short abstract without enough method, evidence, or decision context.",
       language: "en",
       publishedAt: "2026-07-12T00:00:00.000Z",
@@ -158,19 +175,23 @@ describe("signal eventability triage", () => {
 
   it("admits a concise but concrete research abstract into review", async () => {
     const { db, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "arxiv-ai");
+    const source = (await repository.listSources()).find((item) => item.slug === "ccf-database");
+    await repository.updateSource(source?.id ?? "missing", {
+      lifecycle_status: "active",
+      enabled: 1,
+    });
     const summary =
-      "This paper introduces a benchmark for tool-using language model agents. It evaluates planning, recovery, and grounded action across reproducible tasks, and reports where current agents fail under delayed feedback and limited context.";
+      "This paper introduces a benchmark for distributed database recovery. It evaluates failover, transaction correctness, and workload stability across reproducible tasks, and reports degradation under delayed replication and contention.";
     expect(summary.length).toBeGreaterThanOrEqual(160);
     expect(summary.length).toBeLessThan(240);
     await repository.insertSignal(source?.id ?? "missing", {
-      url: "https://arxiv.org/abs/2607.99993",
-      title: "FixtureAgentBench: Evaluating tool-using language model agents",
+      url: "https://www.ccf.org.cn/fixture/benchmark-3",
+      title: "FixtureRecoveryBench: Evaluating distributed database recovery",
       summary,
       language: "en",
       publishedAt: "2026-07-12T00:00:00.000Z",
       category: "research",
-      tags: ["benchmark", "agent"],
+      tags: ["benchmark", "database", "recovery"],
       metrics: {},
       rawMeta: { quality: { score: 82 } },
     });

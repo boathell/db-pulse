@@ -21,7 +21,9 @@ describe("shadow observation mode", () => {
     await migrateToLatest(db, config);
     await seedDatabase(db);
     const repository = new Repository(db);
-    const source = (await repository.listSources()).find((item) => item.slug === "apple-ml");
+    const source = (await repository.listSources()).find(
+      (item) => item.slug === "opengauss-official",
+    );
     expect(source?.lifecycle_status).toBe("shadow");
 
     await expect(setObservationMode(db, source?.id ?? "missing", true)).rejects.toThrow(
@@ -36,14 +38,14 @@ describe("shadow observation mode", () => {
           kind: "fixture",
           collect: async () => [
             {
-              url: "https://machinelearning.apple.com/research/fixture",
-              title: "Apple releases a verified fixture model",
+              url: "https://opengauss.org/zh/news/fixture",
+              title: "openGauss publishes a verified database release fixture",
               summary:
                 "A detailed official research release used to prove shadow observation eligibility.",
               language: "en",
               publishedAt: "2026-07-12T00:00:00.000Z",
-              category: "model-release",
-              tags: ["model", "release", "research"],
+              category: "database-release",
+              tags: ["database", "release", "opengauss"],
               metrics: {},
               rawMeta: {},
             },

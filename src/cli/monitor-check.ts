@@ -1,9 +1,9 @@
 /**
- * Monitor Check — CI-friendly health probe for Agent Pulse.
+ * Monitor Check — CI-friendly health probe for DB Pulse.
  *
  * Checks:
  *   1. Site availability (HTTP GET PUBLIC_SITE_URL)
- *   2. Data freshness (age of data/snapshot/v1.json)
+ *   2. Data freshness (age of data/snapshot/v2.json)
  *   3. Source health (DB query via generateMonitorReport)
  *
  * Exit codes:
@@ -22,6 +22,7 @@ import { loadConfig } from "../config/env.js";
 import { createDatabase } from "../db/database.js";
 import { migrateToLatest } from "../db/migrate.js";
 import { seedDatabase } from "../db/seed.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { generateMonitorReport, getSeverityLevel } from "../pipeline/monitor.js";
 import { restoreRepositorySnapshot } from "../pipeline/snapshot.js";
 
@@ -56,7 +57,7 @@ export interface MonitorCheckResult {
 
 // ─── Snapshot path ────────────────────────────────────────────────────────
 
-const SNAPSHOT_PATH = "data/snapshot/v1.json";
+const SNAPSHOT_PATH = "data/snapshot/v2.json";
 const FRESHNESS_WARNING_MIN = 6 * 60; // 6 hours
 const FRESHNESS_CRITICAL_MIN = 24 * 60; // 24 hours
 
@@ -67,7 +68,7 @@ async function checkSite(config: ReturnType<typeof loadConfig>): Promise<CheckDe
   try {
     const response = await fetch(url, {
       method: "GET",
-      headers: { "User-Agent": "agent-pulse-monitor/1.0" },
+      headers: { "User-Agent": "db-pulse-monitor/0.1" },
       signal: AbortSignal.timeout(15_000),
     });
     if (response.status === 200) {
@@ -140,6 +141,7 @@ async function checkSourceHealth(
     const count = await db
       .selectFrom("sources")
       .select(({ fn }) => fn.countAll<number>().as("count"))
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .executeTakeFirstOrThrow();
     if (Number(count.count) === 0) {
       await seedDatabase(db);

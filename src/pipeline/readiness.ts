@@ -1,11 +1,14 @@
 import type { Kysely } from "kysely";
 import { parseJson } from "../db/repository.js";
 import type { DatabaseSchema, EventRow } from "../db/types.js";
+import { isCompleteEventLocalization, PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import type { ScoreFactors } from "../domain/types.js";
 
 export type ReadinessBlocker =
   | "event_not_found"
+  | "wrong_content_domain"
   | "placeholder_content"
+  | "missing_chinese_content"
   | "thin_fact"
   | "thin_research_analysis"
   | "generic_entity"
@@ -13,7 +16,8 @@ export type ReadinessBlocker =
   | "missing_keywords"
   | "missing_track"
   | "missing_evidence"
-  | "missing_primary_evidence"
+  | "insufficient_independent_evidence"
+  | "missing_english_localization"
   | "low_confidence"
   | "unsupported_heat";
 
@@ -43,7 +47,7 @@ export async function evaluateEventReadiness(
     return result(eventId, ["event_not_found"], 0, 0, 0, 0);
   }
   const candidate = { ...event, ...candidatePatch };
-  const [evidence, tracks] = await Promise.all([
+  const [evidence, tracks, english] = await Promise.all([
     db
       .selectFrom("event_signals")
       .innerJoin("signals", "signals.id", "event_signals.signal_id")
@@ -53,16 +57,25 @@ export async function evaluateEventReadiness(
         "sources.tier as tier",
         "sources.role as role",
         "sources.source_category as sourceCategory",
+        "sources.owner as owner",
+        "signals.author as author",
       ])
       .where("event_signals.event_id", "=", eventId)
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
     db
       .selectFrom("event_tracks")
       .select(({ fn }) => fn.countAll<number>().as("count"))
       .where("event_id", "=", eventId)
       .executeTakeFirstOrThrow(),
+    db
+      .selectFrom("event_localizations")
+      .selectAll()
+      .where("event_id", "=", eventId)
+      .where("locale", "=", "en")
+      .executeTakeFirst(),
   ]);
-  const independentSources = new Set(evidence.map((item) => item.sourceId)).size;
+  const independentSources = independentEligibleSources(evidence);
   const primaryEvidence = new Set(
     evidence
       .filter(
@@ -71,9 +84,12 @@ export async function evaluateEventReadiness(
       )
       .map((item) => item.sourceId),
   ).size;
+  const tierTwoEvidence = independentTierTwoSources(evidence);
   const trackCount = Number(tracks.count);
   const blockers: ReadinessBlocker[] = [];
+  if (candidate.content_domain !== PUBLIC_CONTENT_DOMAIN) blockers.push("wrong_content_domain");
   const content = [
+    candidate.title,
     candidate.fact_summary,
     candidate.summary,
     candidate.technical_insight,
@@ -81,6 +97,7 @@ export async function evaluateEventReadiness(
     candidate.future_outlook,
     candidate.business_value,
   ];
+  if (content.some((field) => !field.trim())) blockers.push("missing_chinese_content");
   if (content.some(hasPlaceholder)) blockers.push("placeholder_content");
   if (candidate.fact_summary.trim().length < 20 || candidate.summary.trim().length < 20)
     blockers.push("thin_fact");
@@ -97,8 +114,11 @@ export async function evaluateEventReadiness(
     blockers.push("missing_keywords");
   if (trackCount === 0) blockers.push("missing_track");
   if (evidence.length === 0) blockers.push("missing_evidence");
-  if (primaryEvidence === 0) blockers.push("missing_primary_evidence");
+  else if (primaryEvidence === 0 && tierTwoEvidence < 2)
+    blockers.push("insufficient_independent_evidence");
   if (candidate.confidence_score < 60) blockers.push("low_confidence");
+  if (candidate.content_domain === PUBLIC_CONTENT_DOMAIN && !isCompleteEventLocalization(english))
+    blockers.push("missing_english_localization");
   const factors = parseJson<Partial<ScoreFactors>>(candidate.score_factors_json, {});
   if (
     candidate.heat_score >= 70 &&
@@ -115,8 +135,12 @@ export async function evaluateEventReadiness(
 }
 
 export async function eventReadinessSummary(db: Kysely<DatabaseSchema>) {
-  const [events, evidence, tracks] = await Promise.all([
-    db.selectFrom("events").selectAll().execute(),
+  const [events, evidence, tracks, localizations] = await Promise.all([
+    db
+      .selectFrom("events")
+      .selectAll()
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
     db
       .selectFrom("event_signals")
       .innerJoin("signals", "signals.id", "event_signals.signal_id")
@@ -127,13 +151,17 @@ export async function eventReadinessSummary(db: Kysely<DatabaseSchema>) {
         "sources.tier as tier",
         "sources.role as role",
         "sources.source_category as sourceCategory",
+        "sources.owner as owner",
+        "signals.author as author",
       ])
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
     db
       .selectFrom("event_tracks")
       .select(["event_id as eventId", ({ fn }) => fn.countAll<number>().as("count")])
       .groupBy("event_id")
       .execute(),
+    db.selectFrom("event_localizations").selectAll().where("locale", "=", "en").execute(),
   ]);
   const evidenceByEvent = new Map<string, typeof evidence>();
   for (const row of evidence) {
@@ -147,6 +175,10 @@ export async function eventReadinessSummary(db: Kysely<DatabaseSchema>) {
       event,
       evidenceByEvent.get(event.id) ?? [],
       tracksByEvent.get(event.id) ?? 0,
+      localizations.some(
+        (localization) =>
+          localization.event_id === event.id && isCompleteEventLocalization(localization),
+      ),
     ),
   );
   const blockerCounts: Record<string, number> = {};
@@ -171,10 +203,13 @@ function evaluateReadinessRow(
     tier: number;
     role: string;
     sourceCategory: string;
+    owner: string;
+    author: string | null;
   }>,
   trackCount: number,
+  hasEnglishLocalization: boolean,
 ): EventReadiness {
-  const independentSources = new Set(evidence.map((item) => item.sourceId)).size;
+  const independentSources = independentEligibleSources(evidence);
   const primaryEvidence = new Set(
     evidence
       .filter(
@@ -183,8 +218,11 @@ function evaluateReadinessRow(
       )
       .map((item) => item.sourceId),
   ).size;
+  const tierTwoEvidence = independentTierTwoSources(evidence);
   const blockers: ReadinessBlocker[] = [];
+  if (candidate.content_domain !== PUBLIC_CONTENT_DOMAIN) blockers.push("wrong_content_domain");
   const content = [
+    candidate.title,
     candidate.fact_summary,
     candidate.summary,
     candidate.technical_insight,
@@ -192,6 +230,7 @@ function evaluateReadinessRow(
     candidate.future_outlook,
     candidate.business_value,
   ];
+  if (content.some((field) => !field.trim())) blockers.push("missing_chinese_content");
   if (content.some(hasPlaceholder)) blockers.push("placeholder_content");
   if (candidate.fact_summary.trim().length < 20 || candidate.summary.trim().length < 20)
     blockers.push("thin_fact");
@@ -208,8 +247,11 @@ function evaluateReadinessRow(
     blockers.push("missing_keywords");
   if (trackCount === 0) blockers.push("missing_track");
   if (evidence.length === 0) blockers.push("missing_evidence");
-  if (primaryEvidence === 0) blockers.push("missing_primary_evidence");
+  else if (primaryEvidence === 0 && tierTwoEvidence < 2)
+    blockers.push("insufficient_independent_evidence");
   if (candidate.confidence_score < 60) blockers.push("low_confidence");
+  if (candidate.content_domain === PUBLIC_CONTENT_DOMAIN && !hasEnglishLocalization)
+    blockers.push("missing_english_localization");
   const factors = parseJson<Partial<ScoreFactors>>(candidate.score_factors_json, {});
   if (
     candidate.heat_score >= 70 &&
@@ -262,6 +304,56 @@ function result(
     primaryEvidence,
     trackCount,
     evidenceLevel:
-      primaryEvidence === 0 ? "none" : independentSources >= 2 ? "multi-source" : "single-primary",
+      independentSources >= 2 ? "multi-source" : primaryEvidence > 0 ? "single-primary" : "none",
   };
+}
+
+function independentTierTwoSources(
+  evidence: Array<{
+    sourceId: string;
+    tier: number;
+    role: string;
+    sourceCategory: string;
+    owner: string;
+    author: string | null;
+  }>,
+): number {
+  return independentIdentityCount(
+    evidence.filter(
+      (item) =>
+        item.tier === 2 && item.role !== "aggregator" && item.sourceCategory !== "aggregator",
+    ),
+  );
+}
+
+function independentEligibleSources(
+  evidence: Array<{
+    sourceId: string;
+    role: string;
+    sourceCategory: string;
+    owner: string;
+    author: string | null;
+  }>,
+): number {
+  return independentIdentityCount(
+    evidence.filter((item) => item.role !== "aggregator" && item.sourceCategory !== "aggregator"),
+  );
+}
+
+function independentIdentityCount(
+  evidence: Array<{ sourceId: string; owner: string; author: string | null }>,
+): number {
+  const sources = new Set<string>();
+  const owners = new Set<string>();
+  const authors = new Set<string>();
+  for (const item of evidence) {
+    sources.add(item.sourceId);
+    owners.add(normalizeIdentity(item.owner) || `source:${item.sourceId}`);
+    authors.add(normalizeIdentity(item.author ?? "") || `source:${item.sourceId}`);
+  }
+  return Math.min(sources.size, owners.size, authors.size);
+}
+
+function normalizeIdentity(value: string): string {
+  return value.normalize("NFKC").trim().toLocaleLowerCase().replace(/\s+/g, " ");
 }

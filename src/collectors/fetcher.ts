@@ -143,7 +143,7 @@ async function fetchWithRedirects(
         headers: {
           accept:
             "application/json, application/rss+xml, application/atom+xml, text/html;q=0.9, */*;q=0.5",
-          "user-agent": headers["user-agent"] ?? headers["User-Agent"] ?? "agent-pulse",
+          "user-agent": headers["user-agent"] ?? headers["User-Agent"] ?? "db-pulse",
           ...headers,
         },
         redirect: "manual",

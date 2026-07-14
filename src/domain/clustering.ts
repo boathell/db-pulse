@@ -57,23 +57,34 @@ export function eventFingerprint(title: string): string | null {
   const normalized = title
     .normalize("NFKC")
     .toLowerCase()
-    .replace(/通义/g, "qwen")
-    .replace(/月之暗面/g, "kimi")
-    .replace(/智谱/g, "zhipu")
-    .replace(/阶跃星辰/g, "stepfun")
+    .replace(/达梦数据库|达梦/g, "dameng")
+    .replace(/人大金仓(?:\s*kingbase(?:es)?)?|金仓/g, "kingbase")
+    .replace(/南大通用/g, "gbase")
+    .replace(/金篆信科/g, "goldendb")
+    .replace(/巨杉数据库|巨杉/g, "sequoiadb")
+    .replace(/矩阵起源/g, "matrixone")
+    .replace(/涛思数据(?:\s*tdengine)?/g, "tdengine")
+    .replace(/悦数科技/g, "nebulagraph")
     .replace(/[–—_]/g, "-");
   const patterns: Array<[string, RegExp]> = [
-    ["openai:gpt", /\bgpt[-\s]?(\d+(?:\.\d+)?(?:[-\s]?(?:mini|nano|pro))?)/],
-    ["openai:o", /\bo(\d+(?:[-\s]?mini)?)/],
-    ["google:gemini", /\bgemini[-\s]?(\d+(?:\.\d+)?(?:[-\s]?(?:flash|pro|ultra))?)/],
-    ["anthropic:claude", /\bclaude[-\s]?(opus|sonnet|haiku)?[-\s]?(\d+(?:\.\d+)?)/],
-    ["deepseek", /\bdeepseek[-\s]?(v\d+(?:\.\d+)?|r\d+)/],
-    ["qwen", /\bqwen[-\s]?(\d+(?:\.\d+)?|coder|vl|max|plus)/],
-    ["kimi", /\bkimi[-\s]?(k\d+(?:\.\d+)?|\d+(?:\.\d+)?)/],
-    ["minimax", /\bminimax[-\s]?(m\d+|text[-\s]?\d+|video[-\s]?\d+)/],
-    ["lingbot", /\blingbot[-\s]?(vla|world|video|vision)(?:[-\s]?(\d+(?:\.\d+)?))?/],
-    ["longcat", /\blongcat[-\s]?(\d+(?:\.\d+)?)/],
-    ["llama", /\bllama[-\s]?(\d+(?:\.\d+)?)/],
+    ["dameng", /\bdameng(?:[-\s]?(dm\d+|dsc))?/],
+    ["kingbase", /\bkingbase(?:es)?[-\s]?(v?\d+(?:\.\d+)*)?/],
+    ["gbase", /\bgbase[-\s]?(?:8a|8s|8c|\d+(?:\.\d+)*)?/],
+    ["goldendb", /\bgoldendb[-\s]?(\d+(?:\.\d+)*)?/],
+    ["oceanbase", /\boceanbase[-\s]?(\d+(?:\.\d+)*)?/],
+    ["tidb", /\btidb[-\s]?(v?\d+(?:\.\d+)*)?/],
+    ["opengauss", /\bopengauss[-\s]?(\d+(?:\.\d+)*)?/],
+    ["gaussdb", /\bgaussdb[-\s]?(\d+(?:\.\d+)*)?/],
+    ["polardb", /\bpolardb(?:-x)?[-\s]?(\d+(?:\.\d+)*)?/],
+    ["tdsql", /\btdsql[-\s]?(\d+(?:\.\d+)*)?/],
+    ["vastbase", /\bvastbase[-\s]?(g?\d+(?:\.\d+)*)?/],
+    ["sequoiadb", /\bsequoiadb[-\s]?(\d+(?:\.\d+)*)?/],
+    ["matrixone", /\bmatrixone[-\s]?(\d+(?:\.\d+)*)?/],
+    ["doris", /(?:apache[-\s]?)?doris[-\s]?(\d+(?:\.\d+)*)?/],
+    ["starrocks", /\bstarrocks[-\s]?(\d+(?:\.\d+)*)?/],
+    ["tdengine", /\btdengine[-\s]?(\d+(?:\.\d+)*)?/],
+    ["nebulagraph", /\bnebula(?:graph)?[-\s]?(\d+(?:\.\d+)*)?/],
+    ["milvus", /\bmilvus[-\s]?(\d+(?:\.\d+)*)?/],
   ];
   for (const [family, pattern] of patterns) {
     const match = normalized.match(pattern);
@@ -87,21 +98,21 @@ export function eventFacet(title: string): string {
   const normalized = title.normalize("NFKC").toLowerCase();
   if (/outage|incident|breach|漏洞|宕机|故障|事故|诉讼|lawsuit/.test(normalized)) return "incident";
   if (/series [a-z]|funding|融资|估值|ipo|s-1|并购|acqui/.test(normalized)) return "capital";
-  if (/price|pricing|降价|涨价|定价|subscription/.test(normalized)) return "pricing";
+  if (/price|pricing|降价|涨价|定价|计费|license|许可/.test(normalized)) return "pricing";
   if (
-    /available (?:in|for|on)|integration|integrat|microsoft 365|github copilot|进入.+copilot|接入|集成|分发/.test(
+    /available (?:in|for|on)|integration|integrat|managed service|cloud marketplace|procurement|migration|compatib|private deployment|接入|集成|托管|采购|迁移|兼容|私有化|行业落地|上云/.test(
       normalized,
     )
   )
     return "distribution";
   if (/benchmark|eval|测评|评测|score|榜单/.test(normalized)) return "benchmark";
   if (
-    /capabilit|reasoning level|performance|solv(?:e|es|ed|ing)|post-train|证明|推理等级|能力|自主训练/.test(
+    /capabilit|performance|benchmark|transaction|query|storage|compatib|事务|查询|存储|兼容|性能|能力/.test(
       normalized,
     )
   )
     return "capability";
-  if (/release|launch|introduc|announce|发布|推出|开源|available/.test(normalized))
+  if (/release|launch|introduc|announce|upgrade|发布|推出|开源|升级|available/.test(normalized))
     return "release";
   return "update";
 }

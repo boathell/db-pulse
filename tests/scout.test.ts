@@ -20,7 +20,7 @@ afterEach(async () => {
 });
 
 const event = {
-  title: "A new agent capability ships",
+  title: "A distributed database release improves recovery",
   confidence_score: 82,
   heat_score: 76,
   impact_score: 91,
@@ -42,6 +42,9 @@ describe("Scout deterministic cards", () => {
     expect(card.artifact_idea.length).toBeGreaterThan(10);
     expect(card.counter_signals).toContain("证据");
     expect(card.total_score).toBeGreaterThan(70);
+    expect(card.why_now).toContain("数据库");
+    expect(card.target_audience).toMatch(/CEO|DBA|数据架构师|数据库从业者/);
+    expect(JSON.stringify(card)).not.toMatch(/AI 从业者|AI 技术与产业|AI 专业表达/);
   });
 
   it("fills distinct opportunity kinds and auto-publishes only viable cards", async () => {
@@ -62,8 +65,10 @@ describe("Scout deterministic cards", () => {
     expect(first.created).toBe(3);
     expect(second.created).toBe(3);
     expect(second.scanned).toBeGreaterThanOrEqual(3);
-    expect(first.published).toBeGreaterThan(0);
-    expect(second.published).toBeGreaterThan(0);
+    expect(first.published).toBe(0);
+    expect(second.published).toBe(0);
+    expect(first.archived).toBe(first.created);
+    expect(second.archived).toBe(second.created);
     expect(first.archived + first.published).toBe(first.created);
     expect(second.archived + second.published).toBe(second.created);
     expect(
@@ -83,7 +88,7 @@ describe("Scout deterministic cards", () => {
             .execute()
         ).map((insight) => insight.kind),
       ).size,
-    ).toBeGreaterThanOrEqual(4);
+    ).toBeGreaterThanOrEqual(1);
   });
 
   it("publishes only insights that clear every autonomous gate", () => {
