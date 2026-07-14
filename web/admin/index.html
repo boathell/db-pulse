@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agent Pulse Control Room</title>
+    <title>DB Pulse Control Room</title>
     <link rel="stylesheet" href="./admin.css" />
   </head>
   <body>
     <aside class="sidebar">
-      <div class="admin-brand"><span class="admin-logo">AP</span><div><strong>CONTROL ROOM</strong><small>Agent Pulse OS</small></div></div>
+      <div class="admin-brand"><span class="admin-logo">DB</span><div><strong>CONTROL ROOM</strong><small>DB Pulse OS</small></div></div>
       <nav id="adminNav">
         <button type="button" class="active" data-tab="dashboard">◫ <span>指挥中心</span></button>
         <button type="button" data-tab="sources">⌁ <span>信源矩阵</span></button>
@@ -19,13 +19,13 @@
         <button type="button" data-tab="events">◉ <span>事件与发布</span></button>
         <button type="button" data-tab="tracks">≋ <span>主线编排</span></button>
         <button type="button" data-tab="actors">⌬ <span>角色雷达</span></button>
-        <button type="button" data-tab="resources">◇ <span>模型资源</span></button>
+        <button type="button" data-tab="resources">◇ <span>选型与成本</span></button>
         <button type="button" data-tab="view">✣ <span>视觉与视图</span></button>
       </nav>
       <div class="sidebar-foot"><span class="status-dot"></span><span>LOCAL ADMIN</span></div>
     </aside>
     <main class="admin-main">
-      <header class="admin-header"><div><p>AGENT PULSE / ADMIN</p><h1 id="pageTitle">指挥中心</h1></div><div class="auto-controls"><span id="autoIndicator" class="auto-status running">无人值守运行中</span></div><div class="token-box"><input id="tokenInput" type="password" placeholder="ADMIN_TOKEN（开发环境可留空）" /><button type="button" class="token-submit" id="saveToken">连接</button></div></header>
+      <header class="admin-header"><div><p>DB PULSE / ADMIN</p><h1 id="pageTitle">指挥中心</h1></div><div class="auto-controls"><span id="autoIndicator" class="auto-status running">无人值守运行中</span></div><div class="token-box"><input id="tokenInput" type="password" placeholder="ADMIN_TOKEN（开发环境可留空）" /><button type="button" class="token-submit" id="saveToken">连接</button></div></header>
       <section class="tab-page active" data-page="dashboard">
         <div class="metric-grid" id="metricGrid"></div>
         <article class="panel funnel-panel">
@@ -96,7 +96,7 @@
       </section>
       <section class="tab-page" data-page="tracks"><div class="page-toolbar"><input class="table-search" data-search="tracks" placeholder="搜索主线…" /><span>控制颜色、顺序和叙事定义</span></div><div class="data-table" id="tracksTable"></div></section>
       <section class="tab-page" data-page="actors"><div class="page-toolbar"><input class="table-search" data-search="actors" placeholder="搜索角色…" /><span>校准国内外角色的上牌桌评分</span></div><div class="data-table" id="actorsTable"></div></section>
-      <section class="tab-page" data-page="resources"><div class="page-toolbar"><input class="table-search" data-search="resources" placeholder="搜索模型资源…" /><span>官方入口优先，第三方参考明确风险</span></div><div class="data-table" id="resourcesTable"></div></section>
+      <section class="tab-page" data-page="resources"><div class="page-toolbar"><input class="table-search" data-search="resources" placeholder="搜索数据库产品…" /><span>只维护可回链的部署、许可、兼容性和定价口径，不生成产品排名</span></div><div class="data-table" id="resourcesTable"></div></section>
       <section class="tab-page" data-page="view"><div class="view-editor"><aside><span>VISUAL COMPOSER</span><h2>发布视图编排</h2><p>这里决定公开站点的区块顺序、默认主线、密度、主题和筛选阈值。保存后执行“静态化”发布预览。</p><label>视图名称<input id="viewName" /></label><label>描述<textarea id="viewDescription" rows="4"></textarea></label><button type="button" id="saveView" class="primary">保存视图</button></aside><div class="json-deck"><label>Filters JSON<textarea id="viewFilters"></textarea></label><label>Layout JSON<textarea id="viewLayout"></textarea></label><label>Theme JSON<textarea id="viewTheme"></textarea></label></div></div></section>
     </main>
 

@@ -6,6 +6,7 @@ import type { FetchResult } from "../collectors/types.js";
 import type { AppConfig } from "../config/env.js";
 import { Repository } from "../db/repository.js";
 import type { DatabaseSchema, NewSourceCheckRow, SourceRow } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import type { CollectedSignal, SourceDescriptor } from "../domain/types.js";
 import { canonicalizeUrl } from "../domain/url.js";
 import { concurrentMap } from "./collect.js";
@@ -16,6 +17,10 @@ export type SourceCheckStatus = "healthy" | "degraded" | "failed" | "skipped";
 export interface SourceCheckResult {
   sourceId: string;
   slug: string;
+  owner: string;
+  adapterVersion: string;
+  robotsPolicy: string;
+  freshnessSloHours: number;
   status: SourceCheckStatus;
   accessStatus: string;
   fetchStatus: string;
@@ -79,10 +84,13 @@ export async function auditSources(
   const repository = new Repository(db);
   const startedAt = new Date().toISOString();
   const sources = options.sourceId
-    ? [await repository.getSource(options.sourceId)].filter((source): source is SourceRow =>
-        Boolean(source),
+    ? [await repository.getSource(options.sourceId)].filter(
+        (source): source is SourceRow =>
+          source?.content_domain === PUBLIC_CONTENT_DOMAIN && source.lifecycle_status !== "retired",
       )
-    : await repository.listSources();
+    : (await repository.listPublicSources()).filter(
+        (source) => source.lifecycle_status !== "retired",
+      );
   if (options.sourceId && sources.length === 0) throw new Error("Source not found");
 
   const jobId = await repository.startJob("source-audit", options.sourceId ?? null);
@@ -319,7 +327,7 @@ async function persistCheck(
     job_id: jobId,
     status: draft.status,
     adapter: source.adapter,
-    adapter_version: "1",
+    adapter_version: source.adapter_version,
     access_status: draft.accessStatus,
     fetch_status: draft.fetchStatus,
     parse_status: draft.parseStatus,
@@ -358,6 +366,10 @@ async function persistCheck(
   return {
     sourceId: source.id,
     slug: source.slug,
+    owner: source.owner,
+    adapterVersion: source.adapter_version,
+    robotsPolicy: source.robots_policy,
+    freshnessSloHours: source.freshness_slo_hours,
     status: draft.status,
     accessStatus: draft.accessStatus,
     fetchStatus: draft.fetchStatus,

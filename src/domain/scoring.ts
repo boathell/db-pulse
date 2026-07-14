@@ -58,8 +58,15 @@ export function scoreEvent(input: ScoringInput): ScoreResult {
   };
 }
 
-export function heatLabel(heat: number, confidence: number, crossRegion: boolean): string {
-  if (heat >= 70 && confidence >= 60 && crossRegion) return "跨圈热点";
+export function heatLabel(
+  heat: number,
+  confidence: number,
+  _crossRegion: boolean,
+  independentSources = 2,
+  platformBreadth = 2,
+): string {
+  if (heat >= 70 && confidence >= 60 && independentSources >= 2 && platformBreadth >= 2)
+    return "国内热点";
   if (heat >= 60 && confidence >= 55) return "高关注";
   if (heat >= 40) return "升温中";
   return "观察信号";

@@ -5,6 +5,7 @@ import { loadConfig } from "../config/env.js";
 import { createDatabase } from "../db/database.js";
 import { migrateToLatest } from "../db/migrate.js";
 import { seedDatabase } from "../db/seed.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { auditSources } from "../pipeline/source-audit.js";
 
 export interface AuditCliOptions {
@@ -66,6 +67,8 @@ export async function runAuditCli(args = process.argv.slice(2)): Promise<void> {
     const sourceCount = await db
       .selectFrom("sources")
       .select(({ fn }) => fn.countAll<number>().as("count"))
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .where("lifecycle_status", "!=", "retired")
       .executeTakeFirstOrThrow();
     if (Number(sourceCount.count) === 0) await seedDatabase(db);
 
@@ -75,6 +78,8 @@ export async function runAuditCli(args = process.argv.slice(2)): Promise<void> {
             .selectFrom("sources")
             .select("id")
             .where("slug", "=", options.sourceSlug)
+            .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+            .where("lifecycle_status", "!=", "retired")
             .executeTakeFirst()
         )?.id
       : undefined;

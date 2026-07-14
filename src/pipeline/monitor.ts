@@ -12,6 +12,7 @@
 import type { Kysely } from "kysely";
 import { Repository } from "../db/repository.js";
 import type { DatabaseSchema, SourceRow } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { transitionSource } from "../domain/source-lifecycle.js";
 
 export interface HealthSnapshot {
@@ -69,8 +70,15 @@ export interface MonitorReport {
  * Generate a full monitoring report.
  */
 export async function generateMonitorReport(db: Kysely<DatabaseSchema>): Promise<MonitorReport> {
-  const sources = await db.selectFrom("sources").selectAll().execute();
-  const latestChecks = await new Repository(db).latestSourceChecks();
+  const sources = await db
+    .selectFrom("sources")
+    .selectAll()
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+    .execute();
+  const sourceIds = new Set(sources.map((source) => source.id));
+  const latestChecks = (await new Repository(db).latestSourceChecks()).filter((check) =>
+    sourceIds.has(check.source_id),
+  );
   const checksBySource = new Map(latestChecks.map((check) => [check.source_id, check]));
 
   const byLifecycle = groupBy(sources, (s) => s.lifecycle_status);
@@ -152,7 +160,11 @@ export async function generateMonitorReport(db: Kysely<DatabaseSchema>): Promise
 export async function applyAdaptiveHealth(
   db: Kysely<DatabaseSchema>,
 ): Promise<{ degraded: number; quarantined: number; recovered: number; retired: number }> {
-  const sources = await db.selectFrom("sources").selectAll().execute();
+  const sources = await db
+    .selectFrom("sources")
+    .selectAll()
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+    .execute();
   const result = { degraded: 0, quarantined: 0, recovered: 0, retired: 0 };
 
   for (const source of sources) {
@@ -168,6 +180,7 @@ export async function applyAdaptiveHealth(
             updated_at: new Date().toISOString(),
           })
           .where("id", "=", source.id)
+          .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
           .execute();
         result.quarantined++;
         continue;
@@ -183,6 +196,7 @@ export async function applyAdaptiveHealth(
             updated_at: new Date().toISOString(),
           })
           .where("id", "=", source.id)
+          .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
           .execute();
         result.degraded++;
       }
@@ -208,6 +222,7 @@ export async function probeQuarantinedSources(
   const quarantined = await db
     .selectFrom("sources")
     .selectAll()
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .where("lifecycle_status", "=", "quarantined")
     .orderBy("last_verified_at", "asc")
     .limit(maxProbes)
@@ -271,7 +286,7 @@ export function generateAlertEmail(report: MonitorReport): { subject: string; bo
   const lines: string[] = [];
   const push = (text: string) => lines.push(text);
 
-  push("=== Agent Pulse — Critical Alert ===");
+  push("=== DB Pulse — Critical Alert ===");
   push(`Generated: ${report.timestamp}`);
   push("");
 
@@ -342,7 +357,7 @@ export function generateAlertEmail(report: MonitorReport): { subject: string; bo
   if (failedChecks > 0) {
     push("- Run `npm run sources:audit -- --concurrency=4` for detailed per-source diagnostics.");
   }
-  push("- Review the full health report at: https://github.com/barretlee/agent-pulse/actions");
+  push("- Review the full health report at: https://github.com/boathell/db-pulse/actions");
   push("");
 
   push("=== End of Alert ===");
@@ -353,7 +368,7 @@ export function generateAlertEmail(report: MonitorReport): { subject: string; bo
   else if (failed > 0) subjectSummary = `${failed} sources quarantined`;
   else subjectSummary = "Critical system anomaly detected";
 
-  const subject = `AGENT-PULSE CRITICAL: ${subjectSummary}`;
+  const subject = `DB-PULSE CRITICAL: ${subjectSummary}`;
 
   return { subject, body: lines.join("\n") };
 }
@@ -370,56 +385,56 @@ interface CoverageTarget {
 const COVERAGE_TARGETS: CoverageTarget[] = [
   {
     dimension: "cn-sources",
-    label: "中文源 (CN)",
-    target: 20,
-    filter: (s) => s.language === "zh-CN" && s.enabled === 1,
+    label: "中国数据库来源",
+    target: 48,
+    filter: (s) => s.region === "CN" && s.enabled === 1,
   },
   {
-    dimension: "paper-research",
-    label: "论文/研究源",
-    target: 15,
+    dimension: "database-official",
+    label: "数据库产品官方来源",
+    target: 36,
     filter: (s) =>
-      (s.source_category === "research-eval" || s.topics_json.includes("research")) &&
+      ["database-vendor", "open-source-database", "cloud-database"].includes(s.source_category) &&
       s.enabled === 1,
   },
   {
-    dimension: "capital-vc",
-    label: "投资/资本源",
+    dimension: "policy-standard",
+    label: "政策与标准来源",
+    target: 4,
+    filter: (s) => s.source_category === "policy-standard" && s.enabled === 1,
+  },
+  {
+    dimension: "research-benchmark",
+    label: "论文/基准/原始产物来源",
+    target: 4,
+    filter: (s) => s.source_category === "research-benchmark" && s.enabled === 1,
+  },
+  {
+    dimension: "capital-business",
+    label: "资本与商业来源",
+    target: 1,
+    filter: (s) => s.source_category === "capital-business" && s.enabled === 1,
+  },
+  {
+    dimension: "community-media",
+    label: "专业媒体与数据库社区",
+    target: 3,
+    filter: (s) =>
+      ["professional-media", "database-community"].includes(s.source_category) && s.enabled === 1,
+  },
+  {
+    dimension: "github-release",
+    label: "GitHub 官方发布源",
     target: 10,
+    filter: (s) => s.acquisition === "github" && s.enabled === 1,
+  },
+  {
+    dimension: "dba-operations",
+    label: "DBA 与运维证据入口",
+    target: 8,
     filter: (s) =>
-      (s.source_category === "capital-business" || s.topics_json.includes("capital")) &&
+      /dba|operations|reliability|documentation/.test(s.topics_json.toLowerCase()) &&
       s.enabled === 1,
-  },
-  {
-    dimension: "open-source",
-    label: "开源动态源",
-    target: 15,
-    filter: (s) =>
-      (s.source_category === "open-source" || s.acquisition === "github") && s.enabled === 1,
-  },
-  {
-    dimension: "policy-gov",
-    label: "政策/监管源",
-    target: 5,
-    filter: (s) => s.source_category === "policy" && s.enabled === 1,
-  },
-  {
-    dimension: "expert-people",
-    label: "人物/观点源",
-    target: 20,
-    filter: (s) => (s.source_category === "expert" || s.role === "expert") && s.enabled === 1,
-  },
-  {
-    dimension: "frontier-lab",
-    label: "前沿实验室源",
-    target: 15,
-    filter: (s) => s.source_category === "frontier-lab" && s.enabled === 1,
-  },
-  {
-    dimension: "cn-lab",
-    label: "中国 AI 实验室源",
-    target: 15,
-    filter: (s) => s.source_category === "china-lab" && s.enabled === 1,
   },
 ];
 

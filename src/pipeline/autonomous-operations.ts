@@ -1,6 +1,7 @@
 import type { Kysely } from "kysely";
 import { Repository } from "../db/repository.js";
 import type { DatabaseSchema } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { discoverNewSources, saveDiscoveredSources } from "./discovery.js";
 import { rootDomain } from "./utils.js";
 
@@ -27,7 +28,7 @@ export async function reconcileSourcePortfolio(
 ): Promise<SourcePortfolioResult> {
   const repository = new Repository(db);
   const [sources, checks] = await Promise.all([
-    repository.listSources(),
+    repository.listPublicSources(),
     repository.listSourceChecks(undefined, 2_000),
   ]);
   const checksBySource = new Map<string, typeof checks>();
@@ -63,6 +64,7 @@ export async function reconcileSourcePortfolio(
         .updateTable("sources")
         .set({ observation_enabled: 0, updated_at: timestamp })
         .where("id", "=", source.id)
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
         .execute();
       result.observationDisabled.push(source.slug);
     }
@@ -78,6 +80,7 @@ export async function reconcileSourcePortfolio(
           updated_at: timestamp,
         })
         .where("id", "=", source.id)
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
         .execute();
       result.restoredToShadow.push(source.slug);
       continue;
@@ -97,6 +100,7 @@ export async function reconcileSourcePortfolio(
           updated_at: timestamp,
         })
         .where("id", "=", source.id)
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
         .execute();
       result.quarantined.push(source.slug);
       continue;
@@ -107,6 +111,7 @@ export async function reconcileSourcePortfolio(
         .updateTable("sources")
         .set({ lifecycle_status: "degraded", enabled: 1, updated_at: timestamp })
         .where("id", "=", source.id)
+        .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
         .execute();
       result.degraded.push(source.slug);
     }
@@ -118,8 +123,10 @@ export async function reconcileSourcePortfolio(
 export async function triageSourceRadar(db: Kysely<DatabaseSchema>): Promise<RadarTriageResult> {
   const rows = await db
     .selectFrom("source_discoveries")
-    .selectAll()
+    .innerJoin("sources as aggregator", "aggregator.id", "source_discoveries.aggregator_source_id")
+    .selectAll("source_discoveries")
     .where("status", "in", ["pending", "candidate"])
+    .where("aggregator.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .orderBy("last_seen_at", "desc")
     .limit(2_000)
     .execute();
@@ -127,8 +134,14 @@ export async function triageSourceRadar(db: Kysely<DatabaseSchema>): Promise<Rad
     db
       .selectFrom("sources")
       .select(["id", "homepage_url", "role", "source_category", "lifecycle_status"])
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute(),
-    db.selectFrom("signals").select(["id", "source_id", "url_hash"]).execute(),
+    db
+      .selectFrom("signals")
+      .innerJoin("sources", "sources.id", "signals.source_id")
+      .select(["signals.id", "signals.source_id", "signals.url_hash"])
+      .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+      .execute(),
   ]);
   const signalByHash = new Map(signals.map((signal) => [signal.url_hash, signal]));
   const sourcesByRoot = new Map<string, string[]>();
@@ -194,6 +207,7 @@ export async function triageSourceRadar(db: Kysely<DatabaseSchema>): Promise<Rad
     .selectFrom("sources")
     .select(["id", "homepage_url"])
     .where("lifecycle_status", "=", "draft")
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .execute();
   const draftsByRoot = new Map<string, string>();
   for (const source of draftSources) {
@@ -203,9 +217,11 @@ export async function triageSourceRadar(db: Kysely<DatabaseSchema>): Promise<Rad
   let candidates = 0;
   const unresolved = await db
     .selectFrom("source_discoveries")
-    .select(["id", "origin_url"])
-    .where("status", "=", "pending")
-    .where("origin_url", "is not", null)
+    .innerJoin("sources as aggregator", "aggregator.id", "source_discoveries.aggregator_source_id")
+    .select(["source_discoveries.id", "source_discoveries.origin_url"])
+    .where("source_discoveries.status", "=", "pending")
+    .where("source_discoveries.origin_url", "is not", null)
+    .where("aggregator.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .execute();
   for (const row of unresolved) {
     const root = urlRoot(row.origin_url ?? "");
@@ -225,8 +241,10 @@ export async function triageSourceRadar(db: Kysely<DatabaseSchema>): Promise<Rad
 
   const remainingRow = await db
     .selectFrom("source_discoveries")
+    .innerJoin("sources as aggregator", "aggregator.id", "source_discoveries.aggregator_source_id")
     .select(({ fn }) => fn.countAll<number>().as("count"))
-    .where("status", "=", "pending")
+    .where("source_discoveries.status", "=", "pending")
+    .where("aggregator.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .executeTakeFirstOrThrow();
   return {
     checked: rows.length,

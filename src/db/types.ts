@@ -38,8 +38,13 @@ export interface SourceTable {
   license_note: Generated<string>;
   quality_score: Generated<number>;
   last_verified_at: Generated<string | null>;
+  owner: Generated<string>;
+  robots_policy: Generated<string>;
+  freshness_slo_hours: Generated<number>;
+  adapter_version: Generated<string>;
   created_at: string;
   updated_at: string;
+  content_domain: Generated<string>;
 }
 
 export interface SourceRunTable {
@@ -152,6 +157,7 @@ export interface ScoutInsightTable {
   published_at: string | null;
   created_at: string;
   updated_at: string;
+  content_domain: Generated<string>;
 }
 
 export interface ScoutEvidenceTable {
@@ -246,6 +252,21 @@ export interface EventTable {
   manual_override: number;
   happened_at: string;
   published_at: string | null;
+  created_at: string;
+  updated_at: string;
+  content_domain: Generated<string>;
+}
+
+export interface EventLocalizationTable {
+  event_id: string;
+  locale: string;
+  title: string;
+  fact_summary: string;
+  summary: string;
+  technical_insight: string;
+  industry_insight: string;
+  future_outlook: string;
+  business_value: string;
   created_at: string;
   updated_at: string;
 }
@@ -361,6 +382,30 @@ export interface ModelResourceTable {
   updated_at: string;
 }
 
+export interface DatabaseResourceTable {
+  id: string;
+  slug: string;
+  provider: string;
+  product: string;
+  engine_type: string;
+  version_note: string;
+  editions_json: string;
+  deployment_modes_json: string;
+  license_models_json: string;
+  compatibility_json: string;
+  pricing_model: string;
+  pricing_note: string;
+  region: string;
+  purchase_url: string;
+  documentation_url: string;
+  evidence_url: string;
+  evidence_status: string;
+  verified_at: string;
+  enabled: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface ViewTable {
   id: string;
   slug: string;
@@ -385,6 +430,7 @@ export interface DatabaseSchema {
   signal_observation_occurrences: SignalObservationOccurrenceTable;
   signal_triage: SignalTriageTable;
   events: EventTable;
+  event_localizations: EventLocalizationTable;
   event_signals: EventSignalTable;
   event_merges: EventMergeTable;
   jobs: JobTable;
@@ -394,6 +440,7 @@ export interface DatabaseSchema {
   actors: ActorTable;
   event_actors: EventActorTable;
   model_resources: ModelResourceTable;
+  database_resources: DatabaseResourceTable;
   views: ViewTable;
   scout_insights: ScoutInsightTable;
   scout_evidence: ScoutEvidenceTable;

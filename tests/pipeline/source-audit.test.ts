@@ -27,7 +27,9 @@ async function setup() {
 describe("source audit", () => {
   it("persists structured diagnostics without activating or writing signals", async () => {
     const { db, config, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "openai");
+    const source = (await repository.listSources()).find(
+      (item) => item.slug === "oceanbase-official",
+    );
     expect(source).toBeTruthy();
     const beforeSignals = await db
       .selectFrom("signals")
@@ -35,9 +37,9 @@ describe("source audit", () => {
       .executeTakeFirstOrThrow();
     const beforeLifecycle = source?.lifecycle_status;
     const items = [
-      signal("https://example.com/release", "Frontier model release"),
-      signal("https://example.com/release", "Frontier model release"),
-      signal("https://example.com/product", "New enterprise product"),
+      signal("https://example.com/release", "Distributed database release"),
+      signal("https://example.com/release", "Distributed database release"),
+      signal("https://example.com/product", "New enterprise database product"),
     ];
     const adapter: SourceAdapter = { kind: "fixture", collect: async () => items };
 
@@ -49,7 +51,14 @@ describe("source audit", () => {
     );
 
     expect(report).toMatchObject({ total: 1, healthy: 1, withContent: 1 });
-    expect(report.results[0]).toMatchObject({ itemCount: 3, duplicateRatio: 1 / 3 });
+    expect(report.results[0]).toMatchObject({
+      itemCount: 3,
+      duplicateRatio: 1 / 3,
+      owner: source?.owner,
+      adapterVersion: source?.adapter_version,
+      robotsPolicy: source?.robots_policy,
+      freshnessSloHours: source?.freshness_slo_hours,
+    });
     const checks = await repository.listSourceChecks(source?.id ?? "missing");
     expect(checks).toHaveLength(1);
     expect(checks[0]).toMatchObject({
@@ -57,6 +66,7 @@ describe("source audit", () => {
       item_count: 3,
       duplicate_count: 1,
       policy_status: "allowed_metadata",
+      adapter_version: source?.adapter_version,
     });
     const monitor = await generateMonitorReport(db);
     expect(monitor).toMatchObject({
@@ -78,8 +88,12 @@ describe("source audit", () => {
 
   it("records restricted sources without requesting them", async () => {
     const { db, config, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.acquisition === "social");
+    const source = (await repository.listSources()).find((item) => item.slug === "modb");
     expect(source).toBeTruthy();
+    await repository.updateSource(source?.id ?? "missing", {
+      maintenance_status: "restricted",
+      acquisition: "social",
+    });
     let adapterCalled = false;
 
     const report = await auditSources(
@@ -105,7 +119,9 @@ describe("source audit", () => {
 
   it("classifies a source failure without aborting the audit job", async () => {
     const { db, config, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "openai");
+    const source = (await repository.listSources()).find(
+      (item) => item.slug === "oceanbase-official",
+    );
     expect(source).toBeTruthy();
     const adapter: SourceAdapter = {
       kind: "fixture",
@@ -132,9 +148,77 @@ describe("source audit", () => {
     expect(job?.status).toBe("failed");
   });
 
+  it("isolates one automatic-source failure, preserves cursor state, and allows recovery", async () => {
+    const { db, config, repository } = await setup();
+    const failing = (await repository.listSources()).find(
+      (item) => item.slug === "oceanbase-official",
+    );
+    expect(failing).toBeTruthy();
+    const state = JSON.stringify({ cursor: "stable-cursor", etag: '"stable-etag"' });
+    await repository.updateSource(failing?.id ?? "missing", { state_json: state });
+    const adapter: SourceAdapter = {
+      kind: "fixture",
+      collect: async (source) => {
+        if (source.slug === "oceanbase-official") {
+          throw new FetchError("connection reset", "network", true, null, "ECONNRESET");
+        }
+        return [
+          signal(
+            new URL(`/audit/${source.slug}`, source.homepageUrl).toString(),
+            `${source.name} database contract release`,
+          ),
+        ];
+      },
+    };
+    const fetcher = async (url: string) => ({
+      body: "manual source reachability fixture",
+      status: 200,
+      headers: new Headers({ "content-type": "text/html" }),
+      attemptCount: 1,
+      responseBytes: 34,
+      finalUrl: url,
+    });
+
+    const failed = await auditSources(
+      db,
+      config,
+      { concurrency: 8 },
+      { adapterFor: () => adapter, fetcher },
+    );
+    expect(failed.total).toBe(48);
+    expect(failed.failed).toBe(1);
+    expect(failed.results.find((item) => item.slug === "oceanbase-official")).toMatchObject({
+      status: "failed",
+      errorCode: "ECONNRESET",
+      recommendedLifecycle: "shadow",
+    });
+    expect((await repository.getSource(failing?.id ?? "missing"))?.state_json).toBe(state);
+
+    const recoveredAdapter: SourceAdapter = {
+      kind: "fixture",
+      collect: async (source) => [
+        signal(
+          new URL(`/audit/${source.slug}`, source.homepageUrl).toString(),
+          `${source.name} database contract release`,
+        ),
+      ],
+    };
+    const recovered = await auditSources(
+      db,
+      config,
+      { sourceId: failing?.id ?? "missing" },
+      { adapterFor: () => recoveredAdapter, fetcher },
+    );
+    expect(recovered).toMatchObject({ total: 1, healthy: 1, failed: 0 });
+    expect(recovered.results[0]).toMatchObject({ recommendedLifecycle: "shadow" });
+    expect((await repository.getSource(failing?.id ?? "missing"))?.state_json).toBe(state);
+  });
+
   it("does not mark relative or malformed item URLs as healthy", async () => {
     const { db, config, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "openai");
+    const source = (await repository.listSources()).find(
+      (item) => item.slug === "oceanbase-official",
+    );
     const invalid = signal("/relative-release", "Relative release link");
     const adapter: SourceAdapter = { kind: "fixture", collect: async () => [invalid] };
 
@@ -156,7 +240,9 @@ describe("source audit", () => {
 
   it("records proxy fallback without storing proxy configuration", async () => {
     const { db, config, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "openai");
+    const source = (await repository.listSources()).find(
+      (item) => item.slug === "oceanbase-official",
+    );
     const adapter: SourceAdapter = {
       kind: "fixture",
       collect: async (_descriptor, context) => {
@@ -199,8 +285,8 @@ function signal(url: string, title: string): CollectedSignal {
     author: "Official team",
     language: "en",
     publishedAt: new Date().toISOString(),
-    category: "model-release",
-    tags: ["model", "release", "official"],
+    category: "database-release",
+    tags: ["database", "release", "official"],
     metrics: {},
     rawMeta: {},
   };

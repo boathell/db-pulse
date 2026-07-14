@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Release notes from tidb</title>
+  <entry>
+    <id>tag:github.com,2008:Repository/41986369/v8.5.0</id>
+    <updated>2026-07-10T08:00:00Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/pingcap/tidb/releases/tag/v8.5.0"/>
+    <title>v8.5.0</title>
+    <content type="html">A database release fixture covering compatibility, recovery, and query behavior.</content>
+  </entry>
+</feed>

@@ -27,12 +27,12 @@ describe("autonomous publication", () => {
     const ready = await db
       .selectFrom("events")
       .select("id")
-      .where("slug", "=", "gemma-4-open-model-efficiency")
+      .where("slug", "=", "oceanbase-official-ecosystem-baseline")
       .executeTakeFirstOrThrow();
     const blocked = await db
       .selectFrom("events")
       .select("id")
-      .where("slug", "=", "gpt-5-6-agent-platform-shift")
+      .where("slug", "=", "tidb-official-ecosystem-baseline")
       .executeTakeFirstOrThrow();
     await db
       .updateTable("events")
@@ -76,6 +76,59 @@ describe("autonomous publication", () => {
       .where("id", "=", insight.id)
       .execute();
     expect(await autoAdvanceScout(db)).toMatchObject({ published: 0, archived: 1 });
+  });
+
+  it("never publishes or archives legacy AI review Events and Scout items", async () => {
+    const db = await database();
+    const event = await db.selectFrom("events").selectAll().limit(1).executeTakeFirstOrThrow();
+    await db
+      .insertInto("events")
+      .values({
+        ...event,
+        id: "legacy-ai-review-event",
+        slug: "legacy-ai-review-event",
+        status: "review",
+        published_at: null,
+        content_domain: "ai-industry",
+      })
+      .execute();
+    const scout = await db
+      .selectFrom("scout_insights")
+      .selectAll()
+      .limit(1)
+      .executeTakeFirstOrThrow();
+    await db
+      .insertInto("scout_insights")
+      .values({
+        ...scout,
+        id: "legacy-ai-scout-item",
+        slug: "legacy-ai-scout-item",
+        cooldown_key: "legacy-ai-scout-item",
+        status: "inbox",
+        published_at: null,
+        content_domain: "ai-industry",
+      })
+      .execute();
+
+    const eventResult = await autoPublishReadyEvents(db);
+    const scoutResult = await autoAdvanceScout(db);
+
+    expect(eventResult.eventIds).not.toContain("legacy-ai-review-event");
+    expect(scoutResult.insightIds).not.toContain("legacy-ai-scout-item");
+    await expect(
+      db
+        .selectFrom("events")
+        .select("status")
+        .where("id", "=", "legacy-ai-review-event")
+        .executeTakeFirstOrThrow(),
+    ).resolves.toEqual({ status: "review" });
+    await expect(
+      db
+        .selectFrom("scout_insights")
+        .select("status")
+        .where("id", "=", "legacy-ai-scout-item")
+        .executeTakeFirstOrThrow(),
+    ).resolves.toEqual({ status: "inbox" });
   });
 
   it("keeps the Control Room free of manual publication decisions", async () => {

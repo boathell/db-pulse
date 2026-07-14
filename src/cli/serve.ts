@@ -21,5 +21,5 @@ process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
 
 await app.listen({ host: config.HOST, port: config.PORT });
-console.log(`Agent Pulse: http://${config.HOST}:${config.PORT}`);
+console.log(`DB Pulse: http://${config.HOST}:${config.PORT}`);
 console.log(`Admin: http://${config.HOST}:${config.PORT}/admin/`);

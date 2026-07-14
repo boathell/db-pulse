@@ -1,5 +1,6 @@
 import type { Kysely } from "kysely";
 import type { DatabaseSchema } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 
 export interface ProvenanceDebtReport {
   aggregatorSignals: number;
@@ -16,6 +17,7 @@ export async function inspectProvenanceDebt(
     .innerJoin("sources", "sources.id", "signals.source_id")
     .leftJoin("event_signals", "event_signals.signal_id", "signals.id")
     .select(["signals.id", "sources.slug", "event_signals.event_id as eventId"])
+    .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .where((expression) =>
       expression.or([
         expression("sources.role", "=", "aggregator"),
@@ -57,6 +59,7 @@ export async function purgeUnattachedAggregatorSignals(
     .innerJoin("sources", "sources.id", "signals.source_id")
     .leftJoin("event_signals", "event_signals.signal_id", "signals.id")
     .select(["signals.id", "event_signals.event_id as eventId"])
+    .where("sources.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .where((expression) =>
       expression.or([
         expression("sources.role", "=", "aggregator"),

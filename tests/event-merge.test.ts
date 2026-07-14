@@ -1,8 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { afterEach, describe, expect, it } from "vitest";
-import { earlyHistoryEvents } from "../src/catalog/early-history.js";
 import { historicalEvents } from "../src/catalog/history.js";
-import { recentDensityEvents } from "../src/catalog/recent-density.js";
 import { loadConfig } from "../src/config/env.js";
 import { createDatabase } from "../src/db/database.js";
 import { migrateToLatest } from "../src/db/migrate.js";
@@ -25,12 +23,12 @@ async function setup() {
 }
 
 describe("event merge candidate queue", () => {
-  it("groups fragmented model events without mutating them", async () => {
+  it("groups fragmented database release events without mutating them", async () => {
     const db = await setup();
     const original = await db
       .selectFrom("events")
       .selectAll()
-      .where("slug", "=", "openai-o1-test-time-reasoning")
+      .where("slug", "=", "oceanbase-official-ecosystem-baseline")
       .executeTakeFirstOrThrow();
     const duplicateId = randomUUID();
     await db
@@ -38,8 +36,8 @@ describe("event merge candidate queue", () => {
       .values({
         ...original,
         id: duplicateId,
-        slug: "openai-o1-follow-up-fixture",
-        title: "OpenAI o1 capability expansion through test-time compute",
+        slug: "oceanbase-baseline-follow-up-fixture",
+        title: "OceanBase official ecosystem and architecture baseline",
         status: "review",
         manual_override: 0,
         published_at: null,
@@ -57,7 +55,7 @@ describe("event merge candidate queue", () => {
         .select(({ fn }) => fn.countAll<number>().as("count"))
         .executeTakeFirstOrThrow(),
     ).toMatchObject({
-      count: earlyHistoryEvents.length + historicalEvents.length + recentDensityEvents.length + 7,
+      count: historicalEvents.length + 1,
     });
 
     const result = await mergeEventCandidates(db, {
@@ -82,12 +80,12 @@ describe("event merge candidate queue", () => {
     });
   });
 
-  it("keeps incidents separate from model releases", async () => {
+  it("keeps database incidents separate from product baselines", async () => {
     const db = await setup();
     const original = await db
       .selectFrom("events")
       .selectAll()
-      .where("slug", "=", "openai-o1-test-time-reasoning")
+      .where("slug", "=", "oceanbase-official-ecosystem-baseline")
       .executeTakeFirstOrThrow();
     const incidentId = randomUUID();
     await db
@@ -95,8 +93,8 @@ describe("event merge candidate queue", () => {
       .values({
         ...original,
         id: incidentId,
-        slug: "openai-o1-outage-fixture",
-        title: "OpenAI o1 outage incident",
+        slug: "oceanbase-outage-fixture",
+        title: "OceanBase outage incident",
         status: "review",
         manual_override: 0,
         published_at: null,

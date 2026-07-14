@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "mode": "manual-review-only",
+  "collectionAllowed": false,
+  "requirements": [
+    "Verify ownership, robots and terms before changing acquisition mode.",
+    "Capture canonical metadata and a publication date during human review.",
+    "Keep the source disabled and in shadow until an automated contract exists."
+  ]
+}

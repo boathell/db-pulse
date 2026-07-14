@@ -3,6 +3,7 @@
 import type { Kysely } from "kysely";
 import { now } from "../db/repository.js";
 import type { DatabaseSchema } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import { findEventMergeCandidates } from "./event-merge.js";
 import { evaluateEventReadiness } from "./readiness.js";
 import { scoutPublicationDecision } from "./scout.js";
@@ -45,7 +46,12 @@ export async function autoPublishReadyEvents(
     eventIds: [],
     errors: [],
   };
-  const events = await db.selectFrom("events").selectAll().where("status", "=", "review").execute();
+  const events = await db
+    .selectFrom("events")
+    .selectAll()
+    .where("status", "=", "review")
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+    .execute();
   for (const event of events) {
     try {
       const readiness = await evaluateEventReadiness(db, event.id);
@@ -77,6 +83,7 @@ export async function autoAdvanceScout(
       .selectFrom("scout_insights")
       .select(["id", "total_score", "evidence_score", "confidence_score", "novelty_score"])
       .where("status", "in", ["inbox", "considering", "accepted"])
+      .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .orderBy("total_score", "desc")
       .execute();
     const linkedPublished = await db
@@ -84,6 +91,7 @@ export async function autoAdvanceScout(
       .innerJoin("events", "events.id", "scout_evidence.event_id")
       .select("scout_evidence.insight_id as insightId")
       .where("events.status", "=", "published")
+      .where("events.content_domain", "=", PUBLIC_CONTENT_DOMAIN)
       .execute();
     const linkedIds = new Set(linkedPublished.map((item) => item.insightId));
     let published = 0;
@@ -150,7 +158,11 @@ export async function autoManageLifecycle(
   db: Kysely<DatabaseSchema>,
 ): Promise<AutoLifecycleResult> {
   const result: AutoLifecycleResult = { degraded: 0, quarantined: 0, errors: [] };
-  const sources = await db.selectFrom("sources").selectAll().execute();
+  const sources = await db
+    .selectFrom("sources")
+    .selectAll()
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
+    .execute();
   for (const source of sources) {
     try {
       if (source.consecutive_failures >= 5 && source.lifecycle_status === "degraded") {

@@ -136,7 +136,7 @@ export function pageLayout(input: PageChrome): string {
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Agent Pulse",
+    name: "DB Pulse",
     url: ensureSlash(input.siteUrl),
     description: input.description,
     inLanguage: locale,
@@ -187,7 +187,7 @@ export function pageLayout(input: PageChrome): string {
   <header class="topbar">
     <a class="brand" href="${prefix}" aria-label="${escapeHtml(t("brand.aria", locale))}">
       <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span><strong>AGENT PULSE</strong><small>${escapeHtml(t("brand.subtitle", locale))}</small></span>
+      <span><strong>DB PULSE</strong><small>${escapeHtml(t("brand.subtitle", locale))}</small></span>
     </a>
     <nav class="desktop-nav" aria-label="${escapeHtml(t("ui.desktopNav", locale))}">${navHtml}</nav>
     <div class="top-actions">
@@ -199,7 +199,7 @@ export function pageLayout(input: PageChrome): string {
   ${eventDrawerShell(locale, assetPrefix, prefix)}
   <footer class="site-footer">
     <div class="shell footer-grid">
-      <div class="footer-brand"><strong>AGENT PULSE</strong><p>${escapeHtml(t("footer.tagline", locale))}</p>${footerSubscriptions(input.github, locale)}</div>
+      <div class="footer-brand"><strong>DB PULSE</strong><p>${escapeHtml(t("footer.tagline", locale))}</p>${footerSubscriptions(input.github, locale)}</div>
       <div class="footer-links">
         <nav aria-label="${locale === "en" ? "Explore" : "探索"}"><span>${locale === "en" ? "EXPLORE" : "探索"}</span><a href="${prefix}lines/">${escapeHtml(t("footer.lines", locale))}</a><a href="${prefix}industry-evolution/">${locale === "en" ? "Industry Evolution" : "行业演化"}</a><a href="${prefix}timeline/">${escapeHtml(t("footer.timeline", locale))}</a><a href="${prefix}signals/">${locale === "en" ? "Source updates" : "来源动态"}</a><a href="${prefix}scout/">${escapeHtml(t("footer.scout", locale))}</a><a href="${prefix}sources/">${escapeHtml(t("footer.sources", locale))}</a></nav>
         <nav aria-label="${locale === "en" ? "More" : "更多"}"><span>${locale === "en" ? "MORE" : "更多"}</span><a href="${prefix}actors/">${escapeHtml(t("tab.actors", locale))}</a><a href="${prefix}resources/">${escapeHtml(t("tab.resources", locale))}</a><a href="${prefix}legal/">${escapeHtml(t("footer.legal", locale))}</a><a href="${prefix}changelog/">${escapeHtml(t("footer.changelog", locale))}</a></nav>
@@ -228,22 +228,23 @@ function footerSubscriptions(github: GithubData, locale: Locale): string {
   const repository = github.repositoryUrl.replace(/\/$/, "");
   const watchUrl = `${repository}/subscription`;
   const weeklyUrl = `${repository}/issues?q=is%3Aissue+label%3Aweekly-brief`;
-  return `<nav class="footer-subscriptions" aria-label="${locale === "en" ? "Agent Pulse subscriptions" : "Agent Pulse 订阅入口"}"><a href="${escapeHtml(watchUrl)}" target="_blank" rel="noopener noreferrer">${icon("github")} Watch</a><a href="${escapeHtml(weeklyUrl)}" target="_blank" rel="noopener noreferrer">${icon("route")} ${locale === "en" ? "Weekly brief" : "AI 周报"}</a></nav>`;
+  return `<nav class="footer-subscriptions" aria-label="${locale === "en" ? "DB Pulse subscriptions" : "DB Pulse 订阅入口"}"><a href="${escapeHtml(watchUrl)}" target="_blank" rel="noopener noreferrer">${icon("github")} Watch</a><a href="${escapeHtml(weeklyUrl)}" target="_blank" rel="noopener noreferrer">${icon("route")} ${locale === "en" ? "Weekly brief" : "数据库周报"}</a></nav>`;
 }
 
 function eventDrawerShell(locale: Locale, assetPrefix: string, prefix: string): string {
   const label = locale === "en" ? "Event evidence drawer" : "事件证据抽屉";
   const kicker = locale === "en" ? "EVENT BRIEF" : "事件判断";
   const close = locale === "en" ? "Close event drawer" : "关闭事件抽屉";
-  return `<aside class="timeline-preview event-drawer" id="event-drawer" role="dialog" aria-modal="true" aria-hidden="true" aria-label="${escapeHtml(label)}" data-event-drawer data-timeline-src="${escapeHtml(`${assetPrefix}data/timeline.json`)}" data-event-base="${escapeHtml(`${prefix}events/`)}" inert><header class="drawer-header"><span>${escapeHtml(kicker)}</span><button class="preview-close" type="button" data-event-drawer-close aria-label="${escapeHtml(close)}">${icon("x")}</button></header><div class="event-drawer-content" data-event-drawer-content></div></aside><div class="preview-backdrop" data-event-drawer-backdrop hidden></div>`;
+  const timeline = locale === "en" ? "timeline.en.json" : "timeline.json";
+  return `<aside class="timeline-preview event-drawer" id="event-drawer" role="dialog" aria-modal="true" aria-hidden="true" aria-label="${escapeHtml(label)}" data-event-drawer data-timeline-src="${escapeHtml(`${assetPrefix}data/${timeline}`)}" data-event-base="${escapeHtml(`${prefix}events/`)}" inert><header class="drawer-header"><span>${escapeHtml(kicker)}</span><button class="preview-close" type="button" data-event-drawer-close aria-label="${escapeHtml(close)}">${icon("x")}</button></header><div class="event-drawer-content" data-event-drawer-content></div></aside><div class="preview-backdrop" data-event-drawer-backdrop hidden></div>`;
 }
 
 function githubStarButton(github: GithubData, locale: Locale): string {
   const count = github.stars === null ? "—" : new Intl.NumberFormat("en-US").format(github.stars);
   const label =
     locale === "en"
-      ? `Star Agent Pulse on GitHub, ${github.stars ?? "count unavailable"} stars`
-      : `在 GitHub 为 Agent Pulse 点赞，当前 ${github.stars ?? "未知"} 个 Star`;
+      ? `Star DB Pulse on GitHub, ${github.stars ?? "count unavailable"} stars`
+      : `在 GitHub 为 DB Pulse 点赞，当前 ${github.stars ?? "未知"} 个 Star`;
   return `<a class="github-star-button" data-github-star-button href="${escapeHtml(github.repositoryUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}"><span class="github-star-action">${icon("github")}<span>Star</span></span><strong class="github-star-count" data-github-star-count>${escapeHtml(count)}</strong></a>`;
 }
 

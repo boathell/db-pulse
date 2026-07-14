@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   import-draft:
-    if: github.event.label.name == 'source:import-ready' && contains(github.event.issue.body, '<!-- agent-pulse-source-proposal:v1 -->')
+    if: github.event.label.name == 'source:import-ready' && contains(github.event.issue.body, '<!-- db-pulse-source-proposal:v1 -->')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -109,6 +109,6 @@ jobs:
         run: |
           set -euo pipefail
           printf '%s\n\nDisabled draft review: %s\n\nThis proposal remains inactive until contract, policy, shadow, E3, and human E4 gates pass.\n' \
-            '<!-- agent-pulse-source-proposal-pr:v1 -->' "$PR_URL" > "$RUNNER_TEMP/source-proposal-pr.md"
+            '<!-- db-pulse-source-proposal-pr:v1 -->' "$PR_URL" > "$RUNNER_TEMP/source-proposal-pr.md"
           gh issue comment "$ISSUE_NUMBER" --body-file "$RUNNER_TEMP/source-proposal-pr.md"
           gh issue edit "$ISSUE_NUMBER" --add-label "source:draft-pr"

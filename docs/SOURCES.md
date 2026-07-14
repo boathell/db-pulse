@@ -1,77 +1,24 @@
-# Data sources and ranking
+# DB Pulse Source Catalog and Evidence Policy
 
-## Source tiers
+The first DB Pulse catalog contains 48 China database sources:
 
-| Tier | Role | Examples | Default authority |
-| --- | --- | --- | --- |
-| 1 | Primary fact | Official blog, paper, filing, GitHub release | 85-100 |
-| 2 | Professional verification | Reputable press, research institute | 65-85 |
-| 3 | Expert interpretation | Researcher, CXO, engineer, newsletter | 50-80 |
-| 4 | Distribution signal | X, Weibo, Reddit, HN, Zhihu | 20-60 |
-| Aggregator | Discovery | AI HOT, HuggingNews | Never sole evidence |
+- 36 official product, documentation, and release entrances across 18 core ecosystems;
+- 4 policy and standards sources;
+- 4 research, benchmark, or original-artifact sources;
+- 4 capital, professional-media, or database-community discovery sources.
 
-## Heat is not credibility
+All new automated sources start disabled in `draft` or `shadow`. Promotion to `active` requires an adapter contract, fixture, schema-drift test, access/license review, health probe, and a real observation window.
 
-`confidenceScore` answers “how likely is the factual core to be correct?”
+## Evidence rules
 
-`heatScore` answers “how broadly and quickly is this event spreading?”
+- Tier 1: official releases, documentation, filings, policy, standards, or original research.
+- Tier 2: independent professional verification or reproducible evaluation.
+- Tier 3/4: expert, media, community, or propagation signals used for discovery and context.
+- Aggregators cannot be the sole evidence for a material fact.
+- A public fact requires one Tier 1 source or two independent Tier 2 sources; exceptions remain visibly unconfirmed.
 
-A cross-circle hot event needs confidence, independent authors/sources, platform breadth, region breadth, velocity and persistence. Mirrored media accounts receive a repost penalty in future calibration.
+The initial scope is domestic. Overseas database material may be attached as comparison evidence only when it helps explain a China database Event.
 
-## Initial adapters
+## Public boundary
 
-- AI HOT public API (`selected` mode)
-- OpenAI RSS
-- Google DeepMind RSS
-- Hugging Face RSS
-- arXiv cs.AI RSS
-- Hacker News RSS query
-- Generic RSS / Atom
-- Generic array JSON API
-- HuggingNews public homepage metadata (disabled by default until a formal API/RSS exists)
-
-## Source Catalog v0.5
-
-The registry now contains 258 classified sources across 14 domains, including 73 China sources and 185 global/overseas sources. The catalog covers frontier labs, China labs, research/evaluation, open source, agent/dev tools, robotics, chips/cloud/infra, capital/business, experts, media, policy, community heat, aggregators and model economics.
-
-This is a discovery and maintenance catalog, not a claim that 258 collectors are production-ready:
-
-- `ready` + `active`: contract is known and scheduled collection is allowed;
-- `candidate` + `shadow`: stable-looking API/RSS/GitHub source awaiting fixtures and verification;
-- `manual`: high-value official/expert source without a safe stable feed;
-- `restricted`: social/platform source; metadata discovery only and disabled by default.
-
-The canonical catalog is `src/catalog/sources.ts`; database rows add lifecycle, run-time health and verification evidence.
-
-## Acquisition policy
-
-- Identify the collector with a non-browser User-Agent.
-- Follow API rate limits, fingerprint/ETag and caching contracts.
-- Do not bypass login, WAF, CAPTCHA, paywalls or platform restrictions.
-- Store metadata and provenance, not complete third-party articles. Repository snapshots cap Signal and Discovery excerpts at 320 characters; longer source text remains at the canonical publisher and is never mirrored into Pages.
-- Respect correction/removal requests and disable unstable sources by default.
-
-## Aggregator upstream protocol
-
-AI HOT, HuggingNews, TLDR AI and similar products are discovery/heat sensors, never factual publishers. Their collector output is written to `source_discoveries`, not `signals`:
-
-1. preserve the aggregator page as discovery evidence;
-2. extract original URL, publisher name and public source handles;
-3. match only an exact/prefix publisher URL, a unique identity host or an explicit social handle;
-4. store unresolved identities as `candidate` or `heat_only`;
-5. let the direct source collector create the factual signal;
-6. merge aggregator metrics only when the canonical original URL matches.
-
-An unresolved aggregator story cannot enter Event clustering. Aggregator authors/counts may affect heat, but never `independentSources` or factual confidence. Shared hosts such as `github.com` are never matched by hostname alone.
-
-## Source lifecycle and operations
-
-Sources move through `draft -> shadow -> active -> degraded -> quarantined -> retired`. Retire is a soft uninstall: historical provenance remains intact. Every execution creates a `source_runs` row with attempts, latency, counts, HTTP/error classification and response bytes.
-
-The fetch layer supports bounded retries for network errors, 408/425/429 and 5xx, exponential backoff with jitter, `Retry-After`, ETag/Last-Modified, per-source timeout policy, manual redirect validation and streamed size limits. Scheduled batches use bounded concurrency and isolate failures by source.
-
-Current limits are explicit: source-level rate policy is enforced inside one adapter run, but a global per-host token bucket and scheduler are not yet complete; adapter fixture coverage is still thin; AI HOT fingerprint polling is not yet implemented; HuggingNews remains an experimental HTML metadata adapter and its story page may expose handles without original post URLs.
-
-## PriceAI boundary
-
-[PriceAI](https://github.com/dimthink/PriceAI) is a valuable external model-purchase reference. Its data policy does not grant bulk reuse of production prices, channel lists, stock or snapshots. Agent Pulse links to the project with attribution and independently collects official vendor pages, Apple App Store regional subscription evidence and independent FX baselines; it does not mirror PriceAI production data.
+The static export includes allowlisted metadata, canonical URLs, evidence status, and health summaries. It excludes raw payloads, credentials, private notes, local paths, database files, and legacy `ai-industry` records.

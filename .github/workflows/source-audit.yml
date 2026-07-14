@@ -12,7 +12,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: agent-pulse-repository-data-main
+  group: db-pulse-repository-data-main
   cancel-in-progress: false
 
 jobs:
@@ -46,6 +46,7 @@ jobs:
         run: |
           set -euo pipefail
           npm run export -- --skip-seed
+          npm run privacy:scan
           npm run --silent public:fingerprint -- --include-sources > "$RUNNER_TEMP/public-before.sha256"
 
       - name: Audit every configured source
@@ -65,7 +66,7 @@ jobs:
         run: |
           set -euo pipefail
           git fetch origin main
-          git show origin/main:data/snapshot/v1.json > "$RUNNER_TEMP/remote-snapshot.json"
+          git show origin/main:data/snapshot/v2.json > "$RUNNER_TEMP/remote-snapshot.json"
           npm run db:snapshot -- merge --file="$RUNNER_TEMP/remote-snapshot.json"
 
       - name: Export converged source state and detect a material public change
@@ -74,6 +75,7 @@ jobs:
         run: |
           set -euo pipefail
           npm run export -- --skip-seed
+          npm run privacy:scan
           npm run --silent public:fingerprint -- --include-sources > "$RUNNER_TEMP/public-after.sha256"
           if cmp -s "$RUNNER_TEMP/public-before.sha256" "$RUNNER_TEMP/public-after.sha256"; then
             echo "No material public source changes."
@@ -91,9 +93,9 @@ jobs:
         run: |
           set -euo pipefail
           test -s data/reports/source-health.json
-          test -s data/snapshot/v1.json
-          git diff --check -- data/reports/source-health.json data/snapshot/v1.json
-          if grep -E 'gh[opsu]_[A-Za-z0-9_]{20,}|-----BEGIN .*PRIVATE KEY-----|/Users/[^/]+/|/home/runner/|"(token|secret|password|cookie|authorization|api[_-]?key)"[[:space:]]*:' data/reports/source-health.json data/snapshot/v1.json; then
+          test -s data/snapshot/v2.json
+          git diff --check -- data/reports/source-health.json data/snapshot/v2.json
+          if grep -E 'gh[opsu]_[A-Za-z0-9_]{20,}|-----BEGIN .*PRIVATE KEY-----|/Users/[^/]+/|/home/runner/|"(token|secret|password|cookie|authorization|api[_-]?key)"[[:space:]]*:' data/reports/source-health.json data/snapshot/v2.json; then
             echo "Private material detected in source health output" >&2
             exit 1
           fi
@@ -144,7 +146,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -- data/reports/source-health.json data/snapshot/v1.json
+          git add -- data/reports/source-health.json data/snapshot/v2.json
           if git diff --cached --quiet; then
             echo "No report changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"

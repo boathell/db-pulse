@@ -2868,6 +2868,9 @@ body:is([data-page="scout"], [data-page="actors"], [data-page="resources"], [dat
   min-height: 190px;
   flex-direction: column;
 }
+.actor-card[hidden] {
+  display: none;
+}
 .actor-card h2,
 .resource-card h2 {
   margin: 18px 0 5px;
@@ -3288,6 +3291,9 @@ body:is([data-page="scout"], [data-page="actors"], [data-page="resources"], [dat
   padding: 11px 15px;
   border-bottom: 1px solid var(--border-soft);
   transition: background 0.15s;
+}
+.source-table article[hidden] {
+  display: none;
 }
 .source-table article:hover {
   background: color-mix(in srgb, var(--accent) 4%, var(--surface-soft));

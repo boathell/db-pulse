@@ -2,12 +2,13 @@ import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { transform } from "esbuild";
 import type { Kysely } from "kysely";
-import { industryNarratives } from "../catalog/history.js";
+import { industryNarratives, industryNarrativesEn } from "../catalog/history.js";
 import { influencerCatalog } from "../catalog/influencers.js";
 import { capabilities, productVersion, releases, roadmap } from "../catalog/product.js";
 import type { AppConfig } from "../config/env.js";
 import { parseJson, Repository } from "../db/repository.js";
 import type { DatabaseSchema } from "../db/types.js";
+import { PUBLIC_DATASET_ID } from "../domain/content-domain.js";
 import { evaluateSystem } from "./evaluate.js";
 import type {
   EnrichedEvent,
@@ -29,18 +30,19 @@ import { renderStaticPages } from "./static-site/pages.js";
 export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppConfig) {
   const repository = new Repository(db);
   const evaluation = await evaluateSystem(db);
-  const [events, tracks, actors, resources, view, scout, latestSourceChecks, signals] =
+  const [events, eventsEn, tracks, actors, resources, view, scout, latestSourceChecks, signals] =
     await Promise.all([
       repository.publicEvents(),
-      repository.listTracks(),
-      repository.listActors(),
+      repository.publicEvents("en"),
+      repository.listPublicTracks(),
+      repository.listPublicActors(),
       repository.listResources(),
       repository.getDefaultView(),
       repository.publicScoutInsights(),
       repository.latestSourceChecks(),
       repository.publicSignals(),
     ]);
-  const sources = (await repository.listSources()).filter(
+  const sources = (await repository.listPublicSources()).filter(
     (source) => source.lifecycle_status !== "retired",
   );
 
@@ -51,6 +53,12 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
       actors: await repository.eventActors(event.id),
     })),
   )) as EnrichedEvent[];
+  const eventsEnById = new Map(eventsEn.map((event) => [event.id, event]));
+  const enrichedEventsEn = enrichedEvents.map((event) => ({
+    ...event,
+    ...eventsEnById.get(event.id),
+    tracks: event.tracks.map((track) => ({ ...track, name: englishTrackName(track.slug) })),
+  })) as EnrichedEvent[];
   const generatedAt = new Date().toISOString();
   const publicTracks: PublicTrack[] = tracks.map((track) => ({
     slug: track.slug,
@@ -65,6 +73,7 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
   const publicSources: PublicSource[] = sources.map((source) => ({
     slug: source.slug,
     name: source.name,
+    owner: source.owner,
     homepageUrl: source.homepage_url,
     category: source.source_category,
     region: source.region,
@@ -77,6 +86,9 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
     observationEnabled: source.observation_enabled === 1,
     qualityScore: source.quality_score,
     cadence: source.cadence,
+    robotsPolicy: source.robots_policy,
+    freshnessSloHours: source.freshness_slo_hours,
+    adapterVersion: source.adapter_version,
     healthStatus: normalizePublicHealth(checksBySourceId.get(source.id)?.status),
     lastCheckedAt: checksBySourceId.get(source.id)?.finished_at ?? null,
     latestItemAt: checksBySourceId.get(source.id)?.latest_item_at ?? null,
@@ -91,6 +103,7 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
     domains: parseJson(actor.domains_json, []),
     tableScore: actor.table_score,
     websiteUrl: actor.website_url,
+    observed: actor.observed_event_count > 0,
   }));
   const publicInfluencers: PublicInfluencer[] = influencerCatalog.map((influencer) => ({
     slug: influencer.slug,
@@ -103,19 +116,20 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
   const publicResources: PublicResource[] = resources.map((resource) => ({
     slug: resource.slug,
     provider: resource.provider,
-    model: resource.model,
-    type: resource.resource_type,
-    audience: resource.audience,
+    product: resource.product,
+    engineType: resource.engine_type,
+    versionNote: resource.version_note,
+    editions: parseJson(resource.editions_json, []),
+    deploymentModes: parseJson(resource.deployment_modes_json, []),
+    licenseModels: parseJson(resource.license_models_json, []),
+    compatibility: parseJson(resource.compatibility_json, []),
+    pricingModel: resource.pricing_model,
+    pricingNote: resource.pricing_note,
     region: resource.region,
-    currency: resource.currency,
-    inputPrice: resource.input_price,
-    outputPrice: resource.output_price,
-    unit: resource.unit,
-    planName: resource.plan_name,
     purchaseUrl: resource.purchase_url,
-    sourceUrl: resource.source_url,
-    comparisonUrl: resource.external_comparison_url,
-    riskLevel: resource.risk_level,
+    documentationUrl: resource.documentation_url,
+    evidenceUrl: resource.evidence_url,
+    evidenceStatus: resource.evidence_status,
     verifiedAt: resource.verified_at,
   }));
   const publicSignals: PublicSignal[] = signals
@@ -147,6 +161,8 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
       ...release,
       capabilities: [...release.capabilities],
       changes: [...release.changes],
+      ...(release.capabilitiesEn ? { capabilitiesEn: [...release.capabilitiesEn] } : {}),
+      ...(release.changesEn ? { changesEn: [...release.changesEn] } : {}),
     })),
     evaluation: evaluation
       ? {
@@ -175,12 +191,23 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
 
   await Promise.all([
     writeJson(join(config.distDir, "data/timeline.json"), {
-      schemaVersion: 1,
+      schemaVersion: 2,
+      datasetId: PUBLIC_DATASET_ID,
+      locale: "zh-CN",
       generatedAt,
       siteUrl: config.PUBLIC_SITE_URL,
       events: enrichedEvents,
     }),
+    writeJson(join(config.distDir, "data/timeline.en.json"), {
+      schemaVersion: 2,
+      datasetId: PUBLIC_DATASET_ID,
+      locale: "en",
+      generatedAt,
+      siteUrl: config.PUBLIC_SITE_URL,
+      events: enrichedEventsEn,
+    }),
     writeJson(join(config.distDir, "data/tracks.json"), publicTracks),
+    writeJson(join(config.distDir, "data/resources.json"), publicResources),
     writeJson(join(config.distDir, "data/scout.json"), {
       schemaVersion: 1,
       generatedAt,
@@ -225,6 +252,7 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
     siteUrl: config.PUBLIC_SITE_URL,
     generatedAt,
     events: enrichedEvents,
+    eventsEn: enrichedEventsEn,
     tracks: publicTracks,
     actors: publicActors,
     resources: publicResources,
@@ -236,9 +264,27 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
       horizon: { ...industryNarratives.horizon },
       eras: industryNarratives.eras.map((era) => ({
         ...era,
-        projects: era.projects.map((project) => ({ ...project })),
+        projects: [],
       })),
       tracks: industryNarratives.tracks.map((track) => ({
+        ...track,
+        stages: track.stages.map((stage) => ({ ...stage })),
+        lenses: track.lenses.map((lens) => ({
+          ...lens,
+          implications: [...lens.implications],
+          actions: [...lens.actions],
+          watch: [...lens.watch],
+          evidenceSlugs: [...lens.evidenceSlugs],
+        })),
+      })),
+    } satisfies IndustryNarratives,
+    narrativesEn: {
+      horizon: { ...industryNarrativesEn.horizon },
+      eras: industryNarrativesEn.eras.map((era) => ({
+        ...era,
+        projects: [],
+      })),
+      tracks: industryNarrativesEn.tracks.map((track) => ({
         ...track,
         stages: track.stages.map((stage) => ({ ...stage })),
         lenses: track.lenses.map((lens) => ({
@@ -273,6 +319,29 @@ export async function exportStaticSite(db: Kysely<DatabaseSchema>, config: AppCo
     version: productVersion,
     generatedAt,
   };
+}
+
+function englishTrackName(slug: string): string {
+  return (
+    (
+      {
+        "kernel-architecture": "Database Kernel & Architecture",
+        "distributed-cloud": "Distributed, Cloud-native & Serverless",
+        "realtime-lakehouse-multimodel": "Real-time Analytics, Lakehouse & Multimodel",
+        "reliability-security-ops-cost": "Reliability, Security, Operations & Cost",
+        "commercialization-adoption": "Commercialization & Industry Adoption",
+        "china-ecosystem-policy": "China Ecosystem, Capital, Policy & Standards",
+        oltp: "OLTP",
+        "olap-htap": "OLAP / HTAP",
+        "lakehouse-realtime": "Lakehouse & Real-time",
+        multimodel: "Graph / Time-series / Vector / Multimodel",
+        "open-source": "Open Source",
+        "cloud-managed": "Managed Cloud",
+        "private-xinchuang": "Private Deployment & Xinchuang",
+        "critical-industries": "Critical Industries",
+      } as Record<string, string>
+    )[slug] ?? slug
+  );
 }
 
 function safePublicUrl(value: string): boolean {
@@ -334,8 +403,8 @@ async function writeSitemap(pages: StaticPage[], siteUrl: string, distDir: strin
 
   const entries: string[] = [];
   for (const [, { zhPath, enPath }] of routes) {
-    const zhUrl = `${baseUrl}${zhPath.replace(/\/index\.html$/, "/")}`;
-    const enUrl = enPath ? `${baseUrl}${enPath.replace(/\/index\.html$/, "/")}` : null;
+    const zhUrl = `${baseUrl}${zhPath.replace(/(^|\/)index\.html$/, "$1")}`;
+    const enUrl = enPath ? `${baseUrl}${enPath.replace(/(^|\/)index\.html$/, "$1")}` : null;
 
     entries.push(`  <url>
     <loc>${escapeXml(zhUrl)}</loc>

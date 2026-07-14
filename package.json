@@ -1,16 +1,16 @@
 {
-  "name": "agent-pulse",
-  "version": "0.10.0",
+  "name": "db-pulse",
+  "version": "0.1.0",
   "private": false,
-  "description": "A curated AI industry intelligence timeline — signal, not noise.",
-  "author": "Barret Lee <barret.china@gmail.com>",
-  "homepage": "https://barretlee.github.io/agent-pulse/",
+  "description": "Evidence-backed intelligence and decision support for China's database industry.",
+  "author": "boathell",
+  "homepage": "https://boathell.github.io/db-pulse/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/barretlee/agent-pulse.git"
+    "url": "git+https://github.com/boathell/db-pulse.git"
   },
   "bugs": {
-    "url": "https://github.com/barretlee/agent-pulse/issues"
+    "url": "https://github.com/boathell/db-pulse/issues"
   },
   "type": "module",
   "engines": {
@@ -50,14 +50,16 @@
     "release:check": "tsx src/cli/release-notes.ts --check",
     "release:notes": "tsx src/cli/release-notes.ts",
     "export": "tsx src/cli/export.ts",
+    "privacy:scan": "tsx scripts/scan-static-output.ts",
     "auto:publish": "tsx src/cli/auto-publish.ts",
-    "check": "npm run lint && npm run typecheck && npm test && npm run export"
+    "check": "npm run lint && npm run typecheck && npm test && npm run export && npm run privacy:scan"
   },
   "keywords": [
-    "ai-news",
-    "ai-intelligence",
+    "database-industry",
+    "database-intelligence",
     "timeline",
-    "llm",
+    "dba",
+    "data-architecture",
     "industry-analysis"
   ],
   "license": "MIT",

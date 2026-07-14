@@ -25,10 +25,12 @@ async function setup() {
 describe("review noise reconciliation", () => {
   it("suppresses a reversible single-source placeholder while retaining its signal", async () => {
     const { db, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "techcrunch-ai");
+    const source = (await repository.listSources()).find(
+      (item) => item.slug === "infoq-cn-database",
+    );
     const signal = await repository.insertSignal(source?.id ?? "missing", {
-      url: "https://techcrunch.com/fixture/legacy-noise",
-      title: "General AI market commentary",
+      url: "https://www.infoq.cn/article/fixture-legacy-noise",
+      title: "General database market commentary",
       summary:
         "A legacy media item that should remain searchable without becoming a timeline event.",
       language: "en",
@@ -67,6 +69,7 @@ describe("review noise reconciliation", () => {
         published_at: null,
         created_at: timestamp,
         updated_at: timestamp,
+        content_domain: "database-cn",
       })
       .execute();
     await repository.attachSignal(eventId, signal?.id ?? "missing", "supporting", 20);
@@ -93,5 +96,62 @@ describe("review noise reconciliation", () => {
       reversible: true,
       suppressedEvent: { id: eventId },
     });
+  });
+
+  it("does not reconcile review noise from the retired AI domain", async () => {
+    const { db, repository } = await setup();
+    const source = await db.selectFrom("sources").selectAll().executeTakeFirstOrThrow();
+    await db
+      .insertInto("sources")
+      .values({
+        ...source,
+        id: "legacy-review-source",
+        slug: "legacy-review-source",
+        content_domain: "ai-industry",
+      })
+      .execute();
+    const signal = await repository.insertSignal("legacy-review-source", {
+      externalId: "legacy-review-signal",
+      url: "https://example.com/legacy-review-signal",
+      title: "Legacy AI market commentary",
+      summary: "Legacy AI review noise that must remain untouched by DB Pulse maintenance.",
+      language: "en",
+      publishedAt: "2026-07-12T00:00:00.000Z",
+      category: "legacy",
+      tags: [],
+      metrics: {},
+      rawMeta: {},
+    });
+    const template = await db.selectFrom("events").selectAll().executeTakeFirstOrThrow();
+    await db
+      .insertInto("events")
+      .values({
+        ...template,
+        id: "legacy-review-event",
+        slug: "legacy-review-event",
+        title: signal?.title ?? "Legacy AI review noise",
+        technical_insight: "待编辑：技术判断",
+        industry_insight: "待编辑：行业判断",
+        future_outlook: "待编辑：未来判断",
+        business_value: "待编辑：业务判断",
+        status: "review",
+        manual_override: 0,
+        published_at: null,
+        content_domain: "ai-industry",
+      })
+      .execute();
+    await repository.attachSignal("legacy-review-event", signal?.id ?? "missing", "supporting", 20);
+
+    expect((await findReviewNoiseCandidates(db)).map((item) => item.eventId)).not.toContain(
+      "legacy-review-event",
+    );
+    await expect(reconcileReviewNoise(db)).resolves.toMatchObject({ suppressed: 0 });
+    expect(
+      await db
+        .selectFrom("events")
+        .select("id")
+        .where("id", "=", "legacy-review-event")
+        .executeTakeFirst(),
+    ).toEqual({ id: "legacy-review-event" });
   });
 });

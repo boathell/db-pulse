@@ -7,6 +7,7 @@ import type { FetchResult } from "../collectors/types.js";
 import type { AppConfig } from "../config/env.js";
 import { parseJson, Repository } from "../db/repository.js";
 import type { DatabaseSchema, SourceRow } from "../db/types.js";
+import { PUBLIC_CONTENT_DOMAIN } from "../domain/content-domain.js";
 import {
   applySourceFailure,
   applySourceSuccess,
@@ -61,7 +62,7 @@ export async function collectSources(
         Boolean(source),
       )
     : scope === "all"
-      ? await repository.listSources()
+      ? await repository.listPublicSources()
       : await repository.getEnabledSources();
   if (sourceId && catalog.length === 0) throw new Error(`Source not found: ${sourceId}`);
   const selection = planSourceCollection(catalog, scope, Boolean(sourceId));
@@ -194,7 +195,7 @@ async function collectOneSource(
             headers: new Headers({
               ...(cached.etag ? { etag: cached.etag } : {}),
               ...(cached.lastModified ? { "last-modified": cached.lastModified } : {}),
-              "x-agent-pulse-cache": "hit",
+              "x-db-pulse-cache": "hit",
             }),
             attemptCount: 0,
             responseBytes: cached.responseBytes,
@@ -427,6 +428,7 @@ export async function autoActivateQualifiedShadows(
     .selectFrom("sources")
     .selectAll()
     .where("lifecycle_status", "=", "shadow")
+    .where("content_domain", "=", PUBLIC_CONTENT_DOMAIN)
     .execute();
 
   const activated: string[] = [];

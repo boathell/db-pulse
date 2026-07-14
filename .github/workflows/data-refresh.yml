@@ -26,7 +26,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: agent-pulse-repository-data-main
+  group: db-pulse-repository-data-main
   cancel-in-progress: false
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
     timeout-minutes: 35
     env:
       DATABASE_URL: sqlite:./var/automation.db
-      PUBLIC_SITE_URL: https://barretlee.github.io/agent-pulse/
+      PUBLIC_SITE_URL: https://boathell.github.io/db-pulse/
       REFRESH_MODE: ${{ inputs.mode || 'incremental' }}
       PUBLISH_WEEKLY: ${{ inputs.publish_weekly || false }}
     steps:
@@ -62,6 +62,7 @@ jobs:
         run: |
           set -euo pipefail
           npm run export -- --skip-seed
+          npm run privacy:scan
           npm run --silent public:fingerprint > "$RUNNER_TEMP/public-before.sha256"
 
       - name: Collect and cluster signals
@@ -101,7 +102,7 @@ jobs:
         run: |
           set -euo pipefail
           git fetch origin main
-          git show origin/main:data/snapshot/v1.json > "$RUNNER_TEMP/remote-snapshot.json"
+          git show origin/main:data/snapshot/v2.json > "$RUNNER_TEMP/remote-snapshot.json"
           npm run db:snapshot -- merge --file="$RUNNER_TEMP/remote-snapshot.json"
 
       - name: Export converged public content and detect a material change
@@ -110,6 +111,7 @@ jobs:
         run: |
           set -euo pipefail
           npm run export -- --skip-seed
+          npm run privacy:scan
           npm run --silent public:fingerprint > "$RUNNER_TEMP/public-after.sha256"
           if cmp -s "$RUNNER_TEMP/public-before.sha256" "$RUNNER_TEMP/public-after.sha256"; then
             echo "No material public content changes."
@@ -151,13 +153,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -f data/snapshot/v1.json
-          git diff --check -- data/snapshot/v1.json
-          if grep -E '"(token|secret|password|cookie|authorization|api[_-]?key)"[[:space:]]*:' data/snapshot/v1.json; then
+          test -f data/snapshot/v2.json
+          git diff --check -- data/snapshot/v2.json
+          if grep -E '"(token|secret|password|cookie|authorization|api[_-]?key)"[[:space:]]*:' data/snapshot/v2.json; then
             echo "Sensitive key detected in repository snapshot" >&2
             exit 1
           fi
-          if grep -E -- '-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|/Users/[^/]+/|/home/runner/' data/snapshot/v1.json; then
+          if grep -E -- '-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|/Users/[^/]+/|/home/runner/' data/snapshot/v2.json; then
             echo "Private material or local path detected in repository snapshot" >&2
             exit 1
           fi
@@ -167,7 +169,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -- data/snapshot/v1.json
+          git add -- data/snapshot/v2.json
           if git diff --cached --quiet; then
             echo "No material data changes; skipping commit."
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -194,8 +196,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          marker="agent-pulse-weekly-brief:${report_week}"
-          title="Agent Pulse AI 周报 · ${report_week}"
+          marker="db-pulse-weekly-brief:${report_week}"
+          title="DB Pulse 数据库行业周报 · ${report_week}"
           gh label create weekly-brief --color 087e70 --description "Automated weekly intelligence brief" 2>/dev/null || true
           issue_number="$(gh issue list --state all --label weekly-brief --limit 100 --json number,body \
             --jq ".[] | select(.body | contains(\"$marker\")) | .number" | head -1)"

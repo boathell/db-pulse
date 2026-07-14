@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const weeklyBriefMarker = (week: string) => `<!-- agent-pulse-weekly-brief:${week} -->`;
+export const weeklyBriefMarker = (week: string) => `<!-- db-pulse-weekly-brief:${week} -->`;
 
 interface WeeklyEvent {
   slug: string;
@@ -39,12 +39,12 @@ interface WeeklyBriefInput {
 }
 
 const strategicTracks = [
-  ["tech-evolution", "模型能力与研究"],
-  ["agi-progress", "Agent 与软件重构"],
-  ["commercialization", "产品与商业验证"],
-  ["model-economics", "基础设施与成本"],
-  ["investing", "资本与公司演化"],
-  ["global-innovation", "全球创新版图"],
+  ["kernel-architecture", "数据库内核与架构"],
+  ["distributed-cloud", "分布式、云原生与 Serverless"],
+  ["realtime-lakehouse-multimodel", "实时分析、湖仓与多模数据"],
+  ["reliability-security-ops-cost", "稳定性、安全、运维与成本"],
+  ["commercialization-adoption", "产品商业化与行业落地"],
+  ["china-ecosystem-policy", "国产生态、资本与政策标准"],
 ] as const;
 
 export function renderWeeklyBrief(
@@ -75,7 +75,7 @@ export function renderWeeklyBrief(
   const sourceCount = new Set(
     events.flatMap((event) => event.evidence?.map((item) => item.source).filter(Boolean) ?? []),
   ).size;
-  const siteUrl = input.siteUrl ?? "https://barretlee.github.io/agent-pulse/";
+  const siteUrl = input.siteUrl ?? "https://boathell.github.io/db-pulse/";
   const leadingEvents = events.slice(0, 3);
   const actions = selectActionableScouts(scout, 3);
   const affectedTracks = new Set(events.flatMap(eventTrackNames));
@@ -83,7 +83,7 @@ export function renderWeeklyBrief(
   const judgment = `需要更新。${safe(events[0]?.industryInsight ?? events[0]?.factSummary ?? "", 180)}`;
   const lines = [
     weeklyBriefMarker(window.week),
-    `# Agent Pulse AI 周报 · ${window.week}`,
+    `# DB Pulse 数据库行业周报 · ${window.week}`,
     "",
     `> **一句话判断：${judgment}**`,
     "",

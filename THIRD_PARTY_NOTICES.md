@@ -1,6 +1,6 @@
 # Third-Party Notices
 
-Agent Pulse uses open-source dependencies listed in `package.json` and `package-lock.json`. Each dependency remains subject to its own license. This file records third-party assets vendored into the public product or repository documentation; it does not replace dependency license metadata.
+DB Pulse uses open-source dependencies listed in `package.json` and `package-lock.json`. Each dependency remains subject to its own license. This file records third-party assets vendored into the public product or repository documentation; it does not replace dependency license metadata.
 
 ## Lucide Icons
 
@@ -8,7 +8,7 @@ Project: <https://lucide.dev/>
 Source: <https://github.com/lucide-icons/lucide>  
 License: ISC, with certain icons derived from Feather Icons under MIT
 
-Agent Pulse vendors a fixed SVG subset from Lucide rather than loading a remote icon font or runtime CDN. The icons may be resized or styled to match the interface.
+DB Pulse vendors a fixed SVG subset from Lucide rather than loading a remote icon font or runtime CDN. The icons may be resized or styled to match the interface.
 
 ```text
 ISC License
@@ -58,8 +58,8 @@ The canonical list of Lucide icons derived from Feather is maintained in the [Lu
 
 ## Project-created assets
 
-`docs/assets/hero.svg` and `web/public/assets/favicon.svg` are original Agent Pulse assets and do not incorporate third-party logos or trademarks.
+`docs/assets/hero.svg` and `web/public/assets/favicon.svg` are original DB Pulse assets and do not incorporate third-party logos or trademarks.
 
 ## Source content is not a third-party software dependency
 
-Articles, papers, filings, release notes, model cards, feeds, images, names, and trademarks referenced by Agent Pulse remain the property of their respective owners. They are not relicensed through this notice or the repository's MIT License. See [Copyright, Sources, and Responsible Use](docs/LEGAL.md).
+Articles, papers, filings, standards, release notes, product documentation, feeds, images, names, and trademarks referenced by DB Pulse remain the property of their respective owners. They are not relicensed through this notice or the repository's MIT License. See [Copyright, Sources, and Responsible Use](docs/LEGAL.md).

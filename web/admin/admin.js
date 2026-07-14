@@ -1,5 +1,5 @@
 const state = {
-  token: sessionStorage.getItem("agent-pulse-admin-token") || "",
+  token: sessionStorage.getItem("db-pulse-admin-token") || "",
   lastAutoActions: null,
   sources: [],
   events: [],
@@ -35,7 +35,7 @@ const titles = {
   events: "事件与发布",
   tracks: "主线编排",
   actors: "角色雷达",
-  resources: "模型资源",
+  resources: "选型与成本",
   view: "视觉与视图",
 };
 $("#tokenInput").value = state.token;
@@ -868,11 +868,28 @@ function renderResources(filter = "") {
     .filter((item) => includes(item, filter))
     .forEach((resource) => {
       const row = node("div", "table-row");
+      const deployments = JSON.parse(resource.deployment_modes_json || "[]")
+        .slice(0, 2)
+        .join(" / ");
       row.append(
-        mainCell(resource.model, `${resource.provider} · ${resource.resource_type}`),
-        node("span", "cell-muted", resource.audience),
-        node("span", "cell-muted", resource.risk_level),
-        node("span", "cell-muted", new Date(resource.verified_at).toLocaleDateString("zh-CN")),
+        mainCell(
+          resource.product,
+          `${resource.provider} · ${resource.engine_type} · ${deployments || "部署形态待核验"}`,
+        ),
+      );
+      const versionNote = input("text", resource.version_note, "score-input");
+      versionNote.setAttribute("aria-label", `${resource.product} 版本口径`);
+      versionNote.addEventListener("change", () =>
+        patch(`/api/admin/resources/${resource.id}`, { versionNote: versionNote.value.trim() }),
+      );
+      row.append(
+        versionNote,
+        node("span", "cell-muted", resource.pricing_model),
+        node(
+          "span",
+          "cell-muted",
+          `${resource.evidence_status} · ${new Date(resource.verified_at).toLocaleDateString("zh-CN")}`,
+        ),
       );
       const toggle = switcher(resource.enabled === 1, () =>
         patch(`/api/admin/resources/${resource.id}`, { enabled: toggle.classList.contains("on") }),
@@ -947,7 +964,7 @@ $("#saveView").addEventListener("click", async () => {
 });
 $("#saveToken").addEventListener("click", () => {
   state.token = $("#tokenInput").value.trim();
-  sessionStorage.setItem("agent-pulse-admin-token", state.token);
+  sessionStorage.setItem("db-pulse-admin-token", state.token);
   loadAll();
 });
 $("#adminNav").addEventListener("click", (event) => {

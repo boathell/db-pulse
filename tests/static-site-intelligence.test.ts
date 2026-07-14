@@ -3,7 +3,6 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { sourceCatalog } from "../src/catalog/sources.js";
 import { githubReleasesAdapter } from "../src/collectors/github-releases.js";
-import { rssAdapter } from "../src/collectors/rss.js";
 import type { CollectContext } from "../src/collectors/types.js";
 import type { SourceDescriptor } from "../src/domain/types.js";
 import type {
@@ -176,24 +175,27 @@ describe("static-site intelligence consumption model", () => {
 
   it("keeps catalog presence separate from effective technical coverage", () => {
     const sources = [
-      source("claude-code-releases", "Claude Code Releases", "healthy", "github", [
-        "coding-agent",
-        "developer",
+      source("oceanbase-releases", "OceanBase Releases", "healthy", "github", [
+        "oceanbase",
+        "distributed database",
       ]),
-      source("anthropic", "Anthropic", "failed", "html", ["agent", "enterprise"]),
-      source("lovable-changelog", "Lovable Changelog", "unchecked", "rss", ["lovable", "product"]),
+      source("oceanbase-official", "OceanBase", "failed", "html", ["oceanbase", "htap"]),
+      source("milvus-official", "Milvus Releases", "unchecked", "html", [
+        "milvus",
+        "vector database",
+      ]),
     ];
 
     const coverage = analyzeTechnologyCoverage(sources);
-    expect(coverage.find((item) => item.slug === "claude-code")).toMatchObject({
+    expect(coverage.find((item) => item.slug === "oceanbase")).toMatchObject({
       status: "watch",
       healthySources: 1,
     });
-    expect(coverage.find((item) => item.slug === "lovable")).toMatchObject({
+    expect(coverage.find((item) => item.slug === "milvus")).toMatchObject({
       status: "unchecked",
       healthySources: 0,
     });
-    expect(coverage.find((item) => item.slug === "a2a")).toMatchObject({ status: "gap" });
+    expect(coverage.find((item) => item.slug === "dameng")).toMatchObject({ status: "gap" });
   });
 
   it("summarizes the source portfolio without confusing catalog size with health", () => {
@@ -233,9 +235,12 @@ describe("static-site intelligence consumption model", () => {
   });
 });
 
-describe("new first-party technology source fixtures", () => {
-  it("parses the A2A release fixture through the configured GitHub adapter", async () => {
-    const catalog = sourceCatalog.find((source) => source.slug === "a2a-protocol-releases");
+describe("database source adapter contracts", () => {
+  it("parses a database release fixture through every configured GitHub adapter", async () => {
+    const githubSources = sourceCatalog.filter((source) => source.acquisition === "github");
+    expect(githubSources.length).toBeGreaterThanOrEqual(10);
+    expect(githubSources.every((source) => source.endpoint.endsWith("/releases.atom"))).toBe(true);
+    const catalog = sourceCatalog.find((source) => source.slug === "tidb-releases");
     expect(catalog).toMatchObject({
       adapter: "github-releases",
       lifecycleStatus: "shadow",
@@ -243,53 +248,26 @@ describe("new first-party technology source fixtures", () => {
     });
     const result = await githubReleasesAdapter.collect(
       descriptor(catalog),
-      context(await fixture("a2a-releases.atom"), catalog?.endpoint ?? ""),
+      context(await fixture("database-releases.atom"), catalog?.endpoint ?? ""),
     );
     expect(result[0]).toMatchObject({
-      title: "v1.0.1",
-      url: "https://github.com/a2aproject/A2A/releases/tag/v1.0.1",
-    });
-  });
-
-  it("parses the Lovable changelog fixture through the configured RSS adapter", async () => {
-    const catalog = sourceCatalog.find((source) => source.slug === "lovable-changelog");
-    expect(catalog).toMatchObject({ adapter: "rss", lifecycleStatus: "shadow", enabled: false });
-    const result = await rssAdapter.collect(
-      descriptor(catalog),
-      context(await fixture("lovable-changelog.xml"), catalog?.endpoint ?? ""),
-    );
-    expect(result[0]).toMatchObject({
-      title: "Add payments to your app",
-      publishedAt: "2026-04-24T00:00:00.000Z",
+      title: "v8.5.0",
+      url: "https://github.com/pingcap/tidb/releases/tag/v8.5.0",
     });
   });
 
   it("keeps source schema drift out of normalized signals", async () => {
     const drift = await fixture("source-schema-drift.xml");
-    const lovable = sourceCatalog.find((source) => source.slug === "lovable-changelog");
-    const a2a = sourceCatalog.find((source) => source.slug === "a2a-protocol-releases");
-
-    expect(
-      await rssAdapter.collect(descriptor(lovable), context(drift, lovable?.endpoint ?? "")),
-    ).toEqual([]);
+    const tidb = sourceCatalog.find((source) => source.slug === "tidb-releases");
     await expect(
-      githubReleasesAdapter.collect(descriptor(a2a), context(drift, a2a?.endpoint ?? "")),
+      githubReleasesAdapter.collect(descriptor(tidb), context(drift, tidb?.endpoint ?? "")),
     ).rejects.toThrow("no entries found");
   });
 
-  it.each([
-    "baoyu",
-    "mu-li-blog",
-    "lilian-weng",
-    "eugene-yan",
-  ])("parses the %s expert feed through the RSS contract", async (slug) => {
-    const catalog = sourceCatalog.find((source) => source.slug === slug);
-    expect(catalog).toMatchObject({ adapter: "rss", role: "expert", lifecycleStatus: "shadow" });
-    const result = await rssAdapter.collect(
-      descriptor(catalog),
-      context(await fixture("expert-feed.xml"), catalog?.endpoint ?? ""),
-    );
-    expect(result[0]?.title).toBe("A durable AI systems field note");
+  it("keeps manual and HTML sources disabled until their own contract is verified", () => {
+    const notAutomated = sourceCatalog.filter((source) => source.acquisition !== "github");
+    expect(notAutomated.every((source) => source.enabled === false)).toBe(true);
+    expect(notAutomated.every((source) => source.lifecycleStatus === "shadow")).toBe(true);
   });
 });
 
@@ -374,8 +352,8 @@ function source(
     slug,
     name,
     homepageUrl: `https://example.com/${slug}`,
-    category: "agent-devtool",
-    region: "GLOBAL",
+    category: "database-vendor",
+    region: "CN",
     tier: 1,
     role: "primary",
     acquisition,
@@ -417,7 +395,7 @@ function context(body: string, finalUrl: string): CollectContext {
       HOST: "127.0.0.1",
       PORT: 8899,
       DATABASE_URL: "sqlite::memory:",
-      COLLECTOR_USER_AGENT: "agent-pulse/test",
+      COLLECTOR_USER_AGENT: "db-pulse/test",
       COLLECTOR_TIMEOUT_MS: 30_000,
       COLLECTOR_CONCURRENCY: 4,
       COLLECTOR_PROXY_MODE: "off",

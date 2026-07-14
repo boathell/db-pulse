@@ -6,85 +6,84 @@ import {
   titleSimilarity,
 } from "../src/domain/clustering.js";
 
-describe("event clustering", () => {
-  it("groups updates about the same release", () => {
-    const left = "OpenAI launches GPT-5.6 for long-running agent work";
-    const right = "UPDATE: OpenAI GPT-5.6 launches with agent work mode";
-    expect(titleSimilarity(left, right)).toBeGreaterThan(0.5);
+describe("database event clustering", () => {
+  it("groups two release reports for the same database version", () => {
+    const left = "OceanBase 4.3.5 release improves distributed SQL stability";
+    const right = "OceanBase 4.3.5 release adds distributed SQL stability updates";
+    expect(titleSimilarity(left, right)).toBeGreaterThan(0.4);
     expect(
       belongsToEvent(
         { title: left, publishedAt: "2026-07-11T00:00:00Z" },
         { title: right, happenedAt: "2026-07-10T12:00:00Z" },
       ),
     ).toBe(true);
+    expect(eventFingerprint(left)).toBe("oceanbase:4.3.5");
   });
 
-  it("does not group unrelated events outside the time window", () => {
+  it("does not group identical versions outside the 21-day window", () => {
     expect(
       belongsToEvent(
-        { title: "OpenAI launches GPT-5.6", publishedAt: "2026-07-11T00:00:00Z" },
-        { title: "OpenAI launches GPT-5.6", happenedAt: "2026-01-01T00:00:00Z" },
+        { title: "TiDB 8.5 release", publishedAt: "2026-07-11T00:00:00Z" },
+        { title: "TiDB 8.5 release", happenedAt: "2026-01-01T00:00:00Z" },
       ),
     ).toBe(false);
   });
 
-  it("keeps capability evaluations separate from the named model release", () => {
-    const launch = "OpenAI announces GPT-5.6 for end-to-end knowledge work";
-    const evaluation = "First enterprise evaluations show where GPT 5.6 improves coding";
-    expect(titleSimilarity(launch, evaluation)).toBeLessThan(0.46);
-    expect(eventFingerprint(launch)).toBe("openai:gpt:5.6");
-    expect(eventFingerprint(evaluation)).toBe("openai:gpt:5.6");
+  it("keeps benchmark or capability evaluations separate from a release", () => {
+    const release = "Apache Doris 3.1 release announced";
+    const evaluation = "Apache Doris 3.1 benchmark evaluates query performance";
+    expect(eventFingerprint(release)).toBe("doris:3.1");
+    expect(eventFingerprint(evaluation)).toBe("doris:3.1");
     expect(
       belongsToEvent(
         { title: evaluation, publishedAt: "2026-07-12T00:00:00Z" },
-        { title: launch, happenedAt: "2026-07-10T12:00:00Z" },
+        { title: release, happenedAt: "2026-07-10T12:00:00Z" },
       ),
     ).toBe(false);
   });
 
-  it("keeps incidents separate from the release event", () => {
-    expect(eventFacet("GPT-5.6 outage affects API requests")).toBe("incident");
+  it("keeps incidents and pricing changes separate from releases", () => {
+    expect(eventFacet("PolarDB outage affects database requests")).toBe("incident");
+    expect(eventFacet("GaussDB pricing and billing update")).toBe("pricing");
     expect(
       belongsToEvent(
-        {
-          title: "GPT-5.6 outage affects API requests",
-          publishedAt: "2026-07-12T00:00:00Z",
-        },
-        {
-          title: "OpenAI announces GPT-5.6",
-          happenedAt: "2026-07-10T12:00:00Z",
-        },
+        { title: "PolarDB 2.0 outage affects requests", publishedAt: "2026-07-12T00:00:00Z" },
+        { title: "PolarDB 2.0 release announced", happenedAt: "2026-07-10T12:00:00Z" },
       ),
     ).toBe(false);
   });
 
-  it("keeps capability follow-ups separate from a model launch", () => {
-    expect(
-      belongsToEvent(
-        {
-          title: "GPT-5.6 Sol solves a 50-year-old math problem",
-          publishedAt: "2026-07-11T12:00:00.000Z",
-        },
-        {
-          title: "OpenAI launches GPT-5.6 Sol, Terra and Luna",
-          happenedAt: "2026-07-09T12:00:00.000Z",
-        },
-      ),
-    ).toBe(false);
+  it("classifies database deployment, migration and compatibility adoption separately", () => {
+    expect(eventFacet("OceanBase managed service enters a cloud marketplace")).toBe("distribution");
+    expect(eventFacet("达梦数据库完成核心系统兼容迁移与私有化部署")).toBe("distribution");
   });
 
-  it("groups distribution updates for the same model", () => {
-    expect(
-      belongsToEvent(
-        {
-          title: "GPT-5.6 is now available in GitHub Copilot",
-          publishedAt: "2026-07-09T16:00:00.000Z",
-        },
-        {
-          title: "GPT-5.6 进入 Microsoft 365 Copilot：Agent 获得企业级分发",
-          happenedAt: "2026-07-09T10:00:00.000Z",
-        },
-      ),
-    ).toBe(true);
+  it("normalizes Chinese ecosystem aliases", () => {
+    expect(eventFingerprint("达梦数据库 DM8 发布升级")).toBe("dameng:dm8");
+    expect(eventFingerprint("人大金仓 KingbaseES V9 发布")).toBe("kingbase:v9");
+    expect(eventFingerprint("涛思数据 TDengine 3.3 发布")).toBe("tdengine:3.3");
+  });
+
+  it.each([
+    ["Dameng DM8 release", "dameng"],
+    ["KingbaseES V9 release", "kingbase"],
+    ["GBase 8a release", "gbase"],
+    ["GoldenDB 6.1 release", "goldendb"],
+    ["OceanBase 4.3 release", "oceanbase"],
+    ["TiDB 8.5 release", "tidb"],
+    ["openGauss 7.0 release", "opengauss"],
+    ["GaussDB 8.3 release", "gaussdb"],
+    ["PolarDB-X 2.4 release", "polardb"],
+    ["TDSQL 10.3 release", "tdsql"],
+    ["Vastbase G100 3.0 release", "vastbase"],
+    ["SequoiaDB 5.8 release", "sequoiadb"],
+    ["MatrixOne 2.0 release", "matrixone"],
+    ["Apache Doris 3.1 release", "doris"],
+    ["StarRocks 4.0 release", "starrocks"],
+    ["TDengine 3.3 release", "tdengine"],
+    ["NebulaGraph 3.8 release", "nebulagraph"],
+    ["Milvus 2.6 release", "milvus"],
+  ])("maps %s to the %s ecosystem", (title, ecosystem) => {
+    expect(eventFingerprint(title)?.split(":")[0]).toBe(ecosystem);
   });
 });

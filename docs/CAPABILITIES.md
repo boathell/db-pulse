@@ -1,53 +1,24 @@
-# Agent Pulse 能力图谱与系统架构
+# DB Pulse 能力图谱
 
-## 能力不是页面
+## 已实现
 
-页面只负责让能力可见。真正需要长期沉淀的是采集、验证、处理、理解、挖掘、评测、决策与治理能力。每项能力都必须拥有状态、成熟度、首次 release 和实现/运行证据；planned 不能写成 supported，experimental 不能写成 production-ready。
+- 来源目录、生命周期、健康审计和安全采集边界。
+- `Source → Signal → Event → Track/Actor` 的证据化收敛。
+- `database-cn` / `ai-industry` 领域隔离与 schema v2 快照。
+- 事件中文事实基准与英文完整本地化门禁。
+- 数据库产品、版本、部署、兼容、工作负载和技术方向聚类。
+- 六条数据库产业主线、18 个核心生态和“选型与成本”资源模型。
+- 静态中英文站点、公开 API、隐私扫描、回滚型发布工作流。
 
-## Capability Map
+## 实验性
 
-v0.5 在 v0.4 基线之上沉淀了六项可复用能力资产：逐源恢复审计、隔离观察数据池、可逆信号分诊、人工事件收敛、发布就绪门禁和有界持续进化。来源可观测性已从 experimental 升为 operational；完整机器可读状态以 `src/catalog/product.ts` 和公开 `product.json` 为准。
+- 国内传播热度：仍依赖真实独立来源、平台宽度、置信度和时间衰减。
+- Scout：只产生绑定 Event 与证据的待验证行动假设。
+- 自动收敛与发布：只在 schema、证据、双语和 readiness 硬门禁通过后运行。
 
-<div style="width:1200px;box-sizing:border-box;position:relative;background:#0f172a;padding:20px;border-radius:12px;"><style scoped>.cap-title{text-align:center;font-size:22px;font-weight:700;color:#f1f5f9;margin-bottom:16px;letter-spacing:1px}.cap-catalog{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.cap-card{border:1px solid #334155;border-radius:8px;padding:14px;background:rgba(30,41,59,.72)}.cap-card-title{font-size:12px;font-weight:700;color:#94a3b8;text-align:center;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid #334155}.cap-box{border-radius:6px;padding:8px;text-align:center;font-size:10px;font-weight:600;line-height:1.35;color:#e2e8f0;background:rgba(15,23,42,.7);border-left:2px solid #64748b;margin:5px 0}.cap-box.op{border-left-color:#22c55e}.cap-box.exp{border-left-color:#f59e0b}.cap-box.plan{opacity:.5}.cap-legend{display:flex;justify-content:center;gap:16px;margin-top:14px;color:#94a3b8;font-size:10px}.cap-legend i{display:inline-block;width:7px;height:7px;margin-right:5px;border-radius:50%}</style><div class="cap-title">Agent Pulse Capability Map · v0.3.0</div><div class="cap-catalog"><div class="cap-card"><div class="cap-card-title">Sensing / 感知</div><div class="cap-box op">Source Catalog</div><div class="cap-box exp">Upstream Discovery</div><div class="cap-box op">Source Lifecycle</div><div class="cap-box op">Resilient Fetch</div><div class="cap-box exp">Contract & Fixture</div><div class="cap-box exp">Coverage Map</div></div><div class="cap-card"><div class="cap-card-title">Understanding / 理解</div><div class="cap-box op">Normalize & Sanitize</div><div class="cap-box exp">URL / Content Dedupe</div><div class="cap-box exp">Event Clustering</div><div class="cap-box exp">Fact / Reason / Impact</div><div class="cap-box plan">Entity Resolution</div><div class="cap-box plan">Claim / Evidence Graph</div></div><div class="cap-card"><div class="cap-card-title">Intelligence / 挖掘</div><div class="cap-box exp">Confidence Scoring</div><div class="cap-box exp">Cross-circle Heat</div><div class="cap-box exp">Impact & Value</div><div class="cap-box exp">Opportunity Scout</div><div class="cap-box plan">Trend / Contradiction</div><div class="cap-box plan">Forecast Calibration</div></div><div class="cap-card"><div class="cap-card-title">Experience / 决策</div><div class="cap-box exp">Today Brief</div><div class="cap-box op">Narrative Timeline</div><div class="cap-box exp">Industry Radar</div><div class="cap-box exp">Opportunity Inbox</div><div class="cap-box exp">Control Room</div><div class="cap-box op">Static Release</div></div><div class="cap-card"><div class="cap-card-title">Governance / 治理</div><div class="cap-box op">Primary Source Gate</div><div class="cap-box op">Security Guardrails</div><div class="cap-box op">Provenance</div><div class="cap-box exp">Evaluation Scorecard</div><div class="cap-box op">Capability Accounting</div><div class="cap-box plan">Audit / Replay / Rollback</div></div></div><div class="cap-legend"><span><i style="background:#22c55e"></i>operational</span><span><i style="background:#f59e0b"></i>experimental</span><span><i style="background:#64748b"></i>planned</span></div></div>
+## 规划中
 
-## 分层系统架构
-
-<div style="width:1200px;box-sizing:border-box;position:relative;background:#0f172a;padding:20px;border-radius:12px;"><style scoped>.arch-wrapper{display:flex;gap:12px}.arch-sidebar{width:165px;flex-shrink:0}.arch-main{flex:1;min-width:0}.arch-title{text-align:center;font-size:22px;font-weight:700;color:#f1f5f9;margin-bottom:16px;letter-spacing:1px}.arch-layer{margin:8px 0;padding:14px;border-radius:8px}.arch-layer-title{font-size:13px;font-weight:700;margin-bottom:10px;text-align:center}.arch-grid{display:grid;gap:8px}.arch-grid-3{grid-template-columns:repeat(3,1fr)}.arch-grid-4{grid-template-columns:repeat(4,1fr)}.arch-box{border-radius:6px;padding:8px;text-align:center;font-size:11px;font-weight:600;line-height:1.35;color:#e2e8f0;background:rgba(30,41,59,.8);border:1px solid rgba(148,163,184,.2)}.arch-box.highlight{background:rgba(250,204,21,.15);border-color:#facc15;color:#fef08a}.arch-box small{display:block;margin-top:3px;color:#94a3b8;font-weight:400}.arch-layer.user{background:rgba(14,165,233,.1);border:1px solid #0ea5e9;box-shadow:0 0 12px rgba(14,165,233,.15)}.arch-layer.user .arch-layer-title{color:#7dd3fc}.arch-layer.application{background:rgba(245,158,11,.1);border:1px solid #f59e0b}.arch-layer.application .arch-layer-title{color:#fcd34d}.arch-layer.ai{background:rgba(16,185,129,.1);border:1px solid #10b981}.arch-layer.ai .arch-layer-title{color:#6ee7b7}.arch-layer.data{background:rgba(236,72,153,.1);border:1px solid #ec4899}.arch-layer.data .arch-layer-title{color:#f9a8d4}.arch-layer.infra{background:rgba(139,92,246,.1);border:1px solid #8b5cf6}.arch-layer.infra .arch-layer-title{color:#c4b5fd}.arch-layer.external{background:rgba(51,65,85,.3);border:1px dashed #475569}.arch-layer.external .arch-layer-title{color:#94a3b8}.arch-sidebar-panel{border-radius:8px;padding:10px;background:rgba(30,41,59,.6);border:1px solid #334155;margin-bottom:8px}.arch-sidebar-title{font-size:11px;font-weight:700;text-align:center;color:#94a3b8;margin-bottom:6px}.arch-sidebar-item{font-size:10px;text-align:center;color:#cbd5e1;background:rgba(15,23,42,.5);padding:5px;border-radius:4px;margin:3px 0;border:1px solid rgba(51,65,85,.5)}.arch-sidebar-item.metric{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);color:#6ee7b7}</style><div class="arch-title">Agent Pulse Intelligence Architecture</div><div class="arch-wrapper"><div class="arch-sidebar"><div class="arch-sidebar-panel"><div class="arch-sidebar-title">Evaluation</div><div class="arch-sidebar-item metric">Source Coverage</div><div class="arch-sidebar-item metric">Confidence</div><div class="arch-sidebar-item metric">Value / Effect</div><div class="arch-sidebar-item metric">Realtime / Freshness</div></div><div class="arch-sidebar-panel"><div class="arch-sidebar-title">Operations</div><div class="arch-sidebar-item">SourceRun</div><div class="arch-sidebar-item">Health / SLO</div><div class="arch-sidebar-item">Changelog</div><div class="arch-sidebar-item">Release Evidence</div></div></div><div class="arch-main"><div class="arch-layer user"><div class="arch-layer-title">Product Space</div><div class="arch-grid arch-grid-4"><div class="arch-box">Today<small>真正重要的变化</small></div><div class="arch-box">Timeline<small>长期演进主线</small></div><div class="arch-box">Radar<small>玩家与格局</small></div><div class="arch-box">Inbox<small>机会与行动</small></div></div></div><div class="arch-layer application"><div class="arch-layer-title">Application & Workflow</div><div class="arch-grid arch-grid-3"><div class="arch-box">Control Room<small>审核与编排</small></div><div class="arch-box highlight">Release Orchestrator<small>评测 → 快照 → 静态发布</small></div><div class="arch-box">Public API / Export<small>privacy allowlist</small></div></div></div><div class="arch-layer ai"><div class="arch-layer-title">Intelligence & Analysis</div><div class="arch-grid arch-grid-4"><div class="arch-box">Event Understanding<small>Fact / Reason / Impact</small></div><div class="arch-box">Scoring<small>confidence / heat / value</small></div><div class="arch-box">Trend Graph<small>turning point / contradiction</small></div><div class="arch-box">Scout<small>hypothesis / action / asset</small></div></div></div><div class="arch-layer data"><div class="arch-layer-title">Evidence & Knowledge</div><div class="arch-grid arch-grid-4"><div class="arch-box">Source Registry<small>catalog / policy / lifecycle</small></div><div class="arch-box">Signal / Observation<small>provenance / metrics</small></div><div class="arch-box">Event / Claim<small>unique fact node</small></div><div class="arch-box">Capability / Evaluation<small>maturity / scorecard</small></div></div></div><div class="arch-layer infra"><div class="arch-layer-title">Runtime Foundation</div><div class="arch-grid arch-grid-4"><div class="arch-box">Node / TypeScript</div><div class="arch-box">Kysely / SQLite / MySQL</div><div class="arch-box">Fastify / CLI</div><div class="arch-box">Vitest / CI / Pages</div></div></div><div class="arch-layer external"><div class="arch-layer-title">Knowledge Network</div><div class="arch-grid arch-grid-4"><div class="arch-box">Official / Research</div><div class="arch-box">Open Source / Infra</div><div class="arch-box">Capital / Policy / Media</div><div class="arch-box">Expert / Community Heat</div></div></div></div><div class="arch-sidebar"><div class="arch-sidebar-panel"><div class="arch-sidebar-title">Governance</div><div class="arch-sidebar-item">Evidence Gate</div><div class="arch-sidebar-item">Human Publish Gate</div><div class="arch-sidebar-item">Policy Version</div><div class="arch-sidebar-item">Audit / Rollback</div></div><div class="arch-sidebar-panel"><div class="arch-sidebar-title">Safety</div><div class="arch-sidebar-item">SSRF / Body Limit</div><div class="arch-sidebar-item">Auth / CSP</div><div class="arch-sidebar-item">Privacy Export</div><div class="arch-sidebar-item">License Boundary</div></div></div></div></div>
-
-## 评测闭环
-
-```text
-真实运行数据 / 人工反馈 / release evidence
-                    │
-                    ▼
- Evaluation dimensions + sample target + penalties
-                    │
-          ┌─────────┴─────────┐
-          ▼                   ▼
- sufficient evidence     insufficient data
-按实测分计入总分        计入总分且单项硬封顶 <= 45
-          │                   │
-          └─────────┬─────────┘
-                    ▼
- 加权分 × (0.65 + 充分证据覆盖率 × 0.35)
-                    │
-                    ▼
-      capability maturity + next action
-                    ▼
-      next spec / implementation / release
-```
-
-当前评测维度包括有效来源覆盖、来源内容质量、一手来源归属、采集稳定性、事实置信度、认知与决策价值、端到端实时性、内容时效、机会行动效果、安全与治理。目录数量、目录预填质量分、单一来源重复成功运行、人工 confidence/value 自评分、字段完整度和 Scout 编辑状态不再单独构成高分。
-
-重标定运行检查点：变更前最近一次公开评测记录是 **69 分**（195 个目录源、68 healthy、44 个公开事件、个位数多源事件）；第一版新口径降至 27 分。完成 258 源扩张和 99 源隔离观察后，最终工作库为 **30 分**（维度加权 42，充分证据覆盖 20%）。来源覆盖只给 4 个 active 且健康的 E4 源计生产样本，131 个单轮 healthy 和 99 个 E3 observing 不会伪装成生产覆盖。分数降低不是产品变差，而是把“配置存在”“一次可用”“隔离观察”和“生产验证”分开。后续只有连续观测、多源事件、端到端延迟、用户行动反馈和回滚演练增加，分数才会增长。
-
-硬约束如下：
-
-- `insufficient_data` 维度仍进入总分，统一上限 45；事实置信度、决策价值、实时性和行动效果可使用更严格的 42/35/30/20 上限。
-- 有效来源覆盖以最新 `source_checks=healthy` 为核心样本，100 个健康来源是满量程目标；catalog、draft 和 manual 不算有效来源。
-- 采集稳定性按每个来源的最新检查/运行去重，至少连续 7 个自然日且 100 个健康来源才视为充分证据。
-- 事实置信度要求至少 20 个多源公开事件和 30 个就绪公开事件；人工置信分权重上限为 10%。
-- 认知价值和 Scout 效果必须依赖真实保存、引用、行动、产物或付费反馈；编辑状态不算用户结果。
-- 实时性必须记录 upstream publish → Signal → Event → Pages 的端到端延迟，collector 请求耗时不能替代。
-
-后续增加聚类 F1、Claim 证据覆盖、预测 Brier score、用户节省时间、行动转化和产物完成率。
+- 概率预测、校准与 Brier Score。
+- 更完整的阶段、转折、因果、对比和阶段性总结。
+- 海外数据库独立主线与跨区域传播研究。
+- 经真实集成测试验证的 MySQL 支持。

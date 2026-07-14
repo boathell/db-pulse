@@ -14,18 +14,18 @@ function proposalBody(overrides: Record<string, string> = {}): string {
     "Canonical owner": "Example Foundation",
     "Official homepage URL": "https://research.example.org/",
     "Feed, API, or GitHub Releases URL": "https://research.example.org/feed.xml",
-    Region: "GLOBAL",
-    Language: "en",
-    "Coverage category": "research-eval",
+    Region: "CN",
+    Language: "zh-CN",
+    "Coverage category": "research-benchmark",
     "Source role": "research",
     "Acquisition surface": "rss",
-    Topics: "evaluation, safety",
+    Topics: "database, benchmark",
     "Expected cadence": "24h",
     "License, robots, and attribution":
       "Public metadata feed; preserve canonical links and publisher attribution.",
     "First-party evidence URLs": "https://research.example.org/about/",
-    "Why should Agent Pulse track it?":
-      "It publishes primary evaluation research that closes a documented evidence gap.",
+    "Why should DB Pulse track it?":
+      "It publishes primary database evaluation research that closes a documented evidence gap.",
     ...overrides,
   };
   return [
@@ -44,7 +44,7 @@ describe("source proposal trust boundary", () => {
       issueNumber: 42,
       slug: "example-research",
       acquisition: "rss",
-      category: "research-eval",
+      category: "research-benchmark",
     });
     expect(result.proposal).not.toHaveProperty("enabled");
     expect(result.proposal).not.toHaveProperty("lifecycleStatus");

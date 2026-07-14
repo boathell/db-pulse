@@ -8,6 +8,7 @@ import { capabilities, releases, roadmap } from "../catalog/product.js";
 import type { AppConfig } from "../config/env.js";
 import { Repository, secureTokenEquals } from "../db/repository.js";
 import type { DatabaseSchema } from "../db/types.js";
+import { PUBLIC_DATASET_ID } from "../domain/content-domain.js";
 import { transitionSource } from "../domain/source-lifecycle.js";
 import {
   autoAdvanceScout,
@@ -132,11 +133,14 @@ const ActorPatch = z.object({
 });
 
 const ResourcePatch = z.object({
-  planName: z.string().max(200).optional(),
-  riskLevel: z.enum(["official", "reference", "caution", "high"]).optional(),
+  versionNote: z.string().min(2).max(255).optional(),
+  pricingNote: z.string().max(2_000).optional(),
+  evidenceStatus: z.enum(["official", "corroborated", "pending"]).optional(),
   enabled: z.boolean().optional(),
   verifiedAt: z.string().datetime().optional(),
 });
+
+const TimelineQuery = z.object({ locale: z.enum(["zh-CN", "en"]).default("zh-CN") });
 
 export async function buildApp(db: Kysely<DatabaseSchema>, config: AppConfig) {
   const app = Fastify({ logger: { redact: ["req.headers.authorization"] }, bodyLimit: 256 * 1024 });
@@ -150,18 +154,27 @@ export async function buildApp(db: Kysely<DatabaseSchema>, config: AppConfig) {
     reply.header("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
     reply.header(
       "Content-Security-Policy",
-      "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
+      "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:; connect-src 'self' https://api.github.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
     );
     return payload;
   });
 
   app.get("/api/health", async () => ({ ok: true, time: new Date().toISOString() }));
-  app.get("/api/public/timeline", async () => ({
-    schemaVersion: 1,
-    events: await repository.publicEvents(),
-  }));
-  app.get("/api/public/tracks", async () => repository.listTracks());
-  app.get("/api/public/actors", async () => repository.listActors());
+  app.get("/api/public/timeline", async (request, reply) => {
+    const query = TimelineQuery.safeParse(request.query);
+    if (!query.success) {
+      return reply.code(400).send({ error: "locale must be zh-CN or en" });
+    }
+    const { locale } = query.data;
+    return {
+      schemaVersion: 2,
+      datasetId: PUBLIC_DATASET_ID,
+      locale,
+      events: await repository.publicEvents(locale),
+    };
+  });
+  app.get("/api/public/tracks", async () => repository.listPublicTracks());
+  app.get("/api/public/actors", async () => repository.listPublicActors());
   app.get("/api/public/resources", async () => repository.listResources());
   app.get("/api/public/scout", async () => ({
     schemaVersion: 1,
@@ -458,10 +471,11 @@ export async function buildApp(db: Kysely<DatabaseSchema>, config: AppConfig) {
     const { id } = request.params as { id: string };
     const patch = ResourcePatch.parse(request.body);
     await db
-      .updateTable("model_resources")
+      .updateTable("database_resources")
       .set({
-        ...(patch.planName === undefined ? {} : { plan_name: patch.planName }),
-        ...(patch.riskLevel === undefined ? {} : { risk_level: patch.riskLevel }),
+        ...(patch.versionNote === undefined ? {} : { version_note: patch.versionNote }),
+        ...(patch.pricingNote === undefined ? {} : { pricing_note: patch.pricingNote }),
+        ...(patch.evidenceStatus === undefined ? {} : { evidence_status: patch.evidenceStatus }),
         ...(patch.enabled === undefined ? {} : { enabled: patch.enabled ? 1 : 0 }),
         ...(patch.verifiedAt === undefined ? {} : { verified_at: patch.verifiedAt }),
         updated_at: new Date().toISOString(),

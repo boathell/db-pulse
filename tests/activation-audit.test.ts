@@ -29,7 +29,7 @@ describe("activation qualification audit", () => {
     const source = await db
       .selectFrom("sources")
       .selectAll()
-      .where("slug", "=", "qwen")
+      .where("slug", "=", "tidb-official")
       .executeTakeFirstOrThrow();
     await db
       .updateTable("sources")
@@ -42,10 +42,10 @@ describe("activation qualification audit", () => {
       .executeTakeFirstOrThrow();
 
     const candidates = await findUnqualifiedActivations(db);
-    expect(candidates.map((item) => item.slug)).toContain("qwen");
+    expect(candidates.map((item) => item.slug)).toContain("tidb-official");
     await expect(reconcileUnqualifiedActivations(db)).resolves.toMatchObject({
       movedToShadow: 1,
-      slugs: ["qwen"],
+      slugs: ["tidb-official"],
     });
     await expect(
       db

@@ -33,12 +33,12 @@ import {
 import { escapeHtml, formatDate, icon, pageLayout, safeExternalLink } from "./render.js";
 
 const STRATEGIC_TRACKS = [
-  "tech-evolution",
-  "agi-progress",
-  "commercialization",
-  "investing",
-  "global-innovation",
-  "model-economics",
+  "kernel-architecture",
+  "distributed-cloud",
+  "realtime-lakehouse-multimodel",
+  "reliability-security-ops-cost",
+  "commercialization-adoption",
+  "china-ecosystem-policy",
 ] as const;
 
 export interface StaticPage {
@@ -51,7 +51,11 @@ const LOCALES: Locale[] = ["zh-CN", "en"];
 export function renderStaticPages(model: StaticSiteModel): StaticPage[] {
   const pages: StaticPage[] = [];
   for (const locale of LOCALES) {
-    pages.push(...renderPagesForLocale(model, locale));
+    const localeModel =
+      locale === "en"
+        ? { ...model, events: model.eventsEn, narratives: model.narrativesEn }
+        : model;
+    pages.push(...renderPagesForLocale(localeModel, locale));
   }
   // Single 404 at root
   pages.push({ path: "404.html", content: notFoundPage(model, "zh-CN") });
@@ -68,8 +72,8 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
       0,
       "home",
       locale === "en"
-        ? "Evidence-Led AI Industry Shifts · Agent Pulse"
-        : "重要证据驱动的 AI 行业判断 · Agent Pulse",
+        ? "Evidence-Led China Database Industry Shifts · DB Pulse"
+        : "重要证据驱动的中国数据库行业判断 · DB Pulse",
       home(model, locale),
       locale,
     ),
@@ -78,7 +82,7 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
       `${lp}lines/index.html`,
       1,
       "lines",
-      `${t("nav.lines", locale)} · Agent Pulse`,
+      `${t("nav.lines", locale)} · DB Pulse`,
       defaultTrack
         ? lineDetail(model, defaultTrack, locale, true)
         : emptyState(t("lines.noJudgment", locale), ""),
@@ -89,7 +93,7 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
       `${lp}industry-evolution/index.html`,
       1,
       "lines",
-      `${locale === "en" ? "Industry Evolution" : "行业演化"} · Agent Pulse`,
+      `${locale === "en" ? "Industry Evolution" : "行业演化"} · DB Pulse`,
       industryEvolutionPage(model, locale),
       locale,
     ),
@@ -98,7 +102,7 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
       `${lp}timeline/index.html`,
       1,
       "timeline",
-      `${t("nav.timeline", locale)} · Agent Pulse`,
+      `${t("nav.timeline", locale)} · DB Pulse`,
       timeline(model, locale),
       locale,
     ),
@@ -107,35 +111,35 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
       `${lp}signals/index.html`,
       1,
       "signals",
-      `${locale === "en" ? "Source Updates" : "来源动态"} · Agent Pulse`,
+      `${locale === "en" ? "Source Updates" : "来源动态"} · DB Pulse`,
       signalsPage(model, locale),
       locale,
     ),
     toolPage(
       model,
       "scout",
-      `${t("tab.scout", locale)} · Agent Pulse`,
+      `${t("tab.scout", locale)} · DB Pulse`,
       scoutPage(model, locale),
       locale,
     ),
     toolPage(
       model,
       "actors",
-      `${t("tab.actors", locale)} · Agent Pulse`,
+      `${t("tab.actors", locale)} · DB Pulse`,
       actorsPage(model, locale),
       locale,
     ),
     toolPage(
       model,
       "resources",
-      `${t("tab.resources", locale)} · Agent Pulse`,
+      `${t("tab.resources", locale)} · DB Pulse`,
       resourcesPage(model, locale),
       locale,
     ),
     toolPage(
       model,
       "product",
-      `${t("tab.product", locale)} · Agent Pulse`,
+      `${t("tab.product", locale)} · DB Pulse`,
       productPage(model, locale),
       locale,
     ),
@@ -144,7 +148,7 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
       `${lp}changelog/index.html`,
       1,
       "changelog",
-      `Changelog · Agent Pulse`,
+      `Changelog · DB Pulse`,
       changelogPage(model, locale),
       locale,
     ),
@@ -153,7 +157,7 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
       `${lp}sources/index.html`,
       1,
       "sources",
-      `${t("footer.sources", locale)} · Agent Pulse`,
+      `${t("footer.sources", locale)} · DB Pulse`,
       sourcesPage(model, locale),
       locale,
     ),
@@ -162,7 +166,7 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
       `${lp}legal/index.html`,
       1,
       "legal",
-      `${t("footer.legal", locale)} · Agent Pulse`,
+      `${t("footer.legal", locale)} · DB Pulse`,
       legalPage(model, locale),
       locale,
     ),
@@ -175,7 +179,7 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
         `${lp}lines/${track.slug}/index.html`,
         2,
         "lines",
-        `${track.name} · Agent Pulse`,
+        `${trackName(track, locale)} · DB Pulse`,
         lineDetail(model, track, locale),
         locale,
       ),
@@ -188,7 +192,7 @@ function renderPagesForLocale(model: StaticSiteModel, locale: Locale): StaticPag
         `${lp}events/${event.slug}/index.html`,
         2,
         "timeline",
-        `${event.title} · Agent Pulse`,
+        `${event.title} · DB Pulse`,
         eventPage(model, event, locale),
         locale,
         event.factSummary,
@@ -216,8 +220,8 @@ function page(
   const route = path === "index.html" ? "/" : `/${path.replace(/index\.html$/, "")}`;
   const defaultDesc =
     locale === "en"
-      ? "Primary-source AI intelligence for decisions that matter."
-      : "用一手证据识别真正改变 AI 行业判断的变化。";
+      ? "Primary-source intelligence for decisions across China's database industry."
+      : "用一手证据识别真正改变中国数据库行业判断的变化。";
   return {
     path,
     content: pageLayout({
@@ -275,7 +279,7 @@ function home(model: StaticSiteModel, locale: Locale): string {
         .join("")}</div>`
     : emptyState(t("home.emptyTitle", locale), t("home.emptyDesc", locale));
 
-  return `<section class="home-page-hero shell"><div><span class="section-kicker">AI INDUSTRY INTELLIGENCE</span><h1>${escapeHtml(locale === "en" ? "See the shifts shaping AI" : "看清 AI 行业的关键变化")}</h1><p>${escapeHtml(locale === "en" ? "Traceable evidence connects each shift to a trend and a practical next move." : "用可追溯的一手证据，连接变化、趋势与下一步行动。")}</p></div><div class="signal-field" aria-hidden="true"><svg viewBox="0 0 320 220"><path class="signal-link" d="M40 158 C79 127 100 139 132 103 S197 73 226 96 S269 108 294 61"/><path class="signal-link signal-link-secondary" d="M57 69 C91 93 115 71 149 89 S211 135 276 146"/><circle class="signal-pulse" cx="226" cy="96" r="12"/><circle class="signal-pulse signal-pulse-delay" cx="132" cy="103" r="12"/><circle class="signal-node signal-node-a" cx="40" cy="158" r="4"/><circle class="signal-node signal-node-b" cx="57" cy="69" r="3"/><circle class="signal-node signal-node-c" cx="132" cy="103" r="5"/><circle class="signal-node signal-node-d" cx="149" cy="89" r="3"/><circle class="signal-node signal-node-e" cx="226" cy="96" r="5"/><circle class="signal-node signal-node-f" cx="276" cy="146" r="3"/><circle class="signal-node signal-node-g" cx="294" cy="61" r="4"/></svg></div></section>
+  return `<section class="home-page-hero shell"><div><span class="section-kicker">CHINA DATABASE INTELLIGENCE</span><h1>${escapeHtml(locale === "en" ? "See the shifts shaping China's database industry" : "看清中国数据库行业的关键变化")}</h1><p>${escapeHtml(locale === "en" ? "Traceable evidence connects products, architecture, policy, cost, and the next decision." : "用可追溯证据连接产品、架构、政策、成本与下一步决策。")}</p></div><div class="signal-field" aria-hidden="true"><svg viewBox="0 0 320 220"><path class="signal-link" d="M40 158 C79 127 100 139 132 103 S197 73 226 96 S269 108 294 61"/><path class="signal-link signal-link-secondary" d="M57 69 C91 93 115 71 149 89 S211 135 276 146"/><circle class="signal-pulse" cx="226" cy="96" r="12"/><circle class="signal-pulse signal-pulse-delay" cx="132" cy="103" r="12"/><circle class="signal-node signal-node-a" cx="40" cy="158" r="4"/><circle class="signal-node signal-node-b" cx="57" cy="69" r="3"/><circle class="signal-node signal-node-c" cx="132" cy="103" r="5"/><circle class="signal-node signal-node-d" cx="149" cy="89" r="3"/><circle class="signal-node signal-node-e" cx="226" cy="96" r="5"/><circle class="signal-node signal-node-f" cx="276" cy="146" r="3"/><circle class="signal-node signal-node-g" cx="294" cy="61" r="4"/></svg></div></section>
     <section class="today-section shell">
       <header class="today-heading"><div><span class="section-kicker">LATEST MATERIAL SHIFT</span><h2>${escapeHtml(locale === "en" ? "Latest Trend Judgment" : "最新趋势判断")}</h2></div></header>
       ${latestShift}
@@ -300,7 +304,7 @@ function home(model: StaticSiteModel, locale: Locale): string {
     </section>
 
     <section class="manifesto section-tint"><div class="shell">
-      <span>AGENT PULSE</span><h2>${t("home.manifestoTitle", locale)}</h2><p>${escapeHtml(t("home.manifestoDesc", locale))}</p>
+      <span>DB PULSE</span><h2>${t("home.manifestoTitle", locale)}</h2><p>${escapeHtml(t("home.manifestoDesc", locale))}</p>
       <div class="principles"><span>${escapeHtml(t("home.principle1", locale))}</span><span>${escapeHtml(t("home.principle2", locale))}</span><span>${escapeHtml(t("home.principle3", locale))}</span></div>
     </div></section>`;
 }
@@ -349,7 +353,7 @@ function signalCard(signal: PublicSignal, locale: Locale): string {
 
 function industryEvolutionPage(model: StaticSiteModel, locale: Locale): string {
   return `<section class="page-hero compact lines-overview-hero has-motion shell">
-      <span class="section-kicker">2022 → TODAY</span><h1>${escapeHtml(locale === "en" ? "Industry Evolution" : "行业演化")}</h1><p>${escapeHtml(locale === "en" ? "The major product, platform, and capability shifts that shaped the current AI landscape." : "沿产品、平台与能力转折，回看今天的 AI 行业格局如何形成。")}</p>
+      <span class="section-kicker">2022 → TODAY</span><h1>${escapeHtml(locale === "en" ? "China Database Industry Evolution" : "中国数据库行业演化")}</h1><p>${escapeHtml(locale === "en" ? "The architecture, product, operations, commercial, and policy shifts shaping China's database market." : "沿架构、产品、运维、商业与政策转折，回看中国数据库行业格局如何形成。")}</p>
       ${heroMotion("lines")}
     </section>
     <section class="section section-tint"><div class="shell">
@@ -385,7 +389,7 @@ function lineDetail(
   const stages = narrative?.stages ?? [];
   return `<div class="trend-detail" data-trend-detail style="--track-color:${escapeHtml(track.color)}"><section class="line-hero${defaultRoute ? " default-trend" : ""} shell">
       ${trendSwitcher(model, locale, track.slug, true, defaultRoute)}
-      <div class="line-hero-grid"><div class="line-hero-copy"><span class="section-kicker">${escapeHtml(track.perspective.toUpperCase())} · ${t("lines.evidenceNodes", locale).replace("{count}", String(events.length))}</span><h1>${escapeHtml(track.name)}</h1><p class="line-now">${escapeHtml(narrative?.now || track.description)}</p>${defaultRoute ? heroMotion("lines") : ""}</div>
+      <div class="line-hero-grid"><div class="line-hero-copy"><span class="section-kicker">${escapeHtml(track.perspective.toUpperCase())} · ${t("lines.evidenceNodes", locale).replace("{count}", String(events.length))}</span><h1>${escapeHtml(trackName(track, locale))}</h1><p class="line-now">${escapeHtml(narrative?.now || track.description)}</p>${defaultRoute ? heroMotion("lines") : ""}</div>
       <aside><span>${escapeHtml(t("lines.judgmentLabel", locale))}</span><strong>${escapeHtml(narrative?.thesis || track.description)}</strong><div><span>${escapeHtml(t("lines.nextLabel", locale))}</span><p>${escapeHtml(narrative?.next ?? t("lines.waitingNext", locale))}</p></div></aside></div>
     </section>
     <section class="section shell" data-module-expand-root>
@@ -417,7 +421,7 @@ function timeline(model: StaticSiteModel, locale: Locale): string {
   const filters = strategicTracks(model)
     .map(
       (track) =>
-        `<button type="button" data-filter-track="${escapeHtml(track.slug)}">${escapeHtml(track.name)}</button>`,
+        `<button type="button" data-filter-track="${escapeHtml(track.slug)}">${escapeHtml(trackName(track, locale))}</button>`,
     )
     .join("");
   return `<section class="page-hero compact has-motion shell">
@@ -476,7 +480,7 @@ function eventPage(model: StaticSiteModel, event: EnrichedEvent, locale: Locale)
   const publicLineSlugs = new Set(strategicTracks(model).map((track) => track.slug));
   return `<article class="event-page shell">
       <nav class="breadcrumb"><a href="__PREFIX__timeline/">${escapeHtml(t("event.breadcrumb", locale))}</a><span>/</span><span>${escapeHtml(categoryName(event.category, locale))}</span></nav>
-      <header class="event-header"><div><span class="section-kicker">${escapeHtml(formatDate(event.happenedAt, locale))} · ${escapeHtml(event.company || t("event.unknownEntity", locale))}</span><h1>${escapeHtml(event.title)}</h1><div class="event-tags">${event.tracks.length ? event.tracks.map((track) => (publicLineSlugs.has(track.slug) ? `<a href="__PREFIX__lines/${escapeHtml(track.slug)}/">${escapeHtml(track.name)}</a>` : `<span>${escapeHtml(track.name)}</span>`)).join("") : `<span class="warning-tag">${escapeHtml(t("event.untracked", locale))}</span>`}</div></div>
+      <header class="event-header"><div><span class="section-kicker">${escapeHtml(formatDate(event.happenedAt, locale))} · ${escapeHtml(event.company || t("event.unknownEntity", locale))}</span><h1>${escapeHtml(event.title)}</h1><div class="event-tags">${event.tracks.length ? event.tracks.map((track) => (publicLineSlugs.has(track.slug) ? `<a href="__PREFIX__lines/${escapeHtml(track.slug)}/">${escapeHtml(trackName(track, locale))}</a>` : `<span>${escapeHtml(trackName(track, locale))}</span>`)).join("") : `<span class="warning-tag">${escapeHtml(t("event.untracked", locale))}</span>`}</div></div>
       <aside><span class="evidence-badge">${escapeHtml(evidenceLabel(event, locale))}</span><strong>${t("event.evidenceCount", locale).replace("{count}", String(event.evidence.length))}</strong><p>${t("home.sourceCount", locale).replace("{count}", String(evidenceSourceCount(event)))}</p></aside></header>
       ${isResearchEvent(event) ? `<aside class="research-notice">${icon("search")}<div><strong>${escapeHtml(t("event.researchNoticeTitle", locale))}</strong><p>${escapeHtml(t("event.researchNoticeDesc", locale))}</p></div></aside>` : ""}
       <section class="event-fact"><span>${escapeHtml(t("event.factStatement", locale))}</span><p>${escapeHtml(event.factSummary)}</p></section>
@@ -510,12 +514,23 @@ function scoutPage(model: StaticSiteModel, locale: Locale): string {
 }
 
 function actorsPage(model: StaticSiteModel, locale: Locale): string {
+  const observedActors = new Set(
+    model.events.flatMap((event) => event.actors.map((actor) => actor.slug)),
+  );
+  const hasVerifiedExpert = model.actors.some((actor) => isVerifiedExpertType(actor.type));
   return `${toolHeader("users", t("actors.heroTitle", locale), t("actors.heroDesc", locale), "actors", locale)}
-    <section class="section shell"><div class="filter-toolbar"><button class="active" data-card-filter="all">${t("actors.filterAll", locale)}</button><button data-card-filter="CN">${t("actors.filterChina", locale)}</button><button data-card-filter="GLOBAL">${t("actors.filterGlobal", locale)}</button><button data-card-filter="US">${t("actors.filterUS", locale)}</button></div>
+    <section class="section shell"><div class="filter-toolbar"><button class="active" data-card-filter="all">${t("actors.filterAll", locale)}</button><button data-card-filter="vendor">${locale === "en" ? "Vendors" : "厂商"}</button><button data-card-filter="open-source">${locale === "en" ? "Open Source" : "开源项目"}</button><button data-card-filter="institution">${locale === "en" ? "Institutions" : "机构"}</button><button data-card-filter="policy">${locale === "en" ? "Policy Bodies" : "政策主体"}</button><button data-card-filter="expert">${locale === "en" ? "Experts" : "专家"}</button></div>
     <div class="actor-grid" data-filter-grid>${[...model.actors]
-      .sort((a, b) => b.tableScore - a.tableScore)
-      .map((actor) => actorCard(actor, locale))
-      .join("")}</div></section>`;
+      .sort(
+        (a, b) =>
+          Number(observedActors.has(b.slug)) - Number(observedActors.has(a.slug)) ||
+          actorKind(a.type).localeCompare(actorKind(b.type)) ||
+          a.name.localeCompare(b.name),
+      )
+      .map((actor) => actorCard(actor, locale, observedActors.has(actor.slug)))
+      .join(
+        "",
+      )}</div>${hasVerifiedExpert ? "" : `<p class="legal-note">${locale === "en" ? "Verified individual experts are awaiting identity and affiliation review; DB Pulse does not invent people or present communities as independent experts." : "可信个人专家待完成身份与机构关系核验后接入；DB Pulse 不虚构个人，也不把社区包装成独立专家。"}</p>`}</section>`;
 }
 
 function resourcesPage(model: StaticSiteModel, locale: Locale): string {
@@ -531,7 +546,7 @@ function productPage(_model: StaticSiteModel, locale: Locale): string {
         ${methodStep("02", locale === "en" ? "Separate judgment" : "区分判断", locale === "en" ? "Facts, inference, opinion, forecast, and opportunity hypotheses are labeled separately." : "事实、推断、观点、预测与机会假设分别标注，不把分析包装成已经发生的事实。")}
         ${methodStep("03", locale === "en" ? "Recalibrate" : "持续校准", locale === "en" ? "A public view changes only when new evidence alters the phase, impact, or next signal." : "只有新证据改变阶段、影响或下一信号时，才更新公开判断。")}
       </div>
-      <div class="method-boundaries"><article><span>${locale === "en" ? "VERIFIABLE" : "可直接核验"}</span><h2>${locale === "en" ? "Evidence and event history" : "证据与事件脉络"}</h2><p>${locale === "en" ? "Every public Event links back to source material and keeps later developments in the same thread." : "每个公开 Event 回链原始资料，并把后续进展保留在同一事件脉络中。"}</p><a class="text-link" href="__PREFIX__timeline/">${locale === "en" ? "Open event stories" : "查看事件脉络"} ${icon("arrow-right")}</a></article><article><span>${locale === "en" ? "USE JUDGMENT" : "需要独立决策"}</span><h2>${locale === "en" ? "Forecasts and action ideas" : "预测与行动参考"}</h2><p>${locale === "en" ? "Role assessments, opportunity hypotheses, cost comparisons, and future signals remain decision support, not conclusions." : "角色判断、机会假设、成本比较与未来信号只提供决策参考，不替代独立判断。"}</p><a class="text-link" href="__PREFIX__legal/">${locale === "en" ? "Read the boundary" : "查看使用边界"} ${icon("arrow-right")}</a></article></div>
+      <div class="method-boundaries"><article><span>${locale === "en" ? "VERIFIABLE" : "可直接核验"}</span><h2>${locale === "en" ? "Evidence and event history" : "证据与事件脉络"}</h2><p>${locale === "en" ? "Every public Event links back to source material and keeps later developments in the same thread." : "每个公开 Event 回链原始资料，并把后续进展保留在同一事件脉络中。"}</p><a class="text-link" href="__PREFIX__timeline/">${locale === "en" ? "Open event stories" : "查看事件脉络"} ${icon("arrow-right")}</a></article><article><span>${locale === "en" ? "QUALITATIVE TODAY · PROBABILITY PLANNED" : "当前为定性判断 · 概率预测规划中"}</span><h2>${locale === "en" ? "Forecasts and action ideas" : "预测与行动参考"}</h2><p>${locale === "en" ? "futureOutlook and nextSignal remain qualitative decision support. Probability forecasts, calibration, and Brier scoring are planned and are not implemented." : "futureOutlook 与 nextSignal 继续提供定性决策参考；概率预测、校准与 Brier Score 仍是规划能力，尚未实现。"}</p><a class="text-link" href="__PREFIX__legal/">${locale === "en" ? "Read the boundary" : "查看使用边界"} ${icon("arrow-right")}</a></article></div>
     </section>`;
 }
 
@@ -552,7 +567,7 @@ function sourcesPage(model: StaticSiteModel, locale: Locale): string {
   const technologyCoverage = analyzeTechnologyCoverage(model.sources);
   const portfolio = summarizeSourcePortfolio(model.sources);
   const gaps = technologyCoverage.filter((item) => item.status !== "covered").length;
-  const automaticInfluencers = model.influencers.filter((item) => item.feedSourceSlug).length;
+  const automaticObservers = model.influencers.filter((item) => item.feedSourceSlug).length;
   const restrictedProfiles = model.influencers
     .flatMap((item) => item.profiles)
     .filter((profile) => profile.access === "restricted").length;
@@ -573,8 +588,8 @@ function sourcesPage(model: StaticSiteModel, locale: Locale): string {
       <div class="technology-coverage-grid" data-filter-grid>${technologyCoverage.map((item) => technologyCoverageCard(item, locale)).join("")}</div>
     </section>
     <section class="section shell influencer-section">
-      ${sectionHead("KOL SIGNAL MATRIX", locale === "en" ? "Core Observers" : "核心观察者", locale === "en" ? "Personal feeds enter the normal evidence pipeline; restricted social profiles remain discovery signals and never become sole factual evidence." : "个人 RSS/Atom 进入正常证据链；X、LinkedIn、微博与即刻受限账号只作为发现线索，不会单独成为重大事实证据。")}
-      <div class="coverage-summary">${metric(locale === "en" ? "Core people" : "核心个人", model.influencers.length)}${metric(locale === "en" ? "Automatic feeds" : "自动个人 Feed", automaticInfluencers)}${metric(locale === "en" ? "China" : "中国", model.influencers.filter((item) => item.region === "CN").length)}${metric(locale === "en" ? "Restricted profiles" : "平台受限入口", restrictedProfiles)}</div>
+      ${sectionHead("COMMUNITY & EXPERT OBSERVATION", locale === "en" ? "Community & Expert Observation Matrix" : "社区与专家观察矩阵", locale === "en" ? "The current entries are database communities and public observation endpoints. Verified experts join only after identity and affiliation review; communities are never presented as independent people." : "当前条目是数据库社区与公开观察入口。可信专家只在完成身份与机构关系核验后接入；社区不会被包装成独立个人。")}
+      <div class="coverage-summary">${metric(locale === "en" ? "Core observers" : "核心观察者", model.influencers.length)}${metric(locale === "en" ? "Automatic observation" : "自动观察入口", automaticObservers)}${metric(locale === "en" ? "China endpoints" : "中国观察入口", model.influencers.filter((item) => item.region === "CN").length)}${metric(locale === "en" ? "Restricted endpoints" : "平台受限入口", restrictedProfiles)}</div>
       <div class="influencer-grid">${model.influencers.map((item) => influencerCard(item, locale)).join("")}</div>
     </section>
     <section class="section section-tint"><div class="shell">
@@ -617,20 +632,14 @@ function sourcePortfolioLabel(
 ): string {
   if (locale === "en") return key;
   const labels: Record<string, string> = {
-    "frontier-lab": "全球前沿实验室",
-    "china-lab": "中国模型与产品",
-    "research-eval": "研究与评测",
-    "open-source": "开源生态",
-    "agent-devtool": "Agent 与开发工具",
-    robotics: "机器人与具身智能",
-    "infra-chip-cloud": "基础设施、芯片与云",
+    "database-vendor": "数据库厂商",
+    "open-source-database": "开源数据库",
+    "cloud-database": "云数据库",
+    "policy-standard": "政策与标准",
+    "research-benchmark": "论文与基准",
     "capital-business": "资本与商业",
-    "model-economics": "模型经济",
-    policy: "政策与治理",
-    expert: "专家观察",
-    media: "媒体",
-    "community-heat": "社区热度",
-    aggregator: "聚合发现",
+    "professional-media": "专业媒体",
+    "database-community": "数据库社区",
     GLOBAL: "全球",
     CN: "中国",
     US: "美国",
@@ -690,6 +699,7 @@ function notFoundPage(model: StaticSiteModel, locale: Locale): string {
     siteUrl: model.siteUrl,
     github: model.github,
     generatedAt: model.generatedAt,
+    robots: "noindex, follow",
   });
 }
 
@@ -748,7 +758,7 @@ function industryTrendBlock(model: StaticSiteModel, track: PublicTrack, locale: 
     events.length > 1
       ? `<div class="industry-carousel-controls"><div><button type="button" data-carousel-prev aria-label="${locale === "en" ? "Previous event" : "上一个事件"}">←</button><button type="button" data-carousel-next aria-label="${locale === "en" ? "Next event" : "下一个事件"}">→</button></div><div class="industry-carousel-dots" data-carousel-dots></div><span data-carousel-status aria-live="polite">1 / ${events.length}</span></div>`
       : "";
-  return `<article class="industry-trend-block" data-industry-carousel tabindex="0" aria-roledescription="carousel" aria-label="${escapeHtml(track.name)}" style="--track-color:${escapeHtml(track.color)}"><a class="line-summary industry-trend-summary" href="__PREFIX__lines/${escapeHtml(track.slug)}/"><div><span>${escapeHtml(track.name)} · ${t("lines.nodes", locale).replace("{count}", String(events.length))}</span><h3>${escapeHtml(narrative?.now || track.description)}</h3><p>${escapeHtml(narrative?.thesis || track.description)}</p></div><footer><span>${latest ? t("lines.latest", locale).replace("{date}", formatDate(latestDevelopmentAt(latest), locale)) : t("lines.waitingEvidence", locale)}</span><strong>${t("lines.openLine", locale)} ${icon("arrow-right")}</strong></footer></a><div class="industry-event-viewport"><div class="industry-carousel-track" data-carousel-track>${events
+  return `<article class="industry-trend-block" data-industry-carousel tabindex="0" aria-roledescription="carousel" aria-label="${escapeHtml(trackName(track, locale))}" style="--track-color:${escapeHtml(track.color)}"><a class="line-summary industry-trend-summary" href="__PREFIX__lines/${escapeHtml(track.slug)}/"><div><span>${escapeHtml(trackName(track, locale))} · ${t("lines.nodes", locale).replace("{count}", String(events.length))}</span><h3>${escapeHtml(narrative?.now || track.description)}</h3><p>${escapeHtml(narrative?.thesis || track.description)}</p></div><footer><span>${latest ? t("lines.latest", locale).replace("{date}", formatDate(latestDevelopmentAt(latest), locale)) : t("lines.waitingEvidence", locale)}</span><strong>${t("lines.openLine", locale)} ${icon("arrow-right")}</strong></footer></a><div class="industry-event-viewport"><div class="industry-carousel-track" data-carousel-track>${events
     .map(
       (event, index) =>
         `<a class="industry-event-slide" data-carousel-slide data-event-link="${escapeHtml(event.slug)}" href="__PREFIX__events/${escapeHtml(event.slug)}/" aria-label="${index + 1} / ${events.length}"><time>${escapeHtml(formatDate(latestDevelopmentAt(event), locale))}</time><strong>${escapeHtml(event.title)}</strong><span>${t("home.sourceCount", locale).replace("{count}", String(evidenceSourceCount(event)))}</span></a>`,
@@ -775,7 +785,7 @@ function trendSwitcher(
     .map((track, index) => {
       const isCurrent = track.slug === currentSlug;
       const route = defaultRoute && index === 0 ? "lines/" : `lines/${track.slug}/`;
-      return `<a class="trend-tab" href="__PREFIX__${escapeHtml(route)}" style="--track-color:${escapeHtml(track.color)}"${isCurrent ? ' aria-current="page"' : ""}><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(track.name)}</strong>${compact ? "" : `<small>${escapeHtml(track.perspective)}</small>`}</a>`;
+      return `<a class="trend-tab" href="__PREFIX__${escapeHtml(route)}" style="--track-color:${escapeHtml(track.color)}"${isCurrent ? ' aria-current="page"' : ""}><span>${String(index + 1).padStart(2, "0")}</span><strong>${escapeHtml(trackName(track, locale))}</strong>${compact ? "" : `<small>${escapeHtml(track.perspective)}</small>`}</a>`;
     })
     .join("");
   return `<nav class="trend-switcher${compact ? " compact" : ""}" aria-label="${locale === "en" ? "Six trend perspectives" : "六个趋势视角"}">${tabs}</nav>`;
@@ -812,9 +822,9 @@ function stageEvidenceGroup(
 function roleLens(lens: DecisionLens, events: EnrichedEvent[], locale: Locale): string {
   const roleLabels = {
     ceo: t("lines.lensCEO", locale),
-    investor: t("lines.lensInvestor", locale),
-    cto: t("lines.lensCTO", locale),
-    product: t("lines.lensPM", locale),
+    dba: t("lines.lensDBA", locale),
+    "data-architect": t("lines.lensArchitect", locale),
+    practitioner: t("lines.lensPractitioner", locale),
   } as const;
   const evidence = lens.evidenceSlugs
     .map((slug) => events.find((event) => event.slug === slug))
@@ -864,54 +874,39 @@ function eventsInStage(events: EnrichedEvent[], stage: NarrativeStage): Enriched
 }
 
 const TRACK_SOURCE_TERMS: Record<string, string[]> = {
-  "tech-evolution": [
-    "research",
-    "model",
-    "benchmark",
-    "evaluation",
-    "multimodal",
-    "reasoning",
-    "robotics",
+  "kernel-architecture": ["kernel", "architecture", "database-architecture", "compatibility"],
+  "distributed-cloud": ["distributed", "cloud-native", "cloud-database", "serverless"],
+  "realtime-lakehouse-multimodel": [
+    "olap",
+    "htap",
+    "lakehouse",
+    "time-series",
+    "graph-database",
+    "vector-database",
+    "multimodel",
   ],
-  "agi-progress": ["agent", "coding", "protocol", "automation", "browser", "robotics", "developer"],
-  commercialization: [
-    "product",
-    "enterprise",
-    "company",
-    "commercial",
-    "developer",
-    "cloud",
-    "application",
-  ],
-  investing: [
-    "capital",
-    "business",
-    "filing",
-    "funding",
-    "investment",
-    "earnings",
-    "market",
-    "finance",
-  ],
-  "global-innovation": [
-    "open-source",
-    "open model",
-    "policy",
-    "ecosystem",
-    "regional",
-    "governance",
-    "model",
-  ],
-  "model-economics": [
-    "infrastructure",
-    "inference",
-    "training",
-    "chip",
-    "cloud",
-    "cost",
+  "reliability-security-ops-cost": [
+    "operations",
+    "database-security",
+    "data-security",
+    "database-testing",
     "pricing",
-    "hardware",
-    "gpu",
+    "cost",
+  ],
+  "commercialization-adoption": [
+    "adoption",
+    "business",
+    "financial-database",
+    "critical-industry",
+    "cloud-database",
+  ],
+  "china-ecosystem-policy": [
+    "policy-standard",
+    "data-policy",
+    "standards",
+    "xinchuang",
+    "open-source",
+    "国产数据库",
   ],
 };
 
@@ -919,7 +914,6 @@ function sourcesForTrack(sources: PublicSource[], slug: string): PublicSource[] 
   const terms = TRACK_SOURCE_TERMS[slug] ?? [];
   return sources
     .filter((source) => {
-      if (slug === "global-innovation" && source.region !== "US") return true;
       const haystack = [source.slug, source.name, source.category, ...source.topics]
         .join(" ")
         .toLowerCase();
@@ -989,7 +983,7 @@ function eventJourney(event: EnrichedEvent, locale: Locale, compact = false): st
     })
     .join("");
   const assessment = event.industryInsight || event.summary;
-  return `<ol class="event-journey${compact ? " compact" : ""}">${items}<li class="event-step assessment"><div><span>${escapeHtml(t("event.currentAssessment", locale))}</span><time>${escapeHtml(formatDate(latestDevelopmentAt(event), locale))}</time><strong>${escapeHtml(assessment || t("common.noJudgment", locale))}</strong><small>Agent Pulse · ${locale === "en" ? "analysis" : "分析"}</small></div></li></ol>`;
+  return `<ol class="event-journey${compact ? " compact" : ""}">${items}<li class="event-step assessment"><div><span>${escapeHtml(t("event.currentAssessment", locale))}</span><time>${escapeHtml(formatDate(latestDevelopmentAt(event), locale))}</time><strong>${escapeHtml(assessment || t("common.noJudgment", locale))}</strong><small>DB Pulse · ${locale === "en" ? "analysis" : "分析"}</small></div></li></ol>`;
 }
 
 function developmentLabel(
@@ -1042,15 +1036,92 @@ function scoutCard(insight: PublicScoutInsight, locale: Locale): string {
   return `<article class="scout-card" data-filter-value="${escapeHtml(insight.kind)}"><div class="scout-summary"><header><span>${escapeHtml(scoutKind(insight.kind, locale))}</span><span>${escapeHtml(insight.horizon)}</span><span>${locale === "en" ? "For" : "适合"} · ${escapeHtml(insight.targetAudience)}</span></header><h2>${escapeHtml(insight.title)}</h2><p class="scout-observation"><strong>${locale === "en" ? "Observed shift" : "触发变化"}</strong>${escapeHtml(insight.observation)}</p><p class="hypothesis">${escapeHtml(insight.hypothesis)}</p><div class="scout-metrics"><span>${locale === "en" ? "Confidence" : "置信度"} <strong>${insight.confidenceScore}</strong></span><span>${locale === "en" ? "Evidence" : "证据强度"} <strong>${insight.evidenceScore}</strong></span><span>${locale === "en" ? "Novelty" : "新颖度"} <strong>${insight.noveltyScore}</strong></span><span>${locale === "en" ? "Actionability" : "行动价值"} <strong>${insight.leverageScore}</strong></span></div></div><div class="scout-detail"><div class="scout-sections"><section><span>${locale === "en" ? "Why Now" : "为什么现在"}</span><p>${escapeHtml(insight.whyNow)}</p></section><section><span>${locale === "en" ? "Minimum Action" : "最小动作"}</span><p>${escapeHtml(insight.suggestedAction)}</p></section><section><span>${locale === "en" ? "Artifact" : "建议产物"}</span><p>${escapeHtml(insight.artifactIdea)}</p></section><section class="counter"><span>${locale === "en" ? "What Could Go Wrong" : "可能错在哪"}</span><p>${escapeHtml(insight.counterSignals)}</p></section></div><footer>${insight.evidence.map((item) => `<a data-event-link="${escapeHtml(item.slug)}" href="__PREFIX__events/${escapeHtml(item.slug)}/">${locale === "en" ? "Evidence" : "证据"} · ${escapeHtml(item.title)}</a>`).join("")}</footer></div></article>`;
 }
 
-function actorCard(actor: PublicActor, locale: Locale): string {
+function actorCard(actor: PublicActor, locale: Locale, observed: boolean): string {
   const url = safeExternalLink(actor.websiteUrl);
-  return `<article class="actor-card" data-filter-value="${escapeHtml(actor.region)}"><header><span>${escapeHtml(actor.region)} · ${escapeHtml(actor.type)}</span><strong>${escapeHtml(scoreBand(actor.tableScore, locale))}</strong></header><h2>${escapeHtml(actor.name)}</h2><p>${escapeHtml(actor.scale)} · ${escapeHtml(actor.domains.join(" / ") || t("actors.domainUnknown", locale))}</p>${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("actors.website", locale))} ${icon("external-link")}</a>` : ""}</article>`;
+  const observation = observed
+    ? locale === "en"
+      ? "Cataloged · effectively observed"
+      : "已收录 · 已有效观测"
+    : locale === "en"
+      ? "Cataloged · not yet effectively observed"
+      : "已收录 · 尚未有效观测";
+  return `<article class="actor-card" data-filter-value="${escapeHtml(actorKind(actor.type))}"><header><span>${escapeHtml(actor.region)} · ${escapeHtml(actorTypeLabel(actor.type, locale))}</span><strong>${escapeHtml(observation)}</strong></header><h2>${escapeHtml(actor.name)}</h2><p>${escapeHtml(actor.scale)} · ${escapeHtml(actor.domains.join(" / ") || t("actors.domainUnknown", locale))}</p>${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("actors.website", locale))} ${icon("external-link")}</a>` : ""}</article>`;
+}
+
+function actorKind(type: string): "vendor" | "open-source" | "institution" | "policy" | "expert" {
+  if (["community", "open-source", "project"].includes(type)) return "open-source";
+  if (["policy", "policy-body", "regulator"].includes(type)) return "policy";
+  if (["institution", "standards-body", "association"].includes(type)) return "institution";
+  if (["expert", "person", "researcher", "expert-network"].includes(type)) return "expert";
+  return "vendor";
+}
+
+function actorTypeLabel(type: string, locale: Locale): string {
+  if (type === "expert-network")
+    return locale === "en" ? "Expert Observation Network" : "专家观察网络";
+  const kind = actorKind(type);
+  const labels = {
+    vendor: { "zh-CN": "数据库厂商", en: "Database Vendor" },
+    "open-source": { "zh-CN": "开源项目 / 社区", en: "Open-source Project / Community" },
+    institution: { "zh-CN": "行业机构", en: "Industry Institution" },
+    policy: { "zh-CN": "政策主体", en: "Policy Body" },
+    expert: { "zh-CN": "已核验专家", en: "Verified Expert" },
+  } as const;
+  return labels[kind][locale];
+}
+
+function isVerifiedExpertType(type: string): boolean {
+  return ["expert", "person", "researcher"].includes(type);
 }
 
 function resourceCard(resource: PublicResource, locale: Locale): string {
   const purchase = safeExternalLink(resource.purchaseUrl);
-  const source = safeExternalLink(resource.sourceUrl);
-  return `<article class="resource-card"><header><span>${escapeHtml(resource.audience)} · ${resource.riskLevel === "official" ? t("resources.official", locale) : t("resources.reference", locale)}</span><strong>${escapeHtml(resource.region)}</strong></header><h2>${escapeHtml(resource.model)}</h2><p>${escapeHtml(resource.provider)} · ${escapeHtml(resource.planName)}</p><div class="price-pair"><div><span>${t("resources.input", locale)}</span><strong>${formatPrice(resource.inputPrice, resource.currency, locale)}</strong></div><div><span>${t("resources.output", locale)}</span><strong>${formatPrice(resource.outputPrice, resource.currency, locale)}</strong></div></div><small>${resource.unit ? `${resource.unit} · ` : ""}${t("resources.verified", locale).replace("{date}", formatDate(resource.verifiedAt, locale))}</small><footer>${purchase ? `<a href="${escapeHtml(purchase)}" target="_blank" rel="noopener noreferrer">${t("resources.officialLink", locale)} ${icon("external-link")}</a>` : ""}${source ? `<a href="${escapeHtml(source)}" target="_blank" rel="noopener noreferrer">${t("resources.priceSource", locale)} ${icon("external-link")}</a>` : ""}</footer></article>`;
+  const documentation = safeExternalLink(resource.documentationUrl);
+  const evidence = safeExternalLink(resource.evidenceUrl);
+  const deployment = resource.deploymentModes
+    .map((value) => resourceTerm(value, locale))
+    .join(" · ");
+  const licenses = resource.licenseModels.map((value) => resourceTerm(value, locale)).join(" · ");
+  const compatibility = resource.compatibility
+    .map((value) => resourceTerm(value, locale))
+    .join(" · ");
+  return `<article class="resource-card"><header><span>${escapeHtml(resourceTerm(resource.engineType, locale))} · ${t("resources.official", locale)}</span><strong>${escapeHtml(resource.region)}</strong></header><h2>${escapeHtml(resource.product)}</h2><p>${escapeHtml(resource.provider)} · ${escapeHtml(resourceTerm(resource.pricingModel, locale))}</p><p>${locale === "en" ? "Version scope" : "版本口径"} · ${escapeHtml(resourceTerm(resource.versionNote, locale))}</p><div class="price-pair"><div><span>${locale === "en" ? "Deployment" : "部署方式"}</span><strong>${escapeHtml(deployment)}</strong></div><div><span>${locale === "en" ? "License" : "许可模式"}</span><strong>${escapeHtml(licenses)}</strong></div></div><p>${locale === "en" ? "Compatibility" : "兼容口径"} · ${escapeHtml(compatibility || (locale === "en" ? "Verify with the vendor" : "需向厂商核验"))}</p><small>${escapeHtml(resourceTerm(resource.pricingNote, locale))} · ${t("resources.verified", locale).replace("{date}", formatDate(resource.verifiedAt, locale))}</small><footer>${purchase ? `<a href="${escapeHtml(purchase)}" target="_blank" rel="noopener noreferrer">${t("resources.officialLink", locale)} ${icon("external-link")}</a>` : ""}${documentation ? `<a href="${escapeHtml(documentation)}" target="_blank" rel="noopener noreferrer">${locale === "en" ? "Documentation" : "产品文档"} ${icon("external-link")}</a>` : ""}${evidence ? `<a href="${escapeHtml(evidence)}" target="_blank" rel="noopener noreferrer">${locale === "en" ? "Evidence" : "证据来源"} ${icon("external-link")}</a>` : ""}</footer></article>`;
+}
+
+function resourceTerm(value: string, locale: Locale): string {
+  if (locale !== "en") return value;
+  const translations: Record<string, string> = {
+    关系型: "Relational",
+    分布式: "Distributed",
+    "关系型 / 分布式": "Relational / Distributed",
+    "关系型 / 分析型": "Relational / Analytical",
+    分布式关系型: "Distributed relational",
+    "分布式关系型 / HTAP": "Distributed relational / HTAP",
+    "分布式 SQL / HTAP": "Distributed SQL / HTAP",
+    云原生分布式关系型: "Cloud-native distributed relational",
+    云原生关系型: "Cloud-native relational",
+    云数据库产品族: "Cloud database portfolio",
+    分布式多模: "Distributed multimodel",
+    "云原生 HTAP": "Cloud-native HTAP",
+    "实时分析 / 湖仓": "Real-time analytics / Lakehouse",
+    时序数据库: "Time-series database",
+    分布式图数据库: "Distributed graph database",
+    向量数据库: "Vector database",
+    私有化: "Private deployment",
+    公有云: "Public cloud",
+    云: "Cloud",
+    云托管: "Managed cloud",
+    商业许可: "Commercial license",
+    开源许可: "Open-source license",
+    云计费: "Cloud billing",
+    项目报价: "Project quotation",
+    按云资源计费: "Cloud resource billing",
+    "开源 + 商业 + 云计费": "Open source + commercial + cloud billing",
+    "开源 + 商业服务": "Open source + commercial service",
+    "开源 + 云计费": "Open source + cloud billing",
+    以证据链接中的版本与发布说明为准: "Refer to the linked evidence for versions and release notes",
+  };
+  return translations[value] ?? value;
 }
 
 function releaseDetail(
@@ -1067,7 +1138,12 @@ function releaseDetail(
       ? t("changelog.latest", locale)
       : t("changelog.release", locale);
   const anchor = unreleased ? "unreleased" : `v${release.version.replaceAll(".", "-")}`;
-  return `<article class="release-node" id="${escapeHtml(anchor)}"><div class="release-marker"><i></i><span>${escapeHtml(marker)}</span><time>${escapeHtml(release.date)}</time></div><details${open ? " open" : ""}><summary><div><span>${escapeHtml(label)}</span><h2>${escapeHtml(release.name)}</h2><p>${escapeHtml(release.summary)}</p></div>${icon("chevron-down")}</summary><div class="release-body"><section><h3>${escapeHtml(t("changelog.capabilities", locale))}</h3><div class="capability-pills">${release.capabilities.map((item) => `<span>${icon("check")} ${escapeHtml(item)}</span>`).join("")}</div></section><section><h3>${escapeHtml(t("changelog.changes", locale))}</h3><ol>${release.changes.map((change) => `<li>${escapeHtml(change)}</li>`).join("")}</ol></section></div></details></article>`;
+  const name = locale === "en" ? (release.nameEn ?? release.name) : release.name;
+  const summary = locale === "en" ? (release.summaryEn ?? release.summary) : release.summary;
+  const capabilities =
+    locale === "en" ? (release.capabilitiesEn ?? release.capabilities) : release.capabilities;
+  const changes = locale === "en" ? (release.changesEn ?? release.changes) : release.changes;
+  return `<article class="release-node" id="${escapeHtml(anchor)}"><div class="release-marker"><i></i><span>${escapeHtml(marker)}</span><time>${escapeHtml(release.date)}</time></div><details${open ? " open" : ""}><summary><div><span>${escapeHtml(label)}</span><h2>${escapeHtml(name)}</h2><p>${escapeHtml(summary)}</p></div>${icon("chevron-down")}</summary><div class="release-body"><section><h3>${escapeHtml(t("changelog.capabilities", locale))}</h3><div class="capability-pills">${capabilities.map((item) => `<span>${icon("check")} ${escapeHtml(item)}</span>`).join("")}</div></section><section><h3>${escapeHtml(t("changelog.changes", locale))}</h3><ol>${changes.map((change) => `<li>${escapeHtml(change)}</li>`).join("")}</ol></section></div></details></article>`;
 }
 
 function sourceLevel(level: string, title: string, copy: string): string {
@@ -1146,83 +1222,10 @@ function technologyCoverageCopy(
   locale: Locale,
 ): { description: string; nextAction: string } {
   if (locale !== "en") return { description: item.description, nextAction: item.nextAction };
-  const copy: Record<string, { description: string; nextAction: string }> = {
-    "claude-code": {
-      description:
-        "Product updates, hooks, subagents, SDK, memory, context compression, and enterprise practice.",
-      nextAction:
-        "Strengthen Anthropic engineering updates, Claude Code documentation changes, and high-quality community practice.",
-    },
-    "openai-codex": {
-      description:
-        "Models, Codex, SDKs, agent platforms, enterprise capabilities, and developer ecosystem.",
-      nextAction:
-        "Keep Codex, Agents SDK, model, and enterprise product updates on distinct evidence paths.",
-    },
-    "google-deepmind": {
-      description:
-        "Frontier research, Gemini capabilities, agent development stack, and product adoption.",
-      nextAction:
-        "Connect Gemini product updates, Google ADK, and research results into shared event stories.",
-    },
-    cursor: {
-      description:
-        "Editor capabilities, agent workflows, enterprise features, and product iteration.",
-      nextAction: "Repair changelog parsing and add a stable official release channel.",
-    },
-    windsurf: {
-      description: "Editor, agent capabilities, enterprise features, and ecosystem changes.",
-      nextAction: "Repair the official update parser so the source is more than a catalog entry.",
-    },
-    lovable: {
-      description:
-        "AI app building, agent capabilities, platform integrations, business model, and governance.",
-      nextAction:
-        "Validate the official changelog over time and add independent community and enterprise signals.",
-    },
-    "vercel-ai": {
-      description:
-        "AI SDK, frontend agent experience, streaming interaction, and application infrastructure.",
-      nextAction: "Add Vercel engineering articles and production practice beyond SDK releases.",
-    },
-    "cloudflare-ai": {
-      description: "Workers AI, edge inference, AI Gateway, browser, and agent infrastructure.",
-      nextAction:
-        "Separate general Cloudflare updates from changes that move the AI engineering boundary.",
-    },
-    mcp: {
-      description:
-        "Specification, SDKs, ecosystem integrations, security boundaries, and enterprise adoption.",
-      nextAction: "Add specification changes, adoption, and security events beyond SDK patches.",
-    },
-    a2a: {
-      description: "Agent2Agent specification, SDKs, interoperability, and enterprise adoption.",
-      nextAction:
-        "Start with specification releases, then add SDK compatibility and real interoperability cases.",
-    },
-    "browser-use": {
-      description: "Browser agents, reliability, security, evaluation, and production deployment.",
-      nextAction: "Add browser-agent evaluation, security, and real production feedback.",
-    },
-    "ai-coding": {
-      description:
-        "Coding agents, IDEs, review, long-running work, memory, and engineering workflows.",
-      nextAction:
-        "Cross-check product updates against real engineering practice and independent evaluation.",
-    },
-    "ai-infra": {
-      description:
-        "Training, inference, chips, compilers, observability, and cloud infrastructure.",
-      nextAction: "Counter release-count bias with cost, adoption, and performance evidence.",
-    },
-    "ai-agent": {
-      description:
-        "Agent frameworks, long-running work, memory, tool use, evaluation, and commercialization.",
-      nextAction:
-        "Converge framework releases, research, production adoption, and business outcomes into shared evidence chains.",
-    },
+  return {
+    description: `${item.name} coverage across official product material, releases, research, production adoption, and independent validation.`,
+    nextAction: `Strengthen continuous release evidence, independent production references, compatibility validation, and current cost terms for ${item.name}.`,
   };
-  return copy[item.slug] ?? { description: item.description, nextAction: item.nextAction };
 }
 
 function readingMetric(value: string | number): string {
@@ -1243,6 +1246,27 @@ function strategicTracks(model: StaticSiteModel): PublicTrack[] {
   );
 }
 
+const ENGLISH_TRACK_NAMES: Record<string, string> = {
+  "kernel-architecture": "Database Kernel & Architecture",
+  "distributed-cloud": "Distributed, Cloud-Native & Serverless",
+  "realtime-lakehouse-multimodel": "Real-Time Analytics, Lakehouse & Multimodel Data",
+  "reliability-security-ops-cost": "Reliability, Security, Operations & Cost",
+  "commercialization-adoption": "Product Commercialization & Industry Adoption",
+  "china-ecosystem-policy": "Domestic Ecosystem, Capital, Policy & Standards",
+  oltp: "OLTP",
+  "olap-htap": "OLAP / HTAP",
+  "lakehouse-realtime": "Lakehouse & Real Time",
+  multimodel: "Graph / Time-Series / Vector / Multimodel",
+  "open-source": "Open-Source Ecosystem",
+  "cloud-managed": "Managed Cloud",
+  "private-xinchuang": "Private Deployment & Xinchuang",
+  "critical-industries": "Critical Industries",
+};
+
+function trackName(track: Pick<PublicTrack, "slug" | "name">, locale: Locale): string {
+  return locale === "en" ? (ENGLISH_TRACK_NAMES[track.slug] ?? track.name) : track.name;
+}
+
 function narrativeFor(model: StaticSiteModel, slug: string): TrackNarrative | undefined {
   return model.narratives.tracks.find((item) => item.slug === slug);
 }
@@ -1259,8 +1283,8 @@ function eventJsonLd(event: EnrichedEvent, locale: Locale): Record<string, unkno
       headline: event.title,
       description: event.factSummary,
       datePublished: event.happenedAt,
-      author: { "@type": "Organization", name: "Agent Pulse" },
-      publisher: { "@type": "Organization", name: "Agent Pulse" },
+      author: { "@type": "Organization", name: "DB Pulse" },
+      publisher: { "@type": "Organization", name: "DB Pulse" },
       inLanguage: locale,
     },
   ];
@@ -1321,21 +1345,20 @@ function scoutKind(kind: string, locale: Locale): string {
 
 function categoryName(category: string, locale: Locale): string {
   const map: Record<string, string> = {
-    model: t("category.model", locale),
+    "ecosystem-baseline": locale === "en" ? "Ecosystem Baseline" : "生态基线",
+    architecture: locale === "en" ? "Architecture Evolution" : "架构演进",
+    "database-release": locale === "en" ? "Database Release" : "数据库发布",
     research: t("category.research", locale),
+    benchmark: locale === "en" ? "Benchmark & Validation" : "基准与验证",
     product: t("category.product", locale),
-    commercialization: t("category.commercialization", locale),
+    adoption: locale === "en" ? "Industry Adoption" : "行业落地",
+    commercial: locale === "en" ? "Commercial Progress" : "商业进展",
     investment: t("category.investment", locale),
     policy: t("category.policy", locale),
     infrastructure: t("category.infrastructure", locale),
     talent: t("category.talent", locale),
   };
   return map[category] || category || t("category.general", locale);
-}
-
-function formatPrice(value: number | null, currency: string, locale: Locale): string {
-  if (value === null || !Number.isFinite(value)) return t("resources.inquire", locale);
-  return `${currency === "USD" ? "$" : `${currency} `}${value}`;
 }
 
 function clip(value: string, limit: number): string {
