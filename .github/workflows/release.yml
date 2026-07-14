@@ -36,10 +36,26 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
+      - name: Check release readiness
+        id: readiness
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+          if grep -q "^## \[$version\]" CHANGELOG.md; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            echo "Release section for $version is present; release publication is enabled."
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "No released Changelog section for $version; leaving the development release unpublished."
+          fi
+
       - name: Verify repository and website release contract
+        if: steps.readiness.outputs.ready == 'true'
         run: npm run release:check
 
       - name: Create missing GitHub release
+        if: steps.readiness.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           VERIFIED_SHA: ${{ github.event.workflow_run.head_sha }}
