@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "jobId": "05c5af9d-e907-44f8-a92a-8546efc71d4a",
-  "startedAt": "2026-07-14T08:30:52.770Z",
-  "finishedAt": "2026-07-14T08:31:11.772Z",
+  "jobId": "c4ae08e7-7838-4096-842f-50173db4bb65",
+  "startedAt": "2026-07-18T23:32:16.505Z",
+  "finishedAt": "2026-07-18T23:32:39.132Z",
   "total": 48,
   "healthy": 10,
   "degraded": 7,
   "failed": 17,
   "skipped": 14,
-  "accessible": 47,
+  "accessible": 48,
   "fetched": 38,
   "withContent": 11,
   "results": [
@@ -27,7 +27,7 @@
       "itemCount": 10,
       "latestItemAt": "2026-07-13T02:08:40.000Z",
       "duplicateRatio": 0,
-      "qualityScore": 72,
+      "qualityScore": 70,
       "errorType": null,
       "errorCode": null,
       "repairAction": "observe_in_shadow",
@@ -35,7 +35,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 526
+      "durationMs": 461
     },
     {
       "slug": "doris-official",
@@ -60,7 +60,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 252
+      "durationMs": 285
     },
     {
       "slug": "gbase-official",
@@ -85,7 +85,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1524
+      "durationMs": 1676
     },
     {
       "slug": "gbase-docs",
@@ -110,7 +110,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1309
+      "durationMs": 1430
     },
     {
       "slug": "gaussdb-docs",
@@ -135,7 +135,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1284
+      "durationMs": 1428
     },
     {
       "slug": "goldendb-news",
@@ -160,7 +160,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 3093
+      "durationMs": 2486
     },
     {
       "slug": "goldendb-official",
@@ -185,7 +185,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1268
+      "durationMs": 1509
     },
     {
       "slug": "matrixone-releases",
@@ -200,9 +200,9 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-07-11T03:58:55.000Z",
+      "latestItemAt": "2026-07-17T09:40:25.000Z",
       "duplicateRatio": 0,
-      "qualityScore": 79,
+      "qualityScore": 80,
       "errorType": null,
       "errorCode": null,
       "repairAction": "observe_in_shadow",
@@ -210,7 +210,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1264
+      "durationMs": 852
     },
     {
       "slug": "matrixone-official",
@@ -235,7 +235,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1411
+      "durationMs": 1787
     },
     {
       "slug": "milvus-releases",
@@ -250,7 +250,7 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-07-14T06:44:48.000Z",
+      "latestItemAt": "2026-07-15T10:36:41.000Z",
       "duplicateRatio": 0,
       "qualityScore": 78,
       "errorType": null,
@@ -260,7 +260,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 511
+      "durationMs": 455
     },
     {
       "slug": "milvus-official",
@@ -285,7 +285,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1652
+      "durationMs": 1391
     },
     {
       "slug": "nebulagraph-releases",
@@ -302,7 +302,7 @@
       "itemCount": 10,
       "latestItemAt": "2026-07-09T08:13:18.000Z",
       "duplicateRatio": 0,
-      "qualityScore": 77,
+      "qualityScore": 76,
       "errorType": null,
       "errorCode": null,
       "repairAction": "observe_in_shadow",
@@ -310,7 +310,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 596
+      "durationMs": 883
     },
     {
       "slug": "nebulagraph-official",
@@ -335,7 +335,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1653
+      "durationMs": 2165
     },
     {
       "slug": "oceanbase-releases",
@@ -350,9 +350,9 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-05-08T10:32:23.000Z",
+      "latestItemAt": "2026-07-17T10:07:48.000Z",
       "duplicateRatio": 0,
-      "qualityScore": 74,
+      "qualityScore": 76,
       "errorType": null,
       "errorCode": null,
       "repairAction": "observe_in_shadow",
@@ -360,7 +360,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 318
+      "durationMs": 308
     },
     {
       "slug": "oceanbase-official",
@@ -385,7 +385,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1318
+      "durationMs": 1851
     },
     {
       "slug": "tidb-official",
@@ -410,7 +410,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 99
+      "durationMs": 191
     },
     {
       "slug": "polardb-x-releases",
@@ -435,7 +435,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 326
+      "durationMs": 266
     },
     {
       "slug": "sequoiadb-official",
@@ -460,7 +460,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1370
+      "durationMs": 1095
     },
     {
       "slug": "sequoiadb-docs",
@@ -485,7 +485,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1884
+      "durationMs": 1365
     },
     {
       "slug": "starrocks-releases",
@@ -500,9 +500,9 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-07-14T00:35:07.000Z",
+      "latestItemAt": "2026-07-16T09:35:47.000Z",
       "duplicateRatio": 0,
-      "qualityScore": 73,
+      "qualityScore": 72,
       "errorType": null,
       "errorCode": null,
       "repairAction": "observe_in_shadow",
@@ -510,7 +510,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 747
+      "durationMs": 690
     },
     {
       "slug": "starrocks-official",
@@ -535,7 +535,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 333
+      "durationMs": 493
     },
     {
       "slug": "tdsql-docs",
@@ -560,7 +560,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1008
+      "durationMs": 1708
     },
     {
       "slug": "tdengine-releases",
@@ -585,7 +585,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 403
+      "durationMs": 355
     },
     {
       "slug": "tdengine-official",
@@ -610,7 +610,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 331
+      "durationMs": 443
     },
     {
       "slug": "tidb-releases",
@@ -625,9 +625,9 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-07-13T13:42:35.000Z",
+      "latestItemAt": "2026-07-15T15:31:23.000Z",
       "duplicateRatio": 0,
-      "qualityScore": 75,
+      "qualityScore": 72,
       "errorType": null,
       "errorCode": null,
       "repairAction": "observe_in_shadow",
@@ -635,7 +635,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 538
+      "durationMs": 323
     },
     {
       "slug": "vastbase-official",
@@ -660,7 +660,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1654
+      "durationMs": 2872
     },
     {
       "slug": "vastbase-docs",
@@ -685,7 +685,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1497
+      "durationMs": 1434
     },
     {
       "slug": "opengauss-releases",
@@ -710,7 +710,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 333
+      "durationMs": 323
     },
     {
       "slug": "opengauss-official",
@@ -735,7 +735,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1873
+      "durationMs": 1663
     },
     {
       "slug": "sse-dameng-listing",
@@ -760,7 +760,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2361
+      "durationMs": 1979
     },
     {
       "slug": "caict-database",
@@ -769,23 +769,23 @@
       "robotsPolicy": "review-required",
       "freshnessSloHours": 168,
       "status": "failed",
-      "accessStatus": "unreachable",
+      "accessStatus": "reachable",
       "fetchStatus": "failed",
-      "parseStatus": "not_started",
+      "parseStatus": "failed",
       "schemaStatus": "unknown",
       "policyStatus": "allowed_metadata",
       "itemCount": 0,
       "latestItemAt": null,
       "duplicateRatio": 0,
       "qualityScore": 0,
-      "errorType": "network",
-      "errorCode": "ADAPTER_ERROR",
-      "repairAction": "verify_network_dns_or_proxy",
-      "proxyHint": "possible",
+      "errorType": "permanent_http",
+      "errorCode": "HTTP_412",
+      "repairAction": "replace_or_correct_endpoint",
+      "proxyHint": "not_required",
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1134
+      "durationMs": 1732
     },
     {
       "slug": "kingbase-official",
@@ -810,7 +810,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2384
+      "durationMs": 2564
     },
     {
       "slug": "kingbase-docs",
@@ -835,7 +835,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1530
+      "durationMs": 2142
     },
     {
       "slug": "tc260-standard",
@@ -860,7 +860,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1732
+      "durationMs": 2040
     },
     {
       "slug": "gaussdb-official",
@@ -885,7 +885,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1616
+      "durationMs": 1596
     },
     {
       "slug": "nda-policy",
@@ -910,7 +910,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 743
+      "durationMs": 1382
     },
     {
       "slug": "miit-policy",
@@ -935,7 +935,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 6172
+      "durationMs": 3036
     },
     {
       "slug": "tdsql-official",
@@ -960,7 +960,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1157
+      "durationMs": 1163
     },
     {
       "slug": "dameng-docs",
@@ -985,7 +985,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1582
+      "durationMs": 2738
     },
     {
       "slug": "dameng-official",
@@ -1010,7 +1010,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 3439
+      "durationMs": 3186
     },
     {
       "slug": "polardb-official",
@@ -1035,7 +1035,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1539
+      "durationMs": 2175
     },
     {
       "slug": "ccf-dasfaa",
@@ -1060,7 +1060,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1563
+      "durationMs": 2023
     },
     {
       "slug": "dtcc",
@@ -1085,7 +1085,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 720
+      "durationMs": 1363
     },
     {
       "slug": "gitlink-database",
@@ -1110,7 +1110,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1667
+      "durationMs": 1974
     },
     {
       "slug": "infoq-cn-database",
@@ -1135,7 +1135,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2273
+      "durationMs": 2618
     },
     {
       "slug": "ccf-database",
@@ -1160,7 +1160,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1403
+      "durationMs": 1418
     },
     {
       "slug": "dbtest-lab",
@@ -1185,7 +1185,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 3597
+      "durationMs": 6473
     },
     {
       "slug": "modb",
@@ -1210,7 +1210,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1170
+      "durationMs": 1028
     }
   ]
 }
