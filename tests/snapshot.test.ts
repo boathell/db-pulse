@@ -66,7 +66,7 @@ describe("DB Pulse repository snapshot v2", () => {
       eventLocalizations: Array<{ locale: string }>;
     };
     expect(snapshot).toMatchObject({ schemaVersion: 2, datasetId: PUBLIC_DATASET_ID });
-    expect(snapshot.sources).toHaveLength(48);
+    expect(snapshot.sources).toHaveLength(50);
     expect(snapshot.events.length).toBeGreaterThanOrEqual(36);
     expect(snapshot.sources.every((row) => row.contentDomain === "database-cn")).toBe(true);
     expect(snapshot.events.every((row) => row.contentDomain === "database-cn")).toBe(true);

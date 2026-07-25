@@ -892,6 +892,9 @@ const TRACK_SOURCE_TERMS: Record<string, string[]> = {
     "database-testing",
     "pricing",
     "cost",
+    "dba",
+    "documentation",
+    "release",
   ],
   "commercialization-adoption": [
     "adoption",

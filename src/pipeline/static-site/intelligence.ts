@@ -59,22 +59,12 @@ interface CoverageDefinition {
 const databaseEcosystems = [
   ["dameng", "达梦", ["dameng", "dm8", "达梦"]],
   ["kingbase", "人大金仓", ["kingbase", "kingbasees", "金仓"]],
-  ["gbase", "GBase", ["gbase", "南大通用"]],
-  ["goldendb", "GoldenDB", ["goldendb", "金篆信科"]],
   ["oceanbase", "OceanBase", ["oceanbase"]],
   ["tidb", "TiDB", ["tidb", "pingcap"]],
-  ["opengauss", "openGauss", ["opengauss"]],
-  ["gaussdb", "GaussDB", ["gaussdb"]],
   ["polardb", "PolarDB", ["polardb", "polardb-x"]],
   ["tdsql", "TDSQL", ["tdsql"]],
-  ["vastbase", "Vastbase", ["vastbase", "海量数据"]],
-  ["sequoiadb", "SequoiaDB", ["sequoiadb", "巨杉"]],
-  ["matrixone", "MatrixOne", ["matrixone", "矩阵起源"]],
-  ["apache-doris", "Apache Doris", ["apache doris", "doris"]],
   ["starrocks", "StarRocks", ["starrocks"]],
   ["tdengine", "TDengine", ["tdengine", "涛思"]],
-  ["nebulagraph", "NebulaGraph", ["nebulagraph", "nebula graph"]],
-  ["milvus", "Milvus", ["milvus", "zilliz"]],
 ] as const;
 
 export const coverageDefinitions: CoverageDefinition[] = databaseEcosystems.map(

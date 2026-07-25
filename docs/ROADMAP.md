@@ -3,7 +3,7 @@
 ## 0.1 — China database baseline
 
 - `database-cn` public domain isolation and `db-pulse-cn-v1` snapshot.
-- 18 core ecosystems, 48 governed sources, and at least 36 bilingual Events.
+- 8 retained core ecosystems, 26 governed sources, and at least 36 bilingual Events.
 - Six strategic tracks and database-specific clustering.
 - Evidence-led “Selection & Cost” resources without product rankings.
 - Chinese and English static timelines and locale-aware public API.

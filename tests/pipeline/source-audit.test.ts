@@ -86,35 +86,44 @@ describe("source audit", () => {
     expect(Number(afterSignals.count)).toBe(Number(beforeSignals.count));
   });
 
-  it("records restricted sources without requesting them", async () => {
+  it("records both restricted WeChat sources without requesting them", async () => {
     const { db, config, repository } = await setup();
-    const source = (await repository.listSources()).find((item) => item.slug === "modb");
-    expect(source).toBeTruthy();
-    await repository.updateSource(source?.id ?? "missing", {
-      maintenance_status: "restricted",
-      acquisition: "social",
-    });
-    let adapterCalled = false;
-
-    const report = await auditSources(
-      db,
-      config,
-      { sourceId: source?.id ?? "missing" },
-      {
-        adapterFor: () => {
-          adapterCalled = true;
-          throw new Error("must not be called");
-        },
-      },
+    const sources = new Map(
+      (await repository.listSources()).map((source) => [source.slug, source]),
     );
 
-    expect(adapterCalled).toBe(false);
-    expect(report.results[0]).toMatchObject({
-      status: "skipped",
-      accessStatus: "not_checked",
-      policyStatus: "restricted",
-      retentionDecision: "keep_restricted",
-    });
+    for (const slug of ["greptimedb-wechat", "zhuang-xiaodan-wechat"]) {
+      const source = sources.get(slug);
+      expect(source, slug).toBeTruthy();
+      let adapterCalled = false;
+      let fetcherCalled = false;
+
+      const report = await auditSources(
+        db,
+        config,
+        { sourceId: source?.id ?? "missing" },
+        {
+          adapterFor: () => {
+            adapterCalled = true;
+            throw new Error("must not be called");
+          },
+          fetcher: async () => {
+            fetcherCalled = true;
+            throw new Error("must not be called");
+          },
+        },
+      );
+
+      expect(adapterCalled, slug).toBe(false);
+      expect(fetcherCalled, slug).toBe(false);
+      expect(report.results[0]).toMatchObject({
+        slug,
+        status: "skipped",
+        accessStatus: "not_checked",
+        policyStatus: "restricted",
+        retentionDecision: "keep_restricted",
+      });
+    }
   });
 
   it("classifies a source failure without aborting the audit job", async () => {
@@ -185,7 +194,7 @@ describe("source audit", () => {
       { concurrency: 8 },
       { adapterFor: () => adapter, fetcher },
     );
-    expect(failed.total).toBe(48);
+    expect(failed.total).toBe(26);
     expect(failed.failed).toBe(1);
     expect(failed.results.find((item) => item.slug === "oceanbase-official")).toMatchObject({
       status: "failed",

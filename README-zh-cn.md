@@ -15,7 +15,7 @@
 
 ## 首批中国生态
 
-0.1.0 覆盖达梦、人大金仓、GBase、GoldenDB、OceanBase、TiDB、openGauss、GaussDB、PolarDB、TDSQL、Vastbase、SequoiaDB、MatrixOne、Apache Doris、StarRocks、TDengine、NebulaGraph 与 Milvus。
+当前 0.1.0 观察范围保留达梦、人大金仓、OceanBase、TiDB、PolarDB、TDSQL、StarRocks 与 TDengine；其他数据库生态仅保留历史上下文，后续需明确恢复后才重新跟踪。
 
 首期不建立海外数据库独立主线；海外产品只可作为国内事件的比较证据。
 

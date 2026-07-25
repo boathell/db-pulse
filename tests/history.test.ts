@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { historicalEvents, industryNarratives } from "../src/catalog/history.js";
-import { sourceCatalog } from "../src/catalog/sources.js";
+import { retiredSourceCatalog, sourceCatalog } from "../src/catalog/sources.js";
 import { eventsForVendor, priorityVendorCoverage } from "../src/catalog/vendor-coverage.js";
 
 const ecosystemSlugs = [
@@ -26,7 +26,9 @@ const ecosystemSlugs = [
 
 describe("China database industry baseline", () => {
   it("publishes at least 36 bilingual, source-backed Events with measured heat disabled", () => {
-    const sources = new Map(sourceCatalog.map((source) => [source.slug, source]));
+    const sources = new Map(
+      [...sourceCatalog, ...retiredSourceCatalog].map((source) => [source.slug, source]),
+    );
     expect(historicalEvents.length).toBeGreaterThanOrEqual(36);
     expect(new Set(historicalEvents.map((event) => event.slug)).size).toBe(36);
     for (const event of historicalEvents) {
@@ -84,7 +86,9 @@ describe("China database industry baseline", () => {
   });
 
   it("maps all 18 ecosystem alias sets to Tier 1 entrances and public Events", () => {
-    const sources = new Map(sourceCatalog.map((source) => [source.slug, source]));
+    const sources = new Map(
+      [...sourceCatalog, ...retiredSourceCatalog].map((source) => [source.slug, source]),
+    );
     expect(priorityVendorCoverage).toHaveLength(18);
     expect(priorityVendorCoverage.map((vendor) => vendor.slug)).toEqual(ecosystemSlugs);
     for (const vendor of priorityVendorCoverage) {

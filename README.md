@@ -19,7 +19,7 @@ The public product preserves the existing static multi-page experience:
 
 ## Initial China coverage
 
-The 0.1.0 baseline covers Dameng, Kingbase, GBase, GoldenDB, OceanBase, TiDB, openGauss, GaussDB, PolarDB, TDSQL, Vastbase, SequoiaDB, MatrixOne, Apache Doris, StarRocks, TDengine, NebulaGraph, and Milvus.
+The current 0.1.0 observation scope retains Dameng, Kingbase, OceanBase, TiDB, PolarDB, TDSQL, StarRocks, and TDengine. Other database ecosystems remain historical context only until explicitly restored.
 
 Overseas database products may appear only as comparison evidence for a China-focused Event. They are not independent public tracks in this phase.
 

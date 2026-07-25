@@ -6,28 +6,18 @@ import { sourceCatalog } from "../src/catalog/sources.js";
 const ecosystemPrefixes = [
   "dameng",
   "kingbase",
-  "gbase",
-  "goldendb",
   "oceanbase",
   "tidb",
-  "opengauss",
-  "gaussdb",
   "polardb",
   "tdsql",
-  "vastbase",
-  "sequoiadb",
-  "matrixone",
-  "doris",
   "starrocks",
   "tdengine",
-  "nebulagraph",
-  "milvus",
 ] as const;
 
 describe("DB Pulse source and product catalogs", () => {
-  it("defines exactly 48 China-first sources behind the draft or shadow gate", () => {
-    expect(sourceCatalog).toHaveLength(48);
-    expect(new Set(sourceCatalog.map((source) => source.slug)).size).toBe(48);
+  it("defines exactly 26 retained China-first sources behind the draft or shadow gate", () => {
+    expect(sourceCatalog).toHaveLength(26);
+    expect(new Set(sourceCatalog.map((source) => source.slug)).size).toBe(26);
     expect(sourceCatalog.every((source) => source.region === "CN")).toBe(true);
     expect(sourceCatalog.every((source) => source.enabled === false)).toBe(true);
     expect(
@@ -42,25 +32,84 @@ describe("DB Pulse source and product catalogs", () => {
         new URL(source.endpoint);
       }),
     ).not.toThrow();
+    expect(
+      sourceCatalog.some((source) =>
+        [
+          "sse-dameng-listing",
+          "dbtest-lab",
+          "ccf-dasfaa",
+          "tc260-standard",
+          "milvus-official",
+          "milvus-releases",
+          "nebulagraph-official",
+          "nebulagraph-releases",
+          "doris-official",
+          "doris-releases",
+          "matrixone-official",
+          "matrixone-releases",
+          "sequoiadb-official",
+          "sequoiadb-docs",
+          "vastbase-official",
+          "vastbase-docs",
+          "gaussdb-official",
+          "gaussdb-docs",
+          "opengauss-official",
+          "opengauss-releases",
+          "goldendb-official",
+          "goldendb-news",
+          "gbase-official",
+          "gbase-docs",
+        ].includes(source.slug),
+      ),
+    ).toBe(false);
   });
 
-  it("keeps the required 36 + 4 + 4 + 4 source portfolio", () => {
+  it("keeps the required baseline plus two restricted social sources", () => {
     const official = sourceCatalog.filter((source) =>
       ["database-vendor", "open-source-database", "cloud-database"].includes(source.category),
     );
-    expect(official).toHaveLength(36);
-    expect(sourceCatalog.filter((source) => source.category === "policy-standard")).toHaveLength(4);
+    expect(official).toHaveLength(17);
+    expect(sourceCatalog.filter((source) => source.category === "policy-standard")).toHaveLength(3);
     expect(sourceCatalog.filter((source) => source.category === "research-benchmark")).toHaveLength(
-      4,
+      2,
     );
     expect(
       sourceCatalog.filter((source) =>
         ["capital-business", "professional-media", "database-community"].includes(source.category),
       ),
-    ).toHaveLength(4);
+    ).toHaveLength(3);
+    expect(sourceCatalog.filter((source) => source.category === "expert")).toHaveLength(1);
+    expect(sourceCatalog.filter((source) => source.acquisition === "social")).toEqual([
+      expect.objectContaining({
+        slug: "greptimedb-wechat",
+        adapter: "manual",
+        tier: 1,
+        role: "primary",
+        maintenanceStatus: "restricted",
+        lifecycleStatus: "shadow",
+        enabled: false,
+      }),
+      expect.objectContaining({
+        slug: "zhuang-xiaodan-wechat",
+        adapter: "manual",
+        tier: 3,
+        role: "expert",
+        category: "expert",
+        maintenanceStatus: "restricted",
+        lifecycleStatus: "shadow",
+        enabled: false,
+      }),
+    ]);
+    expect(
+      new Set(
+        sourceCatalog
+          .filter((source) => ["greptimedb-wechat", "zhuang-xiaodan-wechat"].includes(source.slug))
+          .map((source) => source.owner),
+      ).size,
+    ).toBe(1);
   });
 
-  it("covers all 18 core ecosystems with two official evidence entrances", () => {
+  it("covers all 8 retained core ecosystems with two official evidence entrances", () => {
     for (const prefix of ecosystemPrefixes) {
       const entrances = sourceCatalog.filter((source) => source.slug.startsWith(`${prefix}-`));
       expect(entrances, prefix).toHaveLength(2);
@@ -70,25 +119,14 @@ describe("DB Pulse source and product catalogs", () => {
 
   it("keeps the confirmed release and policy entry points canonical", () => {
     const endpoints = new Map(sourceCatalog.map((source) => [source.slug, source.endpoint]));
-    expect(endpoints.get("opengauss-official")).toBe("https://opengauss.org/zh/news/");
     expect(endpoints.get("polardb-official")).toBe(
       "https://help.aliyun.com/zh/polardb/polardb-for-xscale/release-notes-11",
     );
     expect(endpoints.get("tdsql-official")).toBe(
       "https://cloud.tencent.com/document/product/1376/125147",
     );
-    expect(endpoints.get("doris-official")).toBe(
-      "https://doris.apache.org/zh-CN/releases/all-release/",
-    );
-    expect(endpoints.get("milvus-official")).toBe("https://milvus.io/docs/zh/release_notes.md");
-    expect(endpoints.get("matrixone-official")).toBe(
-      "https://docs.matrixorigin.cn/en/v26.3.0.13/MatrixOne/Release-Notes/v22.0.6.0/",
-    );
     expect(endpoints.get("nda-policy")).toBe(
       "https://www.nda.gov.cn/sjj/ywpd/szkjyjcss/0110/20250106095112713400492_pc.html",
-    );
-    expect(endpoints.get("tc260-standard")).toBe(
-      "https://www.tc260.org.cn/portal/article/2/20250915154109",
     );
   });
 
@@ -103,7 +141,7 @@ describe("DB Pulse source and product catalogs", () => {
   });
 
   it("uses a China database community matrix rather than an AI influencer list", () => {
-    expect(influencerCatalog.length).toBeGreaterThanOrEqual(4);
+    expect(influencerCatalog.length).toBeGreaterThanOrEqual(5);
     expect(influencerCatalog.every((entry) => entry.region === "CN")).toBe(true);
     expect(influencerCatalog.every((entry) => entry.focus.length > 0)).toBe(true);
     expect(
@@ -111,5 +149,21 @@ describe("DB Pulse source and product catalogs", () => {
         entry.focus.some((topic) => /database|dba|数据库/i.test(topic)),
       ),
     ).toBe(true);
+    const zhuangXiaodan = influencerCatalog.find((entry) => entry.slug === "zhuang-xiaodan");
+    expect(zhuangXiaodan).toMatchObject({
+      name: "庄晓丹 / Dennis Zhuang",
+      profiles: [
+        {
+          platform: "github",
+          handle: "killme2008",
+          url: "https://github.com/killme2008",
+        },
+        {
+          platform: "website",
+          url: "https://greptime.com/blogs/authors/dennis_zhuang",
+        },
+      ],
+    });
+    expect(zhuangXiaodan).not.toHaveProperty("feedSourceSlug");
   });
 });

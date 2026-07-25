@@ -8,7 +8,8 @@ export const capabilities = [
     status: "operational",
     maturity: 45,
     release: "0.1.0",
-    evidence: "48 governed source records across products, policy, research, media, and community",
+    evidence:
+      "26 governed source records across retained products, policy, research, media, and community",
   },
   {
     slug: "database-domain-isolation",
@@ -85,7 +86,7 @@ export const roadmap = [
     name: "中国数据库公开基线",
     promise: "用可回链证据理解产品、技术、政策与采用变化。",
     status: "operational",
-    milestones: ["18 个核心生态", "48 条来源记录", "36 个双语 Event", "选型与成本 DTO"],
+    milestones: ["8 个核心生态", "26 条来源记录", "36 个双语 Event", "选型与成本 DTO"],
   },
   {
     state: 2,
@@ -127,14 +128,14 @@ export const releases: Array<{
       "The product is becoming a China database industry intelligence and decision system. Version 0.1.0 remains in development until an explicit release.",
     capabilities: [
       "中国数据库行业领域隔离",
-      "18 个核心数据库生态",
+      "8 个当前跟踪的核心数据库生态",
       "36 个中英双语 Event",
       "数据库选型与成本模型",
       "六条行业主线与四类决策角色",
     ],
     capabilitiesEn: [
       "China database industry domain isolation",
-      "18 core database ecosystems",
+      "8 retained core database ecosystems",
       "36 bilingual Events",
       "Database selection and cost model",
       "Six industry lines and four decision roles",
@@ -152,6 +153,9 @@ export const releases: Array<{
       "对齐中英文 canonical、hreflang、sitemap 与 robots，并禁止索引 404 页面",
       "Pages、每日刷新与来源审计在每次静态导出后执行隐私扫描",
       "热点取消跨地区硬门槛，但继续要求真实独立来源与平台宽度",
+      "按关注范围软退役 10 个数据库生态和 4 条辅助来源；保留历史 provenance，不再进入当前观察目录",
+      "GreptimeDB 官方微信公众号作为受限 shadow 来源收录，不自动抓取微信正文",
+      "庄晓丹“此间山林”公众号作为受限专家来源收录，与 Greptime 官方号共享证据所有者",
       "概率预测与 Brier Score 保持 planned，不描述为已实现能力",
     ],
     changesEn: [
@@ -167,6 +171,9 @@ export const releases: Array<{
       "Align bilingual canonical, hreflang, sitemap, and robots metadata while keeping 404 pages out of search indexes",
       "Run the static privacy gate after every Pages, daily-refresh, and source-audit export",
       "Remove the cross-region heat requirement while retaining measured independent-source and platform-width gates",
+      "Soft-retire 10 database ecosystems and four supporting sources from the focus scope while retaining historical provenance",
+      "Catalog the official GreptimeDB WeChat account as a restricted shadow source without automated article-body collection",
+      "Catalog Zhuang Xiaodan's Cijian Shanlin WeChat account as a restricted expert source that shares Greptime's evidence owner",
       "Keep probabilistic forecasts and Brier scoring planned rather than describing them as implemented",
     ],
   },

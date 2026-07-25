@@ -80,7 +80,7 @@ describe("DB Pulse SQLite application", () => {
       tracks: 14,
       actors: 22,
       resources: 18,
-      sources: 48,
+      sources: 26,
       version: "0.1.0",
     });
 
