@@ -21,9 +21,7 @@ describe("shadow observation mode", () => {
     await migrateToLatest(db, config);
     await seedDatabase(db);
     const repository = new Repository(db);
-    const source = (await repository.listSources()).find(
-      (item) => item.slug === "opengauss-official",
-    );
+    const source = (await repository.listSources()).find((item) => item.slug === "tidb-official");
     expect(source?.lifecycle_status).toBe("shadow");
 
     await expect(setObservationMode(db, source?.id ?? "missing", true)).rejects.toThrow(
@@ -38,14 +36,14 @@ describe("shadow observation mode", () => {
           kind: "fixture",
           collect: async () => [
             {
-              url: "https://opengauss.org/zh/news/fixture",
-              title: "openGauss publishes a verified database release fixture",
+              url: "https://docs.pingcap.com/tidb/stable/fixture",
+              title: "TiDB publishes a verified database release fixture",
               summary:
                 "A detailed official research release used to prove shadow observation eligibility.",
               language: "en",
               publishedAt: "2026-07-12T00:00:00.000Z",
               category: "database-release",
-              tags: ["database", "release", "opengauss"],
+              tags: ["database", "release", "tidb"],
               metrics: {},
               rawMeta: {},
             },

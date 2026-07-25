@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "sourceSlug": "greptimedb-wechat",
+  "collectionAllowed": false,
+  "accountName": "GreptimeDB",
+  "accountBiz": "Mzg3MTgxMzczNg==",
+  "article": {
+    "title": "Hebo AI：为什么我们选择了 GreptimeDB 而不是 ClickHouse",
+    "url": "https://mp.weixin.qq.com/s/H-56vo8Zc-spKyy099wqyA",
+    "publishedAt": "2026-03-26T17:07:00+08:00"
+  },
+  "verifiedAt": "2026-07-24T00:00:00+08:00"
+}

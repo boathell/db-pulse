@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "sourceSlug": "zhuang-xiaodan-wechat",
+  "collectionAllowed": false,
+  "accountName": "此间山林",
+  "articleAuthor": "此间的山林",
+  "accountUsername": "gh_8e1963838cae",
+  "accountBiz": "MzkyNjQzNTU3OQ==",
+  "article": {
+    "title": "SkyWalking + GreptimeDB 非官方社区版发布，想听听你的真实需求",
+    "url": "https://mp.weixin.qq.com/s/9bjEqIBw7J7EntAFd8gpsA",
+    "publishedAt": "2026-07-17T11:59:00+08:00"
+  },
+  "identityEvidence": [
+    {
+      "kind": "github-profile",
+      "url": "https://github.com/killme2008",
+      "identity": "Dennis Zhuang / killme2008",
+      "affiliation": "Founder & CEO of Greptime"
+    },
+    {
+      "kind": "official-company-profile",
+      "url": "https://greptime.cn/about",
+      "identity": "庄晓丹",
+      "affiliation": "创始人 CEO"
+    }
+  ],
+  "verifiedAt": "2026-07-24T00:00:00+08:00"
+}

@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import type { Kysely } from "kysely";
 import { type CuratedEventSeed, historicalEvents } from "../catalog/history.js";
-import { sourceCatalog } from "../catalog/sources.js";
+import { retiredSourceCatalog, sourceCatalog } from "../catalog/sources.js";
 import { PUBLIC_CONTENT_DOMAIN, PUBLIC_VIEW_SLUG } from "../domain/content-domain.js";
 import { canonicalizeUrl, sha256 } from "../domain/url.js";
 import { Repository } from "./repository.js";
@@ -607,7 +607,8 @@ export async function seedDatabase(db: Kysely<DatabaseSchema>): Promise<void> {
   const repository = new Repository(db);
   const timestamp = CURATED_SEED_TIMESTAMP;
 
-  for (const source of sourceCatalog) {
+  const catalogSources = [...sourceCatalog, ...retiredSourceCatalog];
+  for (const source of catalogSources) {
     await repository.saveCatalogSource({
       id: stableId("source", source.slug),
       slug: source.slug,
@@ -625,6 +626,7 @@ export async function seedDatabase(db: Kysely<DatabaseSchema>): Promise<void> {
         take: source.tier === 1 ? 50 : 30,
         category: source.category,
         ...(source.identityHosts ? { identityHosts: source.identityHosts } : {}),
+        ...(source.socialHandles ? { socialHandles: source.socialHandles } : {}),
       }),
       state_json: "{}",
       last_collected_at: null,
@@ -647,7 +649,19 @@ export async function seedDatabase(db: Kysely<DatabaseSchema>): Promise<void> {
     });
   }
 
-  const catalogSlugs = new Set(sourceCatalog.map((source) => source.slug));
+  for (const source of retiredSourceCatalog) {
+    const row = await repository.getSourceByIdOrSlug(source.slug);
+    if (!row) continue;
+    await repository.updateSource(row.id, {
+      enabled: 0,
+      observation_enabled: 0,
+      lifecycle_status: "retired",
+      maintenance_status: "retired",
+      retired_at: timestamp,
+    });
+  }
+
+  const catalogSlugs = new Set(catalogSources.map((source) => source.slug));
   for (const source of await repository.listAllSources()) {
     if (catalogSlugs.has(source.slug)) continue;
     await repository.updateSource(source.id, {
@@ -1093,7 +1107,7 @@ async function seedScout(db: Kysely<DatabaseSchema>, timestamp: string) {
     observation:
       "国产数据库选型的主要风险已经从是否可用转向兼容、切换、恢复和长期运维证据是否完整。",
     hypothesis: "一份按应用与工作负载组织的迁移证据清单，可以降低品牌导向选型和重复验证成本。",
-    why_now: "首批 18 个数据库生态已进入统一证据模型，适合用真实项目反馈校准字段。",
+    why_now: "当前 8 个数据库生态已进入统一证据模型，适合用真实项目反馈校准字段。",
     target_audience: "CEO、DBA、数据架构师和数据库平台负责人",
     suggested_action: "选择一个可回滚应用，在两周内完成兼容扫描、黄金负载、故障切换与成本基线。",
     artifact_idea: "数据库迁移证据清单、故障演练脚本和 TCO 记录模板",

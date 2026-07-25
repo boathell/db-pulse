@@ -55,4 +55,13 @@ describe("scoreEvent", () => {
       ]),
     ).toBe(2);
   });
+
+  it("counts the Greptime official and founder WeChat entrances as one owner", () => {
+    expect(
+      independentEvidenceOwnerCount([
+        { sourceId: "greptimedb-wechat", sourceOwner: "Greptime / 格睿科技" },
+        { sourceId: "zhuang-xiaodan-wechat", sourceOwner: "Greptime / 格睿科技" },
+      ]),
+    ).toBe(1);
+  });
 });

@@ -58,7 +58,6 @@ export const influencerCatalog: readonly InfluencerCatalogEntry[] = [
     name: "openGauss 社区",
     region: "CN",
     focus: ["relational database", "open source", "xinchuang"],
-    feedSourceSlug: "opengauss-official",
     profiles: [
       {
         platform: "website",
@@ -85,6 +84,26 @@ export const influencerCatalog: readonly InfluencerCatalogEntry[] = [
         handle: "modb.pro",
         url: "https://www.modb.pro/",
         access: "restricted",
+      },
+    ],
+  },
+  {
+    slug: "zhuang-xiaodan",
+    name: "庄晓丹 / Dennis Zhuang",
+    region: "CN",
+    focus: ["GreptimeDB", "distributed systems", "observability database"],
+    profiles: [
+      {
+        platform: "github",
+        handle: "killme2008",
+        url: "https://github.com/killme2008",
+        access: "automatic",
+      },
+      {
+        platform: "website",
+        handle: "Greptime author profile",
+        url: "https://greptime.com/blogs/authors/dennis_zhuang",
+        access: "automatic",
       },
     ],
   },

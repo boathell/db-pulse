@@ -286,7 +286,75 @@ describe("DB Pulse domain migrations", () => {
         .where("id", "=", deprecatedSignal?.id ?? "missing")
         .executeTakeFirst(),
     ).toBeUndefined();
-    expect(await repository.listSources()).toHaveLength(48);
+    const sources = await repository.listSources();
+    expect(sources).toHaveLength(50);
+    const retiredSlugs = [
+      "sse-dameng-listing",
+      "dbtest-lab",
+      "ccf-dasfaa",
+      "tc260-standard",
+      "milvus-official",
+      "milvus-releases",
+      "nebulagraph-official",
+      "nebulagraph-releases",
+      "doris-official",
+      "doris-releases",
+      "matrixone-official",
+      "matrixone-releases",
+      "sequoiadb-official",
+      "sequoiadb-docs",
+      "vastbase-official",
+      "vastbase-docs",
+      "gaussdb-official",
+      "gaussdb-docs",
+      "opengauss-official",
+      "opengauss-releases",
+      "goldendb-official",
+      "goldendb-news",
+      "gbase-official",
+      "gbase-docs",
+    ];
+    const retiredSources = sources.filter((source) => retiredSlugs.includes(source.slug));
+    expect(retiredSources).toHaveLength(24);
+    expect(
+      retiredSources.every(
+        (source) =>
+          source.lifecycle_status === "retired" &&
+          source.maintenance_status === "retired" &&
+          source.enabled === 0 &&
+          source.observation_enabled === 0,
+      ),
+    ).toBe(true);
+    const greptime = sources.find((source) => source.slug === "greptimedb-wechat");
+    expect(JSON.parse(greptime?.config_json ?? "{}")).toMatchObject({
+      url: "https://mp.weixin.qq.com/s/H-56vo8Zc-spKyy099wqyA",
+      identityHosts: ["greptime.cn"],
+      socialHandles: ["GreptimeDB", "Mzg3MTgxMzczNg=="],
+    });
+    const zhuangXiaodan = sources.find((source) => source.slug === "zhuang-xiaodan-wechat");
+    expect(zhuangXiaodan).toMatchObject({
+      owner: "Greptime / 格睿科技",
+      homepage_url: "https://github.com/killme2008",
+      tier: 3,
+      role: "expert",
+      source_category: "expert",
+      acquisition: "social",
+      maintenance_status: "restricted",
+      lifecycle_status: "shadow",
+      enabled: 0,
+    });
+    expect(JSON.parse(zhuangXiaodan?.config_json ?? "{}")).toMatchObject({
+      url: "https://mp.weixin.qq.com/s/9bjEqIBw7J7EntAFd8gpsA",
+      identityHosts: ["greptime.cn"],
+      socialHandles: [
+        "此间山林",
+        "此间的山林",
+        "gh_8e1963838cae",
+        "MzkyNjQzNTU3OQ==",
+        "killme2008",
+      ],
+    });
+    expect(greptime?.owner).toBe(zhuangXiaodan?.owner);
     expect(await repository.listEvents("published")).toHaveLength(36);
     expect(
       (await repository.listSources()).every(
@@ -297,14 +365,48 @@ describe("DB Pulse domain migrations", () => {
       true,
     );
     const exported = await exportStaticSite(db, runtime);
-    expect(exported).toMatchObject({ sources: 48, resources: 18 });
+    expect(exported).toMatchObject({ sources: 26, resources: 18 });
     expect(exported.events).toBe(36);
     const publicSources = JSON.parse(
       await readFile(join(runtime.distDir, "data/sources.json"), "utf8"),
     ) as Array<Record<string, unknown>>;
-    expect(publicSources).toHaveLength(48);
+    expect(publicSources).toHaveLength(26);
     expect(publicSources.every((source) => typeof source.owner === "string")).toBe(true);
     expect(publicSources.every((source) => typeof source.adapterVersion === "string")).toBe(true);
+    const publicGreptime = publicSources.find((source) => source.slug === "greptimedb-wechat");
+    expect(publicGreptime).toMatchObject({
+      homepageUrl: "https://greptime.cn/",
+      acquisition: "social",
+      maintenanceStatus: "restricted",
+    });
+    expect(publicGreptime).not.toHaveProperty("socialHandles");
+    expect(JSON.stringify(publicGreptime)).not.toContain("mp.weixin.qq.com");
+    expect(JSON.stringify(publicGreptime)).not.toContain("Mzg3MTgxMzczNg");
+    const publicZhuang = publicSources.find((source) => source.slug === "zhuang-xiaodan-wechat");
+    expect(publicZhuang).toMatchObject({
+      name: "庄晓丹（此间山林）公众号",
+      owner: "Greptime / 格睿科技",
+      homepageUrl: "https://github.com/killme2008",
+      tier: 3,
+      role: "expert",
+      category: "expert",
+      acquisition: "social",
+      maintenanceStatus: "restricted",
+      lifecycle: "shadow",
+      observationEnabled: false,
+    });
+    expect(publicZhuang).not.toHaveProperty("socialHandles");
+    expect(JSON.stringify(publicSources)).not.toContain("mp.weixin.qq.com");
+    expect(JSON.stringify(publicSources)).not.toContain("gh_8e1963838cae");
+    expect(JSON.stringify(publicSources)).not.toContain("MzkyNjQzNTU3OQ");
+
+    const publicInfluencers = JSON.parse(
+      await readFile(join(runtime.distDir, "data/influencers.json"), "utf8"),
+    ) as Array<Record<string, unknown>>;
+    expect(publicInfluencers.find((entry) => entry.slug === "zhuang-xiaodan")).toMatchObject({
+      name: "庄晓丹 / Dennis Zhuang",
+      feedSourceSlug: null,
+    });
   });
 });
 

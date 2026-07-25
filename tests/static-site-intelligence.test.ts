@@ -180,9 +180,9 @@ describe("static-site intelligence consumption model", () => {
         "distributed database",
       ]),
       source("oceanbase-official", "OceanBase", "failed", "html", ["oceanbase", "htap"]),
-      source("milvus-official", "Milvus Releases", "unchecked", "html", [
-        "milvus",
-        "vector database",
+      source("tidb-official", "TiDB Releases", "unchecked", "html", [
+        "tidb",
+        "distributed database",
       ]),
     ];
 
@@ -191,7 +191,7 @@ describe("static-site intelligence consumption model", () => {
       status: "watch",
       healthySources: 1,
     });
-    expect(coverage.find((item) => item.slug === "milvus")).toMatchObject({
+    expect(coverage.find((item) => item.slug === "tidb")).toMatchObject({
       status: "unchecked",
       healthySources: 0,
     });
@@ -238,7 +238,7 @@ describe("static-site intelligence consumption model", () => {
 describe("database source adapter contracts", () => {
   it("parses a database release fixture through every configured GitHub adapter", async () => {
     const githubSources = sourceCatalog.filter((source) => source.acquisition === "github");
-    expect(githubSources.length).toBeGreaterThanOrEqual(10);
+    expect(githubSources.length).toBeGreaterThanOrEqual(5);
     expect(githubSources.every((source) => source.endpoint.endsWith("/releases.atom"))).toBe(true);
     const catalog = sourceCatalog.find((source) => source.slug === "tidb-releases");
     expect(catalog).toMatchObject({

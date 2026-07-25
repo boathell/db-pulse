@@ -1,13 +1,23 @@
 # DB Pulse Source Catalog and Evidence Policy
 
-The first DB Pulse catalog contains 48 China database sources:
+The current DB Pulse catalog contains 26 retained China database sources:
 
-- 36 official product, documentation, and release entrances across 18 core ecosystems;
-- 4 policy and standards sources;
-- 4 research, benchmark, or original-artifact sources;
-- 4 capital, professional-media, or database-community discovery sources.
+- 16 official product, documentation, and release entrances across 8 retained core ecosystems;
+- 3 policy and standards sources;
+- 2 research, benchmark, or original-artifact sources;
+- 3 professional-media or database-community discovery sources.
+- 1 Tier 1 official WeChat identity retained as a restricted, non-collecting social source.
+- 1 verified founder/expert WeChat identity retained as a Tier 3 restricted, non-collecting social source.
+
+Sources outside the current focus are soft-retired: their rows and historical provenance remain in
+the private database and snapshots, but they are excluded from the current observation catalog,
+collection plan, and public source export.
 
 All new automated sources start disabled in `draft` or `shadow`. Promotion to `active` requires an adapter contract, fixture, schema-drift test, access/license review, health probe, and a real observation window.
+
+Platform-restricted sources remain disabled in `shadow` and are never scraped around login, WAF, CAPTCHA, or platform controls. Their catalog presence records identity and provenance only until a platform-approved API or feed is available.
+
+Multiple entrances from the same company ecosystem share an evidence owner. The GreptimeDB official account and founder Zhuang Xiaodan's personal account are separate catalog entries but do not count as independent corroboration.
 
 ## Evidence rules
 

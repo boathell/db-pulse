@@ -90,13 +90,11 @@ describe("signal eventability triage", () => {
 
   it("keeps healthy shadow-source signals in observation until activation", async () => {
     const { db, repository } = await setup();
-    const source = (await repository.listSources()).find(
-      (item) => item.slug === "opengauss-official",
-    );
+    const source = (await repository.listSources()).find((item) => item.slug === "tidb-official");
     expect(source?.lifecycle_status).toBe("shadow");
     const inserted = await repository.insertSignal(source?.id ?? "missing", {
-      url: "https://opengauss.org/zh/news/fixture-observation",
-      title: "openGauss releases Fixture Observation database version",
+      url: "https://docs.pingcap.com/tidb/stable/fixture-observation",
+      title: "TiDB releases Fixture Observation database version",
       summary:
         "A concrete official database release that remains non-production during shadow observation.",
       language: "en",

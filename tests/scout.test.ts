@@ -159,6 +159,7 @@ describe("Scout deterministic cards", () => {
       .selectAll()
       .where("status", "=", "published")
       .executeTakeFirstOrThrow();
+    const unexpiredAt = new Date(Date.now() + 24 * 60 * 60 * 1_000).toISOString();
     const fixtures = Array.from({ length: PUBLIC_SCOUT_POOL_TARGET - 1 }, (_, index) => ({
       ...original,
       id: randomUUID(),
@@ -167,7 +168,7 @@ describe("Scout deterministic cards", () => {
         ["venture", "media", "work", "learning", "artifact", "influence"][index % 6] ?? "venture",
       title: `Pool fixture ${index}`,
       cooldown_key: `pool:fixture-${index}`,
-      expires_at: "2026-07-20T00:00:00.000Z",
+      expires_at: unexpiredAt,
     }));
     await db.insertInto("scout_insights").values(fixtures).execute();
 

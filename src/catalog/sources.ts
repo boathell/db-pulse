@@ -599,12 +599,102 @@ const discoverySources: CatalogSource[] = [
   }),
 ];
 
-export const sourceCatalog: CatalogSource[] = [
+const restrictedSocialSources: CatalogSource[] = [
+  defineSource({
+    slug: "greptimedb-wechat",
+    name: "GreptimeDB 公众号",
+    owner: "Greptime / 格睿科技",
+    homepageUrl: "https://greptime.cn/",
+    endpoint: "https://mp.weixin.qq.com/s/H-56vo8Zc-spKyy099wqyA",
+    adapter: "manual",
+    tier: 1,
+    role: "primary",
+    category: "database-vendor",
+    acquisition: "social",
+    topics: ["greptimedb", "time-series", "observability", "wechat"],
+    maintenanceStatus: "restricted",
+    cadence: "manual",
+    licenseNote:
+      "Official WeChat identity and canonical article metadata only; automated collection requires a platform-approved API or feed.",
+    robotsPolicy: "manual-only",
+    freshnessSloHours: 720,
+    identityHosts: ["greptime.cn"],
+    socialHandles: ["GreptimeDB", "Mzg3MTgxMzczNg=="],
+  }),
+  defineSource({
+    slug: "zhuang-xiaodan-wechat",
+    name: "庄晓丹（此间山林）公众号",
+    owner: "Greptime / 格睿科技",
+    homepageUrl: "https://github.com/killme2008",
+    endpoint: "https://mp.weixin.qq.com/s/9bjEqIBw7J7EntAFd8gpsA",
+    adapter: "manual",
+    tier: 3,
+    role: "expert",
+    category: "expert",
+    acquisition: "social",
+    topics: [
+      "greptimedb",
+      "distributed-systems",
+      "observability",
+      "open-source",
+      "developer-community",
+      "wechat",
+    ],
+    maintenanceStatus: "restricted",
+    cadence: "manual",
+    licenseNote:
+      "Verified personal WeChat identity and canonical article metadata only; posts are expert/community material rather than official Greptime announcements, and automated collection requires a platform-approved API or feed.",
+    robotsPolicy: "manual-only",
+    freshnessSloHours: 720,
+    identityHosts: ["greptime.cn"],
+    socialHandles: ["此间山林", "此间的山林", "gh_8e1963838cae", "MzkyNjQzNTU3OQ==", "killme2008"],
+  }),
+];
+
+const retiredSourceSlugs = new Set([
+  "sse-dameng-listing",
+  "dbtest-lab",
+  "ccf-dasfaa",
+  "tc260-standard",
+  "milvus-official",
+  "milvus-releases",
+  "nebulagraph-official",
+  "nebulagraph-releases",
+  "doris-official",
+  "doris-releases",
+  "matrixone-official",
+  "matrixone-releases",
+  "sequoiadb-official",
+  "sequoiadb-docs",
+  "vastbase-official",
+  "vastbase-docs",
+  "gaussdb-official",
+  "gaussdb-docs",
+  "opengauss-official",
+  "opengauss-releases",
+  "goldendb-official",
+  "goldendb-news",
+  "gbase-official",
+  "gbase-docs",
+]);
+
+const allSourceCatalog: CatalogSource[] = [
   ...officialSources,
   ...governanceSources,
   ...researchSources,
   ...discoverySources,
+  ...restrictedSocialSources,
 ];
+
+// Retired entries remain in the source definitions for provenance and rollback,
+// but are excluded from the current observation catalog and future seed runs.
+export const sourceCatalog: CatalogSource[] = allSourceCatalog.filter(
+  (source) => !retiredSourceSlugs.has(source.slug),
+);
+
+export const retiredSourceCatalog: CatalogSource[] = allSourceCatalog.filter((source) =>
+  retiredSourceSlugs.has(source.slug),
+);
 
 export function proposalToCatalogSource(proposal: SourceProposalCatalogEntry): CatalogSource {
   const adapter =

@@ -85,7 +85,7 @@ describe("event publication readiness", () => {
       (await repository.listSources()).map((source) => [source.slug, source]),
     );
     const first = sources.get("ccf-database");
-    const sharedOwner = sources.get("dbtest-lab");
+    const sharedOwner = sources.get("gitlink-database");
     const independent = sources.get("infoq-cn-database");
     const aggregator = sources.get("modb");
     expect([first, sharedOwner, independent, aggregator].every(Boolean)).toBe(true);

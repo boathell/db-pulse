@@ -21,12 +21,12 @@ interface SourceContractManifest {
 
 const fixtureRoot = join(process.cwd(), "tests/fixtures/sources");
 
-describe("DB Pulse 48-source contract manifest", () => {
+describe("DB Pulse retained-source contract manifest", () => {
   it("maps every source to an exact endpoint, adapter mode and existing fixture", async () => {
     const manifest = await loadManifest();
     expect(manifest).toMatchObject({ schemaVersion: 1, datasetId: "db-pulse-cn-v1" });
-    expect(manifest.sources).toHaveLength(48);
-    expect(new Set(manifest.sources.map((entry) => entry.slug)).size).toBe(48);
+    expect(manifest.sources).toHaveLength(26);
+    expect(new Set(manifest.sources.map((entry) => entry.slug)).size).toBe(26);
     expect(manifest.sources.map((entry) => entry.slug)).toEqual(
       sourceCatalog.map((source) => source.slug),
     );
@@ -96,7 +96,7 @@ describe("DB Pulse 48-source contract manifest", () => {
     }
   });
 
-  it("documents every manual source as non-collecting shadow inventory", async () => {
+  it("documents every manual adapter source as non-collecting shadow inventory", async () => {
     const manifest = await loadManifest();
     const boundary = JSON.parse(await readFixture(manifest.contracts.manual.successFixture)) as {
       mode: string;
@@ -108,14 +108,109 @@ describe("DB Pulse 48-source contract manifest", () => {
     const manual = manifest.sources.filter((entry) => entry.mode === "manual");
     expect(manual.length).toBeGreaterThan(0);
     for (const entry of manual) {
-      expect(requiredSource(entry.slug)).toMatchObject({
+      const source = requiredSource(entry.slug);
+      expect(source).toMatchObject({
         adapter: "manual",
-        acquisition: "manual",
         enabled: false,
         lifecycleStatus: "shadow",
-        maintenanceStatus: "manual",
       });
+      expect(["manual", "social"]).toContain(source.acquisition);
+      expect(["manual", "restricted"]).toContain(source.maintenanceStatus);
     }
+  });
+
+  it("pins the verified GreptimeDB WeChat identity without storing article content", async () => {
+    const metadata = JSON.parse(await readFixture("greptimedb-wechat-metadata.json")) as {
+      schemaVersion: number;
+      sourceSlug: string;
+      collectionAllowed: boolean;
+      accountName: string;
+      accountBiz: string;
+      article: { title: string; url: string; publishedAt: string };
+    };
+    const source = requiredSource("greptimedb-wechat");
+
+    expect(metadata).toMatchObject({
+      schemaVersion: 1,
+      sourceSlug: source.slug,
+      collectionAllowed: false,
+      accountName: "GreptimeDB",
+      accountBiz: "Mzg3MTgxMzczNg==",
+      article: {
+        title: "Hebo AI：为什么我们选择了 GreptimeDB 而不是 ClickHouse",
+        url: source.endpoint,
+      },
+    });
+    expect(Number.isFinite(Date.parse(metadata.article.publishedAt))).toBe(true);
+    expect(source).toMatchObject({
+      acquisition: "social",
+      maintenanceStatus: "restricted",
+      robotsPolicy: "manual-only",
+      socialHandles: ["GreptimeDB", "Mzg3MTgxMzczNg=="],
+      identityHosts: ["greptime.cn"],
+    });
+    expect(JSON.stringify(metadata)).not.toMatch(/articleBody|content|html/i);
+  });
+
+  it("pins Zhuang Xiaodan's verified personal WeChat identity without storing article content", async () => {
+    const metadata = JSON.parse(await readFixture("zhuang-xiaodan-wechat-metadata.json")) as {
+      schemaVersion: number;
+      sourceSlug: string;
+      collectionAllowed: boolean;
+      accountName: string;
+      articleAuthor: string;
+      accountUsername: string;
+      accountBiz: string;
+      article: { title: string; url: string; publishedAt: string };
+      identityEvidence: Array<{ kind: string; url: string; identity: string }>;
+    };
+    const source = requiredSource("zhuang-xiaodan-wechat");
+
+    expect(metadata).toMatchObject({
+      schemaVersion: 1,
+      sourceSlug: source.slug,
+      collectionAllowed: false,
+      accountName: "此间山林",
+      articleAuthor: "此间的山林",
+      accountUsername: "gh_8e1963838cae",
+      accountBiz: "MzkyNjQzNTU3OQ==",
+      article: {
+        title: "SkyWalking + GreptimeDB 非官方社区版发布，想听听你的真实需求",
+        url: source.endpoint,
+      },
+      identityEvidence: [
+        {
+          kind: "github-profile",
+          url: "https://github.com/killme2008",
+          identity: "Dennis Zhuang / killme2008",
+        },
+        {
+          kind: "official-company-profile",
+          url: "https://greptime.cn/about",
+          identity: "庄晓丹",
+        },
+      ],
+    });
+    expect(Number.isFinite(Date.parse(metadata.article.publishedAt))).toBe(true);
+    expect(source).toMatchObject({
+      homepageUrl: "https://github.com/killme2008",
+      owner: "Greptime / 格睿科技",
+      tier: 3,
+      role: "expert",
+      category: "expert",
+      acquisition: "social",
+      maintenanceStatus: "restricted",
+      robotsPolicy: "manual-only",
+      socialHandles: [
+        "此间山林",
+        "此间的山林",
+        "gh_8e1963838cae",
+        "MzkyNjQzNTU3OQ==",
+        "killme2008",
+      ],
+      identityHosts: ["greptime.cn"],
+    });
+    expect(JSON.stringify(metadata)).not.toMatch(/articleBody|content|html/i);
   });
 });
 
