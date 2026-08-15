@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "jobId": "c9b99afc-7da5-4520-93ad-a8a3a01eb324",
-  "startedAt": "2026-08-08T23:00:51.714Z",
-  "finishedAt": "2026-08-08T23:01:01.506Z",
+  "jobId": "9780d1bf-e2ce-4b73-99e5-9cab9df6bf74",
+  "startedAt": "2026-08-15T22:51:58.514Z",
+  "finishedAt": "2026-08-15T22:52:09.680Z",
   "total": 26,
   "healthy": 5,
-  "degraded": 3,
-  "failed": 8,
+  "degraded": 2,
+  "failed": 9,
   "skipped": 10,
-  "accessible": 24,
-  "fetched": 19,
+  "accessible": 23,
+  "fetched": 18,
   "withContent": 5,
   "results": [
     {
@@ -35,7 +35,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_restricted",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1
+      "durationMs": 0
     },
     {
       "slug": "oceanbase-releases",
@@ -50,7 +50,7 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-07-21T04:35:52.000Z",
+      "latestItemAt": "2026-08-10T08:11:02.000Z",
       "duplicateRatio": 0,
       "qualityScore": 76,
       "errorType": null,
@@ -60,7 +60,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 688
+      "durationMs": 321
     },
     {
       "slug": "oceanbase-official",
@@ -85,7 +85,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1681
+      "durationMs": 1620
     },
     {
       "slug": "tidb-official",
@@ -110,7 +110,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1071
+      "durationMs": 581
     },
     {
       "slug": "polardb-x-releases",
@@ -135,7 +135,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 796
+      "durationMs": 329
     },
     {
       "slug": "starrocks-releases",
@@ -150,9 +150,9 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-08-05T06:55:27.000Z",
+      "latestItemAt": "2026-08-11T14:32:41.000Z",
       "duplicateRatio": 0,
-      "qualityScore": 70,
+      "qualityScore": 69,
       "errorType": null,
       "errorCode": null,
       "repairAction": "observe_in_shadow",
@@ -160,7 +160,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 730
+      "durationMs": 572
     },
     {
       "slug": "starrocks-official",
@@ -185,7 +185,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 374
+      "durationMs": 358
     },
     {
       "slug": "tdsql-docs",
@@ -210,7 +210,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1768
+      "durationMs": 1691
     },
     {
       "slug": "tdengine-releases",
@@ -235,7 +235,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 411
+      "durationMs": 354
     },
     {
       "slug": "tdengine-official",
@@ -260,7 +260,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 327
+      "durationMs": 137
     },
     {
       "slug": "tidb-releases",
@@ -275,9 +275,9 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-07-30T10:39:17.000Z",
+      "latestItemAt": "2026-08-12T09:41:53.000Z",
       "duplicateRatio": 0,
-      "qualityScore": 70,
+      "qualityScore": 71,
       "errorType": null,
       "errorCode": null,
       "repairAction": "observe_in_shadow",
@@ -285,7 +285,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 406
+      "durationMs": 462
     },
     {
       "slug": "caict-database",
@@ -310,7 +310,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2296
+      "durationMs": 3730
     },
     {
       "slug": "kingbase-official",
@@ -335,7 +335,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 3392
+      "durationMs": 2513
     },
     {
       "slug": "kingbase-docs",
@@ -360,7 +360,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1915
+      "durationMs": 2061
     },
     {
       "slug": "nda-policy",
@@ -385,7 +385,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 966
+      "durationMs": 374
     },
     {
       "slug": "miit-policy",
@@ -393,24 +393,24 @@
       "adapterVersion": "1.0.0",
       "robotsPolicy": "review-required",
       "freshnessSloHours": 168,
-      "status": "degraded",
-      "accessStatus": "reachable",
-      "fetchStatus": "succeeded",
-      "parseStatus": "empty",
-      "schemaStatus": "empty",
+      "status": "failed",
+      "accessStatus": "unreachable",
+      "fetchStatus": "failed",
+      "parseStatus": "not_started",
+      "schemaStatus": "unknown",
       "policyStatus": "allowed_metadata",
       "itemCount": 0,
       "latestItemAt": null,
       "duplicateRatio": 0,
       "qualityScore": 0,
-      "errorType": "content",
-      "errorCode": "EMPTY_RESULT",
-      "repairAction": "inspect_endpoint_or_parser",
-      "proxyHint": "not_required",
+      "errorType": "network",
+      "errorCode": "ADAPTER_ERROR",
+      "repairAction": "verify_network_dns_or_proxy",
+      "proxyHint": "possible",
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2941
+      "durationMs": 1628
     },
     {
       "slug": "tdsql-official",
@@ -435,7 +435,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1141
+      "durationMs": 1138
     },
     {
       "slug": "dameng-docs",
@@ -460,7 +460,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1889
+      "durationMs": 1822
     },
     {
       "slug": "dameng-official",
@@ -485,7 +485,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 3583
+      "durationMs": 5243
     },
     {
       "slug": "polardb-official",
@@ -510,7 +510,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1900
+      "durationMs": 2618
     },
     {
       "slug": "dtcc",
@@ -535,7 +535,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 920
+      "durationMs": 1286
     },
     {
       "slug": "gitlink-database",
@@ -560,7 +560,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1698
+      "durationMs": 2841
     },
     {
       "slug": "infoq-cn-database",
@@ -585,7 +585,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2992
+      "durationMs": 3037
     },
     {
       "slug": "ccf-database",
@@ -610,7 +610,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1442
+      "durationMs": 1864
     },
     {
       "slug": "modb",
@@ -635,7 +635,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1014
+      "durationMs": 2488
     },
     {
       "slug": "zhuang-xiaodan-wechat",
