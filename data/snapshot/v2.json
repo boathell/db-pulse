@@ -16584,7 +16584,7 @@
   "sourceRuns": [],
   "signals": [
     {
-      "id": "0e0b7d79-e1b3-47c3-b183-6ea3d15e36bd",
+      "id": "d12e3a6e-1e26-4023-8f8b-4a2f8647c7dc",
       "sourceSlug": "dameng-official",
       "externalId": "dameng-official-ecosystem-baseline",
       "canonicalUrl": "https://www.dameng.com/",
@@ -16611,11 +16611,11 @@
         ]
       },
       "contentHash": "57b60dba684106ab0cdbe6e98111740d3c73fc082956bad0122cc9a7b94154f3",
-      "createdAt": "2026-08-16T13:01:24.908Z",
-      "updatedAt": "2026-08-16T13:01:24.908Z"
+      "createdAt": "2026-08-17T13:06:14.592Z",
+      "updatedAt": "2026-08-17T13:06:14.592Z"
     },
     {
-      "id": "2416b62d-224f-4bee-a742-1eda5784a3cb",
+      "id": "3abf66df-bdcd-4dbf-90b1-991e80a02450",
       "sourceSlug": "dtcc",
       "externalId": "database-observability-enters-platform-engineering",
       "canonicalUrl": "https://dtcc.it168.com/yichengxiangqing.html",
@@ -16641,11 +16641,11 @@
         ]
       },
       "contentHash": "3268498cc0c604149533fd443751f162760714a6a6f50db271e052a8cdef8395",
-      "createdAt": "2026-08-16T13:01:24.904Z",
-      "updatedAt": "2026-08-16T13:01:24.904Z"
+      "createdAt": "2026-08-17T13:06:14.587Z",
+      "updatedAt": "2026-08-17T13:06:14.587Z"
     },
     {
-      "id": "4ba36758-d513-44a0-91ed-3457714ef597",
+      "id": "65afd9a3-f8ac-4399-b640-87e2e1700d2b",
       "sourceSlug": "sse-dameng-listing",
       "externalId": "dameng-listing-marks-database-capital-milestone",
       "canonicalUrl": "https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20240611_10758581.shtml",
@@ -16671,11 +16671,11 @@
         ]
       },
       "contentHash": "098d163080a88428c8bba32e8dd034b21c768dcb7498258719548b7c410cd675",
-      "createdAt": "2026-08-16T13:01:24.893Z",
-      "updatedAt": "2026-08-16T13:01:24.893Z"
+      "createdAt": "2026-08-17T13:06:14.576Z",
+      "updatedAt": "2026-08-17T13:06:14.576Z"
     },
     {
-      "id": "1c12ccab-e185-4a71-b570-22ada6dfcf2f",
+      "id": "90b2c230-f786-473b-8f0a-ec030434c0c4",
       "sourceSlug": "tidb-releases",
       "externalId": "open-source-database-commercialization-separates-roles",
       "canonicalUrl": "https://github.com/pingcap/tidb",
@@ -16701,8 +16701,8 @@
         ]
       },
       "contentHash": "7dda153584fdcddc5896e7d7a128c4bc7a499c62111dddcbe0ea0627712a62e8",
-      "createdAt": "2026-08-16T13:01:24.897Z",
-      "updatedAt": "2026-08-16T13:01:24.897Z"
+      "createdAt": "2026-08-17T13:06:14.580Z",
+      "updatedAt": "2026-08-17T13:06:14.580Z"
     },
     {
       "id": "36d66e90-e6cb-41c0-a068-48a89faf4676",
@@ -16735,7 +16735,7 @@
       "updatedAt": "2026-07-14T02:08:43.592Z"
     },
     {
-      "id": "f67a62eb-0de3-470b-b9be-d466c4c028ea",
+      "id": "d2fbf048-aa96-4135-8336-850f5e3235a1",
       "sourceSlug": "oceanbase-official",
       "externalId": "oceanbase-official-ecosystem-baseline",
       "canonicalUrl": "https://www.oceanbase.com/",
@@ -16762,11 +16762,11 @@
         ]
       },
       "contentHash": "6c35f44628ccc5cef78c38555acd1f15109865b9ab04e5d11fe9e55e290e8729",
-      "createdAt": "2026-08-16T13:01:24.916Z",
-      "updatedAt": "2026-08-16T13:01:24.916Z"
+      "createdAt": "2026-08-17T13:06:14.599Z",
+      "updatedAt": "2026-08-17T13:06:14.599Z"
     },
     {
-      "id": "e5482c7c-34da-4d87-9fc3-bb9972a2601a",
+      "id": "c90b31f9-1c57-494e-985d-4d7f00169df1",
       "sourceSlug": "gaussdb-official",
       "externalId": "gaussdb-official-ecosystem-baseline",
       "canonicalUrl": "https://www.huaweicloud.com/product/gaussdb.html",
@@ -16793,11 +16793,11 @@
         ]
       },
       "contentHash": "4e326b22e015fb8f5377d624925bd47a5ebe60b64bfadd8d6b2a808192734828",
-      "createdAt": "2026-08-16T13:01:24.922Z",
-      "updatedAt": "2026-08-16T13:01:24.922Z"
+      "createdAt": "2026-08-17T13:06:14.605Z",
+      "updatedAt": "2026-08-17T13:06:14.605Z"
     },
     {
-      "id": "e61d739e-0a65-4bdd-a23c-03fda4b61dbf",
+      "id": "1d2f835d-c3f0-458d-99c7-ec3edbd3870a",
       "sourceSlug": "miit-policy",
       "externalId": "xinchuang-expands-compatibility-evidence-demand",
       "canonicalUrl": "https://www.miit.gov.cn/zwgk/zcwj",
@@ -16823,8 +16823,8 @@
         ]
       },
       "contentHash": "35b263ba3ab18c584fed5a8cd87fa9a85373a0812cd665b9f19752ab4ffb3a65",
-      "createdAt": "2026-08-16T13:01:24.884Z",
-      "updatedAt": "2026-08-16T13:01:24.884Z"
+      "createdAt": "2026-08-17T13:06:14.568Z",
+      "updatedAt": "2026-08-17T13:06:14.568Z"
     },
     {
       "id": "11bcacd9-0572-4fdb-b959-f325e9f7002a",
@@ -16857,7 +16857,7 @@
       "updatedAt": "2026-07-14T02:08:43.592Z"
     },
     {
-      "id": "1c93903d-a207-4299-a25c-ecf1cd914a44",
+      "id": "d6e7dffa-8baf-4d5c-9b00-2b8b46883d42",
       "sourceSlug": "polardb-official",
       "externalId": "polardb-official-ecosystem-baseline",
       "canonicalUrl": "https://help.aliyun.com/zh/polardb/polardb-for-xscale/release-notes-11",
@@ -16884,11 +16884,11 @@
         ]
       },
       "contentHash": "f6e126fbfa054f7e2d09b9b333b34691fd14a84e72975a7a82c4314401a029ae",
-      "createdAt": "2026-08-16T13:01:24.900Z",
-      "updatedAt": "2026-08-16T13:01:24.900Z"
+      "createdAt": "2026-08-17T13:06:14.583Z",
+      "updatedAt": "2026-08-17T13:06:14.583Z"
     },
     {
-      "id": "81efa528-a144-4495-b5f9-8d42b2c3d212",
+      "id": "b46e85c3-49ca-4709-b4e7-3c21c3e2de16",
       "sourceSlug": "goldendb-official",
       "externalId": "goldendb-official-ecosystem-baseline",
       "canonicalUrl": "https://www.goldendb.com/",
@@ -16915,11 +16915,11 @@
         ]
       },
       "contentHash": "b0ab804c8294ce233d2c8c862eef62565b3d985691fe03ce4f9845925de53f56",
-      "createdAt": "2026-08-16T13:01:24.895Z",
-      "updatedAt": "2026-08-16T13:01:24.895Z"
+      "createdAt": "2026-08-17T13:06:14.578Z",
+      "updatedAt": "2026-08-17T13:06:14.578Z"
     },
     {
-      "id": "fd1dc634-2976-41ce-b2c1-ae401b40a196",
+      "id": "350cd7d8-9108-4f4d-8b3a-b01167588445",
       "sourceSlug": "gbase-official",
       "externalId": "gbase-official-ecosystem-baseline",
       "canonicalUrl": "https://www.gbase.cn/",
@@ -16946,11 +16946,11 @@
         ]
       },
       "contentHash": "58356a7bae4da56b7e3ac46295b38a6b284fb06b8f15436930e0a46f40a54c80",
-      "createdAt": "2026-08-16T13:01:24.913Z",
-      "updatedAt": "2026-08-16T13:01:24.913Z"
+      "createdAt": "2026-08-17T13:06:14.596Z",
+      "updatedAt": "2026-08-17T13:06:14.596Z"
     },
     {
-      "id": "bef37360-c3e1-4fb7-a115-14a21cf85201",
+      "id": "e830953d-fc5b-40d7-ab1d-57aa77e24644",
       "sourceSlug": "oceanbase-official",
       "externalId": "distributed-sql-enters-mainstream-evaluation",
       "canonicalUrl": "https://www.oceanbase.com/blog",
@@ -16976,8 +16976,8 @@
         ]
       },
       "contentHash": "98fd5ff6584a027371f28eef82b976ed9b2f15980595cc3bcfc55171a46abe9b",
-      "createdAt": "2026-08-16T13:01:24.858Z",
-      "updatedAt": "2026-08-16T13:01:24.858Z"
+      "createdAt": "2026-08-17T13:06:14.542Z",
+      "updatedAt": "2026-08-17T13:06:14.542Z"
     },
     {
       "id": "4cc6705e-3d02-4437-b866-60b60fe16da3",
@@ -17010,7 +17010,7 @@
       "updatedAt": "2026-07-14T02:08:43.593Z"
     },
     {
-      "id": "2176fb15-a856-4a3a-8851-d6bc9c745995",
+      "id": "5f9d92b7-d25c-4647-8ccd-a5fbb9916456",
       "sourceSlug": "tdengine-official",
       "externalId": "tdengine-official-ecosystem-baseline",
       "canonicalUrl": "https://docs.tdengine.com/release-history",
@@ -17037,11 +17037,11 @@
         ]
       },
       "contentHash": "5fcc3c6ba286c66383240409e45db233fd00377f0eb0ea178adaef785be73ee5",
-      "createdAt": "2026-08-16T13:01:24.936Z",
-      "updatedAt": "2026-08-16T13:01:24.936Z"
+      "createdAt": "2026-08-17T13:06:14.619Z",
+      "updatedAt": "2026-08-17T13:06:14.619Z"
     },
     {
-      "id": "014b71fd-33a1-4e47-b99b-dea539607f9f",
+      "id": "c94d855f-40ba-4afe-95ea-f25829e20c93",
       "sourceSlug": "starrocks-official",
       "externalId": "starrocks-official-ecosystem-baseline",
       "canonicalUrl": "https://docs.starrocks.io/zh/docs/release_notes",
@@ -17068,11 +17068,11 @@
         ]
       },
       "contentHash": "b5782bd3ca205fa2830072e9d9930644597d342d1aef52e6edbde5f737d5f400",
-      "createdAt": "2026-08-16T13:01:24.870Z",
-      "updatedAt": "2026-08-16T13:01:24.870Z"
+      "createdAt": "2026-08-17T13:06:14.553Z",
+      "updatedAt": "2026-08-17T13:06:14.553Z"
     },
     {
-      "id": "5325062f-8f85-48da-81a5-82159b09cca9",
+      "id": "0dc414d8-1c79-4f6c-9ab6-7e55de34a78b",
       "sourceSlug": "nebulagraph-official",
       "externalId": "nebulagraph-official-ecosystem-baseline",
       "canonicalUrl": "https://docs.nebula-graph.com.cn/3.8.0/20.appendix/release-notes",
@@ -17099,8 +17099,8 @@
         ]
       },
       "contentHash": "fbdfbc3a4f10de99beed27f4977dedc159a00440a45cbf5900f5ee627bd1337c",
-      "createdAt": "2026-08-16T13:01:24.938Z",
-      "updatedAt": "2026-08-16T13:01:24.938Z"
+      "createdAt": "2026-08-17T13:06:14.621Z",
+      "updatedAt": "2026-08-17T13:06:14.621Z"
     },
     {
       "id": "5602d803-ab27-4aba-ac70-22518797e012",
@@ -17133,7 +17133,7 @@
       "updatedAt": "2026-07-14T02:08:43.595Z"
     },
     {
-      "id": "d1e6cbc0-0771-417b-a9fc-421518e73a08",
+      "id": "4d0c8725-d9e6-4648-9bf1-dfbadf1ceb81",
       "sourceSlug": "tdsql-official",
       "externalId": "tdsql-official-ecosystem-baseline",
       "canonicalUrl": "https://cloud.tencent.com/document/product/1376/125147",
@@ -17160,11 +17160,11 @@
         ]
       },
       "contentHash": "9c02aeac8abf0f59ab113c809569a3af5134fdfea6d16f7961015eabd01ba67b",
-      "createdAt": "2026-08-16T13:01:24.925Z",
-      "updatedAt": "2026-08-16T13:01:24.925Z"
+      "createdAt": "2026-08-17T13:06:14.608Z",
+      "updatedAt": "2026-08-17T13:06:14.608Z"
     },
     {
-      "id": "22e70637-33c3-453b-abb1-49be666bbfb8",
+      "id": "7e6cc92f-c4d5-424c-b8cf-aba179b19528",
       "sourceSlug": "opengauss-official",
       "externalId": "opengauss-official-ecosystem-baseline",
       "canonicalUrl": "https://opengauss.org/zh/news",
@@ -17191,11 +17191,11 @@
         ]
       },
       "contentHash": "442534a3e563a5b93544a86b537db12646ab3b359f91fae7dd51c091ec14cbf4",
-      "createdAt": "2026-08-16T13:01:24.920Z",
-      "updatedAt": "2026-08-16T13:01:24.920Z"
+      "createdAt": "2026-08-17T13:06:14.603Z",
+      "updatedAt": "2026-08-17T13:06:14.603Z"
     },
     {
-      "id": "7d532086-6f12-42b8-b6c3-0bfb4afb11cf",
+      "id": "4d7f5672-f64c-4cc0-a3bc-5e3edbb90247",
       "sourceSlug": "tidb-official",
       "externalId": "tidb-official-ecosystem-baseline",
       "canonicalUrl": "https://docs.pingcap.com/tidb/stable/release-notes",
@@ -17222,11 +17222,11 @@
         ]
       },
       "contentHash": "bdfcd160d230dcb60194afdb43d0c3660ed585b111df29df49ec6746c8632589",
-      "createdAt": "2026-08-16T13:01:24.860Z",
-      "updatedAt": "2026-08-16T13:01:24.860Z"
+      "createdAt": "2026-08-17T13:06:14.544Z",
+      "updatedAt": "2026-08-17T13:06:14.544Z"
     },
     {
-      "id": "e61619b4-c9a0-42f6-86d3-02a154e09c0b",
+      "id": "7b089e98-5795-4fff-9d45-5de6a9ce4a6f",
       "sourceSlug": "matrixone-official",
       "externalId": "matrixone-official-ecosystem-baseline",
       "canonicalUrl": "https://docs.matrixorigin.cn/en/v26.3.0.13/MatrixOne/Release-Notes/v22.0.6.0",
@@ -17253,11 +17253,11 @@
         ]
       },
       "contentHash": "5f5caf9b472c8d7c32666706d479a4805db1868cce912e64335fed1979af50ef",
-      "createdAt": "2026-08-16T13:01:24.931Z",
-      "updatedAt": "2026-08-16T13:01:24.931Z"
+      "createdAt": "2026-08-17T13:06:14.615Z",
+      "updatedAt": "2026-08-17T13:06:14.615Z"
     },
     {
-      "id": "3c1381ed-84be-49fd-96af-45b05dfca48c",
+      "id": "cb23ee2a-6564-4ab2-bc9b-4653fb8ef99f",
       "sourceSlug": "nda-policy",
       "externalId": "public-data-policy-strengthens-data-infrastructure",
       "canonicalUrl": "https://www.nda.gov.cn/sjj/ywpd/szkjyjcss/0110/20250106095112713400492_pc.html",
@@ -17283,11 +17283,11 @@
         ]
       },
       "contentHash": "37cf108fd34f31dd115df23dc46447f957f3f03762879de78cf3f6c36a7d5ebd",
-      "createdAt": "2026-08-16T13:01:24.887Z",
-      "updatedAt": "2026-08-16T13:01:24.887Z"
+      "createdAt": "2026-08-17T13:06:14.570Z",
+      "updatedAt": "2026-08-17T13:06:14.570Z"
     },
     {
-      "id": "0b6cb515-dead-415d-8fd8-f248890c61f5",
+      "id": "1fc1a941-cfe5-458d-bef0-47fff009fbf9",
       "sourceSlug": "polardb-official",
       "externalId": "cloud-native-separation-becomes-database-design-axis",
       "canonicalUrl": "https://help.aliyun.com/zh/polardb",
@@ -17313,11 +17313,11 @@
         ]
       },
       "contentHash": "eca5c5e648a56ca19a9e520279b959501a49dbb9111b678d18385d9f798f779b",
-      "createdAt": "2026-08-16T13:01:24.863Z",
-      "updatedAt": "2026-08-16T13:01:24.863Z"
+      "createdAt": "2026-08-17T13:06:14.547Z",
+      "updatedAt": "2026-08-17T13:06:14.547Z"
     },
     {
-      "id": "ae08ec29-3570-4df4-9c20-62daabcd9668",
+      "id": "73a57968-85d2-4b23-a3db-0353aff8af20",
       "sourceSlug": "kingbase-official",
       "externalId": "kingbase-official-ecosystem-baseline",
       "canonicalUrl": "https://www.kingbase.com.cn/",
@@ -17344,11 +17344,11 @@
         ]
       },
       "contentHash": "8a723231b1d2c3a69ec4b852bd2fcc3669be333a5a7427adefbac964ba265361",
-      "createdAt": "2026-08-16T13:01:24.911Z",
-      "updatedAt": "2026-08-16T13:01:24.911Z"
+      "createdAt": "2026-08-17T13:06:14.594Z",
+      "updatedAt": "2026-08-17T13:06:14.594Z"
     },
     {
-      "id": "4a3c6c23-faf4-4750-8222-7f1900db399e",
+      "id": "e2588cda-91d0-44f5-8785-d0aade32d426",
       "sourceSlug": "vastbase-official",
       "externalId": "vastbase-official-ecosystem-baseline",
       "canonicalUrl": "https://www.vastdata.com.cn/",
@@ -17375,11 +17375,11 @@
         ]
       },
       "contentHash": "52dc7066962a26eab9407b2554acc7a814c2cbe79cb0bbc442484d262bc2e32b",
-      "createdAt": "2026-08-16T13:01:24.928Z",
-      "updatedAt": "2026-08-16T13:01:24.928Z"
+      "createdAt": "2026-08-17T13:06:14.611Z",
+      "updatedAt": "2026-08-17T13:06:14.611Z"
     },
     {
-      "id": "6e201fbc-41d5-4458-b532-abd0e61564b7",
+      "id": "9fd81c5c-53fe-434e-87dc-4183ce726bc1",
       "sourceSlug": "caict-database",
       "externalId": "database-selection-requires-evidence-led-cost-model",
       "canonicalUrl": "https://www.caict.ac.cn/kxyj/qwfb/bps",
@@ -17405,11 +17405,11 @@
         ]
       },
       "contentHash": "7b5f61ef50636d7a0a6513a13a5e7da7102a7ef9215fc2ed255649e2228fab1d",
-      "createdAt": "2026-08-16T13:01:24.889Z",
-      "updatedAt": "2026-08-16T13:01:24.889Z"
+      "createdAt": "2026-08-17T13:06:14.573Z",
+      "updatedAt": "2026-08-17T13:06:14.573Z"
     },
     {
-      "id": "6c830cb3-8bdb-49ec-91cf-53135a33b0b8",
+      "id": "b8ca2199-f6e1-4d65-959b-6b3b403d309a",
       "sourceSlug": "sequoiadb-official",
       "externalId": "sequoiadb-official-ecosystem-baseline",
       "canonicalUrl": "https://www.sequoiadb.com/",
@@ -17436,11 +17436,11 @@
         ]
       },
       "contentHash": "4f266bd2adeb9d2a1197e20077e78de681b3c48657ac189938abe3bc281d2736",
-      "createdAt": "2026-08-16T13:01:24.930Z",
-      "updatedAt": "2026-08-16T13:01:24.930Z"
+      "createdAt": "2026-08-17T13:06:14.613Z",
+      "updatedAt": "2026-08-17T13:06:14.613Z"
     },
     {
-      "id": "1e5a82d8-bd46-4e3e-a746-b58595836c27",
+      "id": "a53295e7-3c2a-49e6-99f8-a3911d602a79",
       "sourceSlug": "milvus-official",
       "externalId": "milvus-official-ecosystem-baseline",
       "canonicalUrl": "https://milvus.io/docs/zh/release_notes.md",
@@ -17467,11 +17467,11 @@
         ]
       },
       "contentHash": "8fced17acb19af9ec8b510bc06659f7ef1a6fb5f677eda4661b85cdb40e2664e",
-      "createdAt": "2026-08-16T13:01:24.872Z",
-      "updatedAt": "2026-08-16T13:01:24.872Z"
+      "createdAt": "2026-08-17T13:06:14.556Z",
+      "updatedAt": "2026-08-17T13:06:14.556Z"
     },
     {
-      "id": "eb0bdd33-fd03-4b42-85f4-8eeac19227bf",
+      "id": "23d1a0cd-946c-4c57-b625-ae5ae317f58a",
       "sourceSlug": "tc260-standard",
       "externalId": "database-security-standards-enter-procurement",
       "canonicalUrl": "https://www.tc260.org.cn/portal/article/2/20250915154109",
@@ -17497,11 +17497,11 @@
         ]
       },
       "contentHash": "8d6411f31a944da43b27d6c627bd9b3637302e3375fa300565a121a88c352c34",
-      "createdAt": "2026-08-16T13:01:24.877Z",
-      "updatedAt": "2026-08-16T13:01:24.877Z"
+      "createdAt": "2026-08-17T13:06:14.560Z",
+      "updatedAt": "2026-08-17T13:06:14.560Z"
     },
     {
-      "id": "87a39806-7ca8-4f15-b467-75c804071ce6",
+      "id": "bfac7adc-e5a4-4662-861d-75c5b3dae8c8",
       "sourceSlug": "doris-official",
       "externalId": "apache-doris-official-ecosystem-baseline",
       "canonicalUrl": "https://doris.apache.org/zh-CN/releases/all-release",
@@ -17528,11 +17528,11 @@
         ]
       },
       "contentHash": "ad103fdcbd545f50891ed53eaf37e912d45ba93f8e231b24262ccec94f0c34ee",
-      "createdAt": "2026-08-16T13:01:24.868Z",
-      "updatedAt": "2026-08-16T13:01:24.868Z"
+      "createdAt": "2026-08-17T13:06:14.552Z",
+      "updatedAt": "2026-08-17T13:06:14.552Z"
     },
     {
-      "id": "748fe3cd-66f8-4736-a890-f9141175ba8c",
+      "id": "6274921c-3570-4be3-a5ff-0079c7f24f31",
       "sourceSlug": "dameng-docs",
       "externalId": "migration-tooling-becomes-database-product-moat",
       "canonicalUrl": "https://eco.dameng.com/document/dm/zh-cn/start/index.html",
@@ -17558,11 +17558,11 @@
         ]
       },
       "contentHash": "407c80e3b8ea6856497967e3e77db51d934ae293caf95409d0012c5bd4751f99",
-      "createdAt": "2026-08-16T13:01:24.902Z",
-      "updatedAt": "2026-08-16T13:01:24.902Z"
+      "createdAt": "2026-08-17T13:06:14.585Z",
+      "updatedAt": "2026-08-17T13:06:14.585Z"
     },
     {
-      "id": "4156c0e2-4af9-47e3-8f63-069ff4958e5f",
+      "id": "6de3932e-1159-47ec-83b0-69b12cd43566",
       "sourceSlug": "infoq-cn-database",
       "externalId": "database-observability-enters-platform-engineering:evidence:1",
       "canonicalUrl": "https://www.infoq.cn/article/6T0SKldyjbU2ecDcujGW",
@@ -17588,36 +17588,18 @@
         ]
       },
       "contentHash": "da1a71b1d1a84658c6152e0094966bf513af8e552e5d4f0fcc48e7be231fd04c",
-      "createdAt": "2026-08-16T13:01:24.905Z",
-      "updatedAt": "2026-08-16T13:01:24.905Z"
+      "createdAt": "2026-08-17T13:06:14.588Z",
+      "updatedAt": "2026-08-17T13:06:14.588Z"
     }
   ],
   "signalObservations": [
     {
-      "signalId": "014b71fd-33a1-4e47-b99b-dea539607f9f",
-      "sourceSlug": "starrocks-official",
-      "externalId": "realtime-analytics-connects-to-lakehouse:evidence:1",
-      "observedUrl": "https://docs.starrocks.io/zh/docs/release_notes",
-      "firstSeenAt": "2026-07-14T01:53:12.705Z",
-      "lastSeenAt": "2026-08-16T13:01:24.870Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "0b6cb515-dead-415d-8fd8-f248890c61f5",
-      "sourceSlug": "polardb-official",
-      "externalId": "cloud-native-separation-becomes-database-design-axis",
-      "observedUrl": "https://help.aliyun.com/zh/polardb",
-      "firstSeenAt": "2026-07-14T01:53:12.702Z",
-      "lastSeenAt": "2026-08-16T13:01:24.863Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "0e0b7d79-e1b3-47c3-b183-6ea3d15e36bd",
-      "sourceSlug": "dameng-official",
-      "externalId": "dameng-official-ecosystem-baseline",
-      "observedUrl": "https://www.dameng.com/",
-      "firstSeenAt": "2026-07-14T01:53:12.714Z",
-      "lastSeenAt": "2026-08-16T13:01:24.908Z",
+      "signalId": "0dc414d8-1c79-4f6c-9ab6-7e55de34a78b",
+      "sourceSlug": "nebulagraph-official",
+      "externalId": "nebulagraph-official-ecosystem-baseline",
+      "observedUrl": "https://docs.nebula-graph.com.cn/3.8.0/20.appendix/release-notes",
+      "firstSeenAt": "2026-07-14T01:53:12.723Z",
+      "lastSeenAt": "2026-08-17T13:06:14.621Z",
       "observationCount": 1
     },
     {
@@ -17630,57 +17612,39 @@
       "observationCount": 1
     },
     {
-      "signalId": "1c12ccab-e185-4a71-b570-22ada6dfcf2f",
-      "sourceSlug": "tidb-releases",
-      "externalId": "open-source-database-commercialization-separates-roles",
-      "observedUrl": "https://github.com/pingcap/tidb",
-      "firstSeenAt": "2026-07-14T01:53:12.711Z",
-      "lastSeenAt": "2026-08-16T13:01:24.897Z",
+      "signalId": "1d2f835d-c3f0-458d-99c7-ec3edbd3870a",
+      "sourceSlug": "miit-policy",
+      "externalId": "xinchuang-expands-compatibility-evidence-demand",
+      "observedUrl": "https://www.miit.gov.cn/zwgk/zcwj",
+      "firstSeenAt": "2026-07-14T01:53:12.708Z",
+      "lastSeenAt": "2026-08-17T13:06:14.568Z",
       "observationCount": 1
     },
     {
-      "signalId": "1c93903d-a207-4299-a25c-ecf1cd914a44",
+      "signalId": "1fc1a941-cfe5-458d-bef0-47fff009fbf9",
       "sourceSlug": "polardb-official",
-      "externalId": "managed-database-procurement-shifts-to-unit-economics",
-      "observedUrl": "https://help.aliyun.com/zh/polardb/polardb-for-xscale/release-notes-11",
-      "firstSeenAt": "2026-07-14T07:16:47.287Z",
-      "lastSeenAt": "2026-08-16T13:01:24.900Z",
+      "externalId": "cloud-native-separation-becomes-database-design-axis",
+      "observedUrl": "https://help.aliyun.com/zh/polardb",
+      "firstSeenAt": "2026-07-14T01:53:12.702Z",
+      "lastSeenAt": "2026-08-17T13:06:14.547Z",
       "observationCount": 1
     },
     {
-      "signalId": "1e5a82d8-bd46-4e3e-a746-b58595836c27",
-      "sourceSlug": "milvus-official",
-      "externalId": "specialized-databases-enter-composable-architecture",
-      "observedUrl": "https://milvus.io/docs/zh/release_notes.md",
-      "firstSeenAt": "2026-07-14T01:53:12.705Z",
-      "lastSeenAt": "2026-08-16T13:01:24.872Z",
+      "signalId": "23d1a0cd-946c-4c57-b625-ae5ae317f58a",
+      "sourceSlug": "tc260-standard",
+      "externalId": "data-security-law-raises-database-control-baseline",
+      "observedUrl": "https://www.tc260.org.cn/portal/article/2/20250915154109",
+      "firstSeenAt": "2026-07-25T09:02:04.162Z",
+      "lastSeenAt": "2026-08-17T13:06:14.560Z",
       "observationCount": 1
     },
     {
-      "signalId": "2176fb15-a856-4a3a-8851-d6bc9c745995",
-      "sourceSlug": "tdengine-official",
-      "externalId": "tdengine-official-ecosystem-baseline",
-      "observedUrl": "https://docs.tdengine.com/release-history",
-      "firstSeenAt": "2026-07-14T01:53:12.722Z",
-      "lastSeenAt": "2026-08-16T13:01:24.936Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "22e70637-33c3-453b-abb1-49be666bbfb8",
-      "sourceSlug": "opengauss-official",
-      "externalId": "opengauss-official-ecosystem-baseline",
-      "observedUrl": "https://opengauss.org/zh/news",
-      "firstSeenAt": "2026-07-14T01:53:12.718Z",
-      "lastSeenAt": "2026-08-16T13:01:24.920Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "2416b62d-224f-4bee-a742-1eda5784a3cb",
-      "sourceSlug": "dtcc",
-      "externalId": "database-observability-enters-platform-engineering",
-      "observedUrl": "https://dtcc.it168.com/yichengxiangqing.html",
-      "firstSeenAt": "2026-07-25T09:02:04.185Z",
-      "lastSeenAt": "2026-08-16T13:01:24.904Z",
+      "signalId": "350cd7d8-9108-4f4d-8b3a-b01167588445",
+      "sourceSlug": "gbase-official",
+      "externalId": "gbase-official-ecosystem-baseline",
+      "observedUrl": "https://www.gbase.cn/",
+      "firstSeenAt": "2026-07-14T01:53:12.716Z",
+      "lastSeenAt": "2026-08-17T13:06:14.596Z",
       "observationCount": 1
     },
     {
@@ -17693,39 +17657,12 @@
       "observationCount": 1
     },
     {
-      "signalId": "3c1381ed-84be-49fd-96af-45b05dfca48c",
-      "sourceSlug": "nda-policy",
-      "externalId": "public-data-policy-strengthens-data-infrastructure",
-      "observedUrl": "https://www.nda.gov.cn/sjj/ywpd/szkjyjcss/0110/20250106095112713400492_pc.html",
-      "firstSeenAt": "2026-07-25T09:02:04.171Z",
-      "lastSeenAt": "2026-08-16T13:01:24.887Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "4156c0e2-4af9-47e3-8f63-069ff4958e5f",
-      "sourceSlug": "infoq-cn-database",
-      "externalId": "database-observability-enters-platform-engineering:evidence:1",
-      "observedUrl": "https://www.infoq.cn/article/6T0SKldyjbU2ecDcujGW",
-      "firstSeenAt": "2026-07-14T07:16:47.288Z",
-      "lastSeenAt": "2026-08-16T13:01:24.905Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "4a3c6c23-faf4-4750-8222-7f1900db399e",
-      "sourceSlug": "vastbase-official",
-      "externalId": "vastbase-official-ecosystem-baseline",
-      "observedUrl": "https://www.vastdata.com.cn/",
-      "firstSeenAt": "2026-07-14T01:53:12.720Z",
-      "lastSeenAt": "2026-08-16T13:01:24.928Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "4ba36758-d513-44a0-91ed-3457714ef597",
-      "sourceSlug": "sse-dameng-listing",
-      "externalId": "dameng-listing-marks-database-capital-milestone",
-      "observedUrl": "https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20240611_10758581.shtml",
-      "firstSeenAt": "2026-07-14T07:16:47.285Z",
-      "lastSeenAt": "2026-08-16T13:01:24.893Z",
+      "signalId": "3abf66df-bdcd-4dbf-90b1-991e80a02450",
+      "sourceSlug": "dtcc",
+      "externalId": "database-observability-enters-platform-engineering",
+      "observedUrl": "https://dtcc.it168.com/yichengxiangqing.html",
+      "firstSeenAt": "2026-07-25T09:02:04.185Z",
+      "lastSeenAt": "2026-08-17T13:06:14.587Z",
       "observationCount": 1
     },
     {
@@ -17738,12 +17675,21 @@
       "observationCount": 1
     },
     {
-      "signalId": "5325062f-8f85-48da-81a5-82159b09cca9",
-      "sourceSlug": "nebulagraph-official",
-      "externalId": "nebulagraph-official-ecosystem-baseline",
-      "observedUrl": "https://docs.nebula-graph.com.cn/3.8.0/20.appendix/release-notes",
-      "firstSeenAt": "2026-07-14T01:53:12.723Z",
-      "lastSeenAt": "2026-08-16T13:01:24.938Z",
+      "signalId": "4d0c8725-d9e6-4648-9bf1-dfbadf1ceb81",
+      "sourceSlug": "tdsql-official",
+      "externalId": "tdsql-official-ecosystem-baseline",
+      "observedUrl": "https://cloud.tencent.com/document/product/1376/125147",
+      "firstSeenAt": "2026-07-14T01:53:12.720Z",
+      "lastSeenAt": "2026-08-17T13:06:14.608Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "4d7f5672-f64c-4cc0-a3bc-5e3edbb90247",
+      "sourceSlug": "tidb-official",
+      "externalId": "distributed-sql-enters-mainstream-evaluation:evidence:1",
+      "observedUrl": "https://docs.pingcap.com/tidb/stable/release-notes",
+      "firstSeenAt": "2026-07-14T01:53:12.701Z",
+      "lastSeenAt": "2026-08-17T13:06:14.544Z",
       "observationCount": 1
     },
     {
@@ -17756,147 +17702,201 @@
       "observationCount": 1
     },
     {
-      "signalId": "6c830cb3-8bdb-49ec-91cf-53135a33b0b8",
-      "sourceSlug": "sequoiadb-official",
-      "externalId": "sequoiadb-official-ecosystem-baseline",
-      "observedUrl": "https://www.sequoiadb.com/",
-      "firstSeenAt": "2026-07-14T01:53:12.721Z",
-      "lastSeenAt": "2026-08-16T13:01:24.930Z",
+      "signalId": "5f9d92b7-d25c-4647-8ccd-a5fbb9916456",
+      "sourceSlug": "tdengine-official",
+      "externalId": "tdengine-official-ecosystem-baseline",
+      "observedUrl": "https://docs.tdengine.com/release-history",
+      "firstSeenAt": "2026-07-14T01:53:12.722Z",
+      "lastSeenAt": "2026-08-17T13:06:14.619Z",
       "observationCount": 1
     },
     {
-      "signalId": "6e201fbc-41d5-4458-b532-abd0e61564b7",
-      "sourceSlug": "caict-database",
-      "externalId": "database-benchmark-governance-matures",
-      "observedUrl": "https://www.caict.ac.cn/kxyj/qwfb/bps",
-      "firstSeenAt": "2026-07-14T01:53:12.709Z",
-      "lastSeenAt": "2026-08-16T13:01:24.889Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "748fe3cd-66f8-4736-a890-f9141175ba8c",
+      "signalId": "6274921c-3570-4be3-a5ff-0079c7f24f31",
       "sourceSlug": "dameng-docs",
       "externalId": "migration-tooling-becomes-database-product-moat",
       "observedUrl": "https://eco.dameng.com/document/dm/zh-cn/start/index.html",
       "firstSeenAt": "2026-07-14T01:53:12.712Z",
-      "lastSeenAt": "2026-08-16T13:01:24.902Z",
+      "lastSeenAt": "2026-08-17T13:06:14.585Z",
       "observationCount": 1
     },
     {
-      "signalId": "7d532086-6f12-42b8-b6c3-0bfb4afb11cf",
-      "sourceSlug": "tidb-official",
-      "externalId": "distributed-sql-enters-mainstream-evaluation:evidence:1",
-      "observedUrl": "https://docs.pingcap.com/tidb/stable/release-notes",
-      "firstSeenAt": "2026-07-14T01:53:12.701Z",
-      "lastSeenAt": "2026-08-16T13:01:24.860Z",
+      "signalId": "65afd9a3-f8ac-4399-b640-87e2e1700d2b",
+      "sourceSlug": "sse-dameng-listing",
+      "externalId": "dameng-listing-marks-database-capital-milestone",
+      "observedUrl": "https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20240611_10758581.shtml",
+      "firstSeenAt": "2026-07-14T07:16:47.285Z",
+      "lastSeenAt": "2026-08-17T13:06:14.576Z",
       "observationCount": 1
     },
     {
-      "signalId": "81efa528-a144-4495-b5f9-8d42b2c3d212",
-      "sourceSlug": "goldendb-official",
-      "externalId": "financial-core-systems-drive-distributed-validation",
-      "observedUrl": "https://www.goldendb.com/",
-      "firstSeenAt": "2026-07-14T01:53:12.710Z",
-      "lastSeenAt": "2026-08-16T13:01:24.895Z",
+      "signalId": "6de3932e-1159-47ec-83b0-69b12cd43566",
+      "sourceSlug": "infoq-cn-database",
+      "externalId": "database-observability-enters-platform-engineering:evidence:1",
+      "observedUrl": "https://www.infoq.cn/article/6T0SKldyjbU2ecDcujGW",
+      "firstSeenAt": "2026-07-14T07:16:47.288Z",
+      "lastSeenAt": "2026-08-17T13:06:14.588Z",
       "observationCount": 1
     },
     {
-      "signalId": "87a39806-7ca8-4f15-b467-75c804071ce6",
-      "sourceSlug": "doris-official",
-      "externalId": "realtime-analytics-connects-to-lakehouse",
-      "observedUrl": "https://doris.apache.org/zh-CN/releases/all-release",
-      "firstSeenAt": "2026-07-14T01:53:12.704Z",
-      "lastSeenAt": "2026-08-16T13:01:24.868Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "ae08ec29-3570-4df4-9c20-62daabcd9668",
+      "signalId": "73a57968-85d2-4b23-a3db-0353aff8af20",
       "sourceSlug": "kingbase-official",
       "externalId": "kingbase-official-ecosystem-baseline",
       "observedUrl": "https://www.kingbase.com.cn/",
       "firstSeenAt": "2026-07-14T01:53:12.714Z",
-      "lastSeenAt": "2026-08-16T13:01:24.911Z",
+      "lastSeenAt": "2026-08-17T13:06:14.594Z",
       "observationCount": 1
     },
     {
-      "signalId": "bef37360-c3e1-4fb7-a115-14a21cf85201",
-      "sourceSlug": "oceanbase-official",
-      "externalId": "distributed-sql-enters-mainstream-evaluation",
-      "observedUrl": "https://www.oceanbase.com/blog",
-      "firstSeenAt": "2026-07-14T01:53:12.700Z",
-      "lastSeenAt": "2026-08-16T13:01:24.858Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "d1e6cbc0-0771-417b-a9fc-421518e73a08",
-      "sourceSlug": "tdsql-official",
-      "externalId": "tdsql-official-ecosystem-baseline",
-      "observedUrl": "https://cloud.tencent.com/document/product/1376/125147",
-      "firstSeenAt": "2026-07-14T01:53:12.720Z",
-      "lastSeenAt": "2026-08-16T13:01:24.925Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "e5482c7c-34da-4d87-9fc3-bb9972a2601a",
-      "sourceSlug": "gaussdb-official",
-      "externalId": "gaussdb-official-ecosystem-baseline",
-      "observedUrl": "https://www.huaweicloud.com/product/gaussdb.html",
-      "firstSeenAt": "2026-07-14T01:53:12.719Z",
-      "lastSeenAt": "2026-08-16T13:01:24.922Z",
-      "observationCount": 1
-    },
-    {
-      "signalId": "e61619b4-c9a0-42f6-86d3-02a154e09c0b",
+      "signalId": "7b089e98-5795-4fff-9d45-5de6a9ce4a6f",
       "sourceSlug": "matrixone-official",
       "externalId": "matrixone-official-ecosystem-baseline",
       "observedUrl": "https://docs.matrixorigin.cn/en/v26.3.0.13/MatrixOne/Release-Notes/v22.0.6.0",
       "firstSeenAt": "2026-07-14T01:53:12.721Z",
-      "lastSeenAt": "2026-08-16T13:01:24.931Z",
+      "lastSeenAt": "2026-08-17T13:06:14.615Z",
       "observationCount": 1
     },
     {
-      "signalId": "e61d739e-0a65-4bdd-a23c-03fda4b61dbf",
-      "sourceSlug": "miit-policy",
-      "externalId": "xinchuang-expands-compatibility-evidence-demand",
-      "observedUrl": "https://www.miit.gov.cn/zwgk/zcwj",
-      "firstSeenAt": "2026-07-14T01:53:12.708Z",
-      "lastSeenAt": "2026-08-16T13:01:24.884Z",
+      "signalId": "7e6cc92f-c4d5-424c-b8cf-aba179b19528",
+      "sourceSlug": "opengauss-official",
+      "externalId": "opengauss-official-ecosystem-baseline",
+      "observedUrl": "https://opengauss.org/zh/news",
+      "firstSeenAt": "2026-07-14T01:53:12.718Z",
+      "lastSeenAt": "2026-08-17T13:06:14.603Z",
       "observationCount": 1
     },
     {
-      "signalId": "eb0bdd33-fd03-4b42-85f4-8eeac19227bf",
-      "sourceSlug": "tc260-standard",
-      "externalId": "data-security-law-raises-database-control-baseline",
-      "observedUrl": "https://www.tc260.org.cn/portal/article/2/20250915154109",
-      "firstSeenAt": "2026-07-25T09:02:04.162Z",
-      "lastSeenAt": "2026-08-16T13:01:24.877Z",
+      "signalId": "90b2c230-f786-473b-8f0a-ec030434c0c4",
+      "sourceSlug": "tidb-releases",
+      "externalId": "open-source-database-commercialization-separates-roles",
+      "observedUrl": "https://github.com/pingcap/tidb",
+      "firstSeenAt": "2026-07-14T01:53:12.711Z",
+      "lastSeenAt": "2026-08-17T13:06:14.580Z",
       "observationCount": 1
     },
     {
-      "signalId": "f67a62eb-0de3-470b-b9be-d466c4c028ea",
+      "signalId": "9fd81c5c-53fe-434e-87dc-4183ce726bc1",
+      "sourceSlug": "caict-database",
+      "externalId": "database-benchmark-governance-matures",
+      "observedUrl": "https://www.caict.ac.cn/kxyj/qwfb/bps",
+      "firstSeenAt": "2026-07-14T01:53:12.709Z",
+      "lastSeenAt": "2026-08-17T13:06:14.573Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "a53295e7-3c2a-49e6-99f8-a3911d602a79",
+      "sourceSlug": "milvus-official",
+      "externalId": "specialized-databases-enter-composable-architecture",
+      "observedUrl": "https://milvus.io/docs/zh/release_notes.md",
+      "firstSeenAt": "2026-07-14T01:53:12.705Z",
+      "lastSeenAt": "2026-08-17T13:06:14.556Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "b46e85c3-49ca-4709-b4e7-3c21c3e2de16",
+      "sourceSlug": "goldendb-official",
+      "externalId": "financial-core-systems-drive-distributed-validation",
+      "observedUrl": "https://www.goldendb.com/",
+      "firstSeenAt": "2026-07-14T01:53:12.710Z",
+      "lastSeenAt": "2026-08-17T13:06:14.578Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "b8ca2199-f6e1-4d65-959b-6b3b403d309a",
+      "sourceSlug": "sequoiadb-official",
+      "externalId": "sequoiadb-official-ecosystem-baseline",
+      "observedUrl": "https://www.sequoiadb.com/",
+      "firstSeenAt": "2026-07-14T01:53:12.721Z",
+      "lastSeenAt": "2026-08-17T13:06:14.613Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "bfac7adc-e5a4-4662-861d-75c5b3dae8c8",
+      "sourceSlug": "doris-official",
+      "externalId": "realtime-analytics-connects-to-lakehouse",
+      "observedUrl": "https://doris.apache.org/zh-CN/releases/all-release",
+      "firstSeenAt": "2026-07-14T01:53:12.704Z",
+      "lastSeenAt": "2026-08-17T13:06:14.552Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "c90b31f9-1c57-494e-985d-4d7f00169df1",
+      "sourceSlug": "gaussdb-official",
+      "externalId": "gaussdb-official-ecosystem-baseline",
+      "observedUrl": "https://www.huaweicloud.com/product/gaussdb.html",
+      "firstSeenAt": "2026-07-14T01:53:12.719Z",
+      "lastSeenAt": "2026-08-17T13:06:14.605Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "c94d855f-40ba-4afe-95ea-f25829e20c93",
+      "sourceSlug": "starrocks-official",
+      "externalId": "realtime-analytics-connects-to-lakehouse:evidence:1",
+      "observedUrl": "https://docs.starrocks.io/zh/docs/release_notes",
+      "firstSeenAt": "2026-07-14T01:53:12.705Z",
+      "lastSeenAt": "2026-08-17T13:06:14.553Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "cb23ee2a-6564-4ab2-bc9b-4653fb8ef99f",
+      "sourceSlug": "nda-policy",
+      "externalId": "public-data-policy-strengthens-data-infrastructure",
+      "observedUrl": "https://www.nda.gov.cn/sjj/ywpd/szkjyjcss/0110/20250106095112713400492_pc.html",
+      "firstSeenAt": "2026-07-25T09:02:04.171Z",
+      "lastSeenAt": "2026-08-17T13:06:14.570Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "d12e3a6e-1e26-4023-8f8b-4a2f8647c7dc",
+      "sourceSlug": "dameng-official",
+      "externalId": "dameng-official-ecosystem-baseline",
+      "observedUrl": "https://www.dameng.com/",
+      "firstSeenAt": "2026-07-14T01:53:12.714Z",
+      "lastSeenAt": "2026-08-17T13:06:14.592Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "d2fbf048-aa96-4135-8336-850f5e3235a1",
       "sourceSlug": "oceanbase-official",
       "externalId": "oceanbase-official-ecosystem-baseline",
       "observedUrl": "https://www.oceanbase.com/",
       "firstSeenAt": "2026-07-14T01:53:12.717Z",
-      "lastSeenAt": "2026-08-16T13:01:24.916Z",
+      "lastSeenAt": "2026-08-17T13:06:14.599Z",
       "observationCount": 1
     },
     {
-      "signalId": "fd1dc634-2976-41ce-b2c1-ae401b40a196",
-      "sourceSlug": "gbase-official",
-      "externalId": "gbase-official-ecosystem-baseline",
-      "observedUrl": "https://www.gbase.cn/",
-      "firstSeenAt": "2026-07-14T01:53:12.716Z",
-      "lastSeenAt": "2026-08-16T13:01:24.913Z",
+      "signalId": "d6e7dffa-8baf-4d5c-9b00-2b8b46883d42",
+      "sourceSlug": "polardb-official",
+      "externalId": "managed-database-procurement-shifts-to-unit-economics",
+      "observedUrl": "https://help.aliyun.com/zh/polardb/polardb-for-xscale/release-notes-11",
+      "firstSeenAt": "2026-07-14T07:16:47.287Z",
+      "lastSeenAt": "2026-08-17T13:06:14.583Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "e2588cda-91d0-44f5-8785-d0aade32d426",
+      "sourceSlug": "vastbase-official",
+      "externalId": "vastbase-official-ecosystem-baseline",
+      "observedUrl": "https://www.vastdata.com.cn/",
+      "firstSeenAt": "2026-07-14T01:53:12.720Z",
+      "lastSeenAt": "2026-08-17T13:06:14.611Z",
+      "observationCount": 1
+    },
+    {
+      "signalId": "e830953d-fc5b-40d7-ab1d-57aa77e24644",
+      "sourceSlug": "oceanbase-official",
+      "externalId": "distributed-sql-enters-mainstream-evaluation",
+      "observedUrl": "https://www.oceanbase.com/blog",
+      "firstSeenAt": "2026-07-14T01:53:12.700Z",
+      "lastSeenAt": "2026-08-17T13:06:14.542Z",
       "observationCount": 1
     }
   ],
   "signalObservationOccurrences": [
     {
       "id": "initial:06ee6e97df1e1d76f0fbbccc5f6106033b7e7386d3c8c1207d11cf833b5f5606",
-      "signalId": "1e5a82d8-bd46-4e3e-a746-b58595836c27",
+      "signalId": "a53295e7-3c2a-49e6-99f8-a3911d602a79",
       "sourceSlug": "milvus-official",
-      "observedAt": "2026-08-16T13:01:24.872Z",
+      "observedAt": "2026-08-17T13:06:14.556Z",
       "countDelta": 1
     },
     {
@@ -17908,16 +17908,16 @@
     },
     {
       "id": "initial:0e70b13cb6ad0c64c01200a54564d9ec1f44a13dd5925e01b4ac73fd3d2117c9",
-      "signalId": "2176fb15-a856-4a3a-8851-d6bc9c745995",
+      "signalId": "5f9d92b7-d25c-4647-8ccd-a5fbb9916456",
       "sourceSlug": "tdengine-official",
-      "observedAt": "2026-08-16T13:01:24.936Z",
+      "observedAt": "2026-08-17T13:06:14.619Z",
       "countDelta": 1
     },
     {
       "id": "initial:118dea77981b2e163634e83c7635439d7721fe3f64038aea481c3875fe16059f",
-      "signalId": "ae08ec29-3570-4df4-9c20-62daabcd9668",
+      "signalId": "73a57968-85d2-4b23-a3db-0353aff8af20",
       "sourceSlug": "kingbase-official",
-      "observedAt": "2026-08-16T13:01:24.911Z",
+      "observedAt": "2026-08-17T13:06:14.594Z",
       "countDelta": 1
     },
     {
@@ -17929,65 +17929,65 @@
     },
     {
       "id": "initial:1a7308b47f5709ea869edd7b6ad989c67a36831a58f28c54d336fda37c978116",
-      "signalId": "1c12ccab-e185-4a71-b570-22ada6dfcf2f",
+      "signalId": "90b2c230-f786-473b-8f0a-ec030434c0c4",
       "sourceSlug": "tidb-releases",
-      "observedAt": "2026-08-16T13:01:24.897Z",
+      "observedAt": "2026-08-17T13:06:14.580Z",
       "countDelta": 1
     },
     {
       "id": "initial:22c2e5b826e823da3fd35ebe9abc4c9925bc9a897a4b5c2afcd6cab28c6b80f0",
-      "signalId": "f67a62eb-0de3-470b-b9be-d466c4c028ea",
+      "signalId": "d2fbf048-aa96-4135-8336-850f5e3235a1",
       "sourceSlug": "oceanbase-official",
-      "observedAt": "2026-08-16T13:01:24.916Z",
+      "observedAt": "2026-08-17T13:06:14.599Z",
       "countDelta": 1
     },
     {
       "id": "initial:2b358e8d7565cde134aaab834ac0d7ac1dc74cc383d458ec40104d5613b9970b",
-      "signalId": "22e70637-33c3-453b-abb1-49be666bbfb8",
+      "signalId": "7e6cc92f-c4d5-424c-b8cf-aba179b19528",
       "sourceSlug": "opengauss-official",
-      "observedAt": "2026-08-16T13:01:24.920Z",
+      "observedAt": "2026-08-17T13:06:14.603Z",
       "countDelta": 1
     },
     {
       "id": "initial:347bf6a101df6b06b125b83d52e219bdcfb5619c56c67c57677ac3af936cb845",
-      "signalId": "5325062f-8f85-48da-81a5-82159b09cca9",
+      "signalId": "0dc414d8-1c79-4f6c-9ab6-7e55de34a78b",
       "sourceSlug": "nebulagraph-official",
-      "observedAt": "2026-08-16T13:01:24.938Z",
+      "observedAt": "2026-08-17T13:06:14.621Z",
       "countDelta": 1
     },
     {
       "id": "initial:3ffc1889d3f679aa2b2932224edd7b043f0a745d35ad50f2464c19598075c9f0",
-      "signalId": "4156c0e2-4af9-47e3-8f63-069ff4958e5f",
+      "signalId": "6de3932e-1159-47ec-83b0-69b12cd43566",
       "sourceSlug": "infoq-cn-database",
-      "observedAt": "2026-08-16T13:01:24.905Z",
+      "observedAt": "2026-08-17T13:06:14.588Z",
       "countDelta": 1
     },
     {
       "id": "initial:46cd2b4fef022ad7edc618d028a5c9bd5a9abba99366588a550bd366b84f980f",
-      "signalId": "e61619b4-c9a0-42f6-86d3-02a154e09c0b",
+      "signalId": "7b089e98-5795-4fff-9d45-5de6a9ce4a6f",
       "sourceSlug": "matrixone-official",
-      "observedAt": "2026-08-16T13:01:24.931Z",
+      "observedAt": "2026-08-17T13:06:14.615Z",
       "countDelta": 1
     },
     {
       "id": "initial:499db0cc9f91096e28b5a0b4360e156d0115e8f06f4c1750352f7263ba018f5d",
-      "signalId": "fd1dc634-2976-41ce-b2c1-ae401b40a196",
+      "signalId": "350cd7d8-9108-4f4d-8b3a-b01167588445",
       "sourceSlug": "gbase-official",
-      "observedAt": "2026-08-16T13:01:24.913Z",
+      "observedAt": "2026-08-17T13:06:14.596Z",
       "countDelta": 1
     },
     {
       "id": "initial:4d29a0b75d85a18afaac1abd5be105eecab063008ca0626894a858989eac4142",
-      "signalId": "81efa528-a144-4495-b5f9-8d42b2c3d212",
+      "signalId": "b46e85c3-49ca-4709-b4e7-3c21c3e2de16",
       "sourceSlug": "goldendb-official",
-      "observedAt": "2026-08-16T13:01:24.895Z",
+      "observedAt": "2026-08-17T13:06:14.578Z",
       "countDelta": 1
     },
     {
       "id": "initial:53a4b46f911f81aafaec713b96a1c570f88f3806317de59deb8d59ed70e5ef9a",
-      "signalId": "d1e6cbc0-0771-417b-a9fc-421518e73a08",
+      "signalId": "4d0c8725-d9e6-4648-9bf1-dfbadf1ceb81",
       "sourceSlug": "tdsql-official",
-      "observedAt": "2026-08-16T13:01:24.925Z",
+      "observedAt": "2026-08-17T13:06:14.608Z",
       "countDelta": 1
     },
     {
@@ -17999,107 +17999,107 @@
     },
     {
       "id": "initial:75e2e76c67a3853c744e9dd5d949adeb03b3530ab968a04188a521a46a14ed0b",
-      "signalId": "0b6cb515-dead-415d-8fd8-f248890c61f5",
+      "signalId": "1fc1a941-cfe5-458d-bef0-47fff009fbf9",
       "sourceSlug": "polardb-official",
-      "observedAt": "2026-08-16T13:01:24.863Z",
+      "observedAt": "2026-08-17T13:06:14.547Z",
       "countDelta": 1
     },
     {
       "id": "initial:75fa01ed111cfa2f51d88a302b4ea0590782a5ef2c51bbca9a45b6c8f23d58b6",
-      "signalId": "e5482c7c-34da-4d87-9fc3-bb9972a2601a",
+      "signalId": "c90b31f9-1c57-494e-985d-4d7f00169df1",
       "sourceSlug": "gaussdb-official",
-      "observedAt": "2026-08-16T13:01:24.922Z",
+      "observedAt": "2026-08-17T13:06:14.605Z",
       "countDelta": 1
     },
     {
       "id": "initial:76b9ce9e04d7d5ce1278a26f7f3f27012a1fd81c75a4dff93c2c2e3f43c30316",
-      "signalId": "4a3c6c23-faf4-4750-8222-7f1900db399e",
+      "signalId": "e2588cda-91d0-44f5-8785-d0aade32d426",
       "sourceSlug": "vastbase-official",
-      "observedAt": "2026-08-16T13:01:24.928Z",
+      "observedAt": "2026-08-17T13:06:14.611Z",
       "countDelta": 1
     },
     {
       "id": "initial:827abe9dd8ec8e9e213c6d0e03f2ffa85a271720fe789ae3b3bb296975967dbf",
-      "signalId": "2416b62d-224f-4bee-a742-1eda5784a3cb",
+      "signalId": "3abf66df-bdcd-4dbf-90b1-991e80a02450",
       "sourceSlug": "dtcc",
-      "observedAt": "2026-08-16T13:01:24.904Z",
+      "observedAt": "2026-08-17T13:06:14.587Z",
       "countDelta": 1
     },
     {
       "id": "initial:8627171f9aba28952ce62954f13e21bf871d7a5462781ae86c3b50947d183f83",
-      "signalId": "eb0bdd33-fd03-4b42-85f4-8eeac19227bf",
+      "signalId": "23d1a0cd-946c-4c57-b625-ae5ae317f58a",
       "sourceSlug": "tc260-standard",
-      "observedAt": "2026-08-16T13:01:24.877Z",
+      "observedAt": "2026-08-17T13:06:14.560Z",
       "countDelta": 1
     },
     {
       "id": "initial:871405f727c26abaf4a05a8fe4c53ef74c1dfabae878b0d0c0b5cc355b078aa9",
-      "signalId": "014b71fd-33a1-4e47-b99b-dea539607f9f",
+      "signalId": "c94d855f-40ba-4afe-95ea-f25829e20c93",
       "sourceSlug": "starrocks-official",
-      "observedAt": "2026-08-16T13:01:24.870Z",
+      "observedAt": "2026-08-17T13:06:14.553Z",
       "countDelta": 1
     },
     {
       "id": "initial:8f2a120b5d7538cc3dfb56102103fc755ff7d87889c97dbad28acaa73a9ea3d1",
-      "signalId": "e61d739e-0a65-4bdd-a23c-03fda4b61dbf",
+      "signalId": "1d2f835d-c3f0-458d-99c7-ec3edbd3870a",
       "sourceSlug": "miit-policy",
-      "observedAt": "2026-08-16T13:01:24.884Z",
+      "observedAt": "2026-08-17T13:06:14.568Z",
       "countDelta": 1
     },
     {
       "id": "initial:98f3053318f96dd6bdf20f97ba97d8869b8e3a61e45a0adfbc06365f7ab90b3a",
-      "signalId": "4ba36758-d513-44a0-91ed-3457714ef597",
+      "signalId": "65afd9a3-f8ac-4399-b640-87e2e1700d2b",
       "sourceSlug": "sse-dameng-listing",
-      "observedAt": "2026-08-16T13:01:24.893Z",
+      "observedAt": "2026-08-17T13:06:14.576Z",
       "countDelta": 1
     },
     {
       "id": "initial:a43359140bbe535a880b3893d38bd5d51cf47d5819e667a6131b33b05ef1d509",
-      "signalId": "3c1381ed-84be-49fd-96af-45b05dfca48c",
+      "signalId": "cb23ee2a-6564-4ab2-bc9b-4653fb8ef99f",
       "sourceSlug": "nda-policy",
-      "observedAt": "2026-08-16T13:01:24.887Z",
+      "observedAt": "2026-08-17T13:06:14.570Z",
       "countDelta": 1
     },
     {
       "id": "initial:a9975af020df3537ef1401fcdc97d967a6ff8637826527f42f53b70789595072",
-      "signalId": "1c93903d-a207-4299-a25c-ecf1cd914a44",
+      "signalId": "d6e7dffa-8baf-4d5c-9b00-2b8b46883d42",
       "sourceSlug": "polardb-official",
-      "observedAt": "2026-08-16T13:01:24.900Z",
+      "observedAt": "2026-08-17T13:06:14.583Z",
       "countDelta": 1
     },
     {
       "id": "initial:ae08f7264da026ec2da5c78882200bc6a48141a9c47afa1ae2c0a1b01c06a838",
-      "signalId": "7d532086-6f12-42b8-b6c3-0bfb4afb11cf",
+      "signalId": "4d7f5672-f64c-4cc0-a3bc-5e3edbb90247",
       "sourceSlug": "tidb-official",
-      "observedAt": "2026-08-16T13:01:24.860Z",
+      "observedAt": "2026-08-17T13:06:14.544Z",
       "countDelta": 1
     },
     {
       "id": "initial:aea1f04622dee2f1921fc34e6ea91f9d714af03a99c216d2f1d609deaeb890a6",
-      "signalId": "87a39806-7ca8-4f15-b467-75c804071ce6",
+      "signalId": "bfac7adc-e5a4-4662-861d-75c5b3dae8c8",
       "sourceSlug": "doris-official",
-      "observedAt": "2026-08-16T13:01:24.868Z",
+      "observedAt": "2026-08-17T13:06:14.552Z",
       "countDelta": 1
     },
     {
       "id": "initial:c1f49f6759c95ffaa0a401d9a25c9c7974f1783ffeda31e09c731ffb97e0395a",
-      "signalId": "6e201fbc-41d5-4458-b532-abd0e61564b7",
+      "signalId": "9fd81c5c-53fe-434e-87dc-4183ce726bc1",
       "sourceSlug": "caict-database",
-      "observedAt": "2026-08-16T13:01:24.889Z",
+      "observedAt": "2026-08-17T13:06:14.573Z",
       "countDelta": 1
     },
     {
       "id": "initial:c944558ad47b47d0fbe22b1a4bb9375e5080b582d22ed3de7098eca21fcc147b",
-      "signalId": "bef37360-c3e1-4fb7-a115-14a21cf85201",
+      "signalId": "e830953d-fc5b-40d7-ab1d-57aa77e24644",
       "sourceSlug": "oceanbase-official",
-      "observedAt": "2026-08-16T13:01:24.858Z",
+      "observedAt": "2026-08-17T13:06:14.542Z",
       "countDelta": 1
     },
     {
       "id": "initial:d0401577d33cb836bbb455c934c416906cdadba06ec88525fbf83ee87fda1d45",
-      "signalId": "0e0b7d79-e1b3-47c3-b183-6ea3d15e36bd",
+      "signalId": "d12e3a6e-1e26-4023-8f8b-4a2f8647c7dc",
       "sourceSlug": "dameng-official",
-      "observedAt": "2026-08-16T13:01:24.908Z",
+      "observedAt": "2026-08-17T13:06:14.592Z",
       "countDelta": 1
     },
     {
@@ -18111,16 +18111,16 @@
     },
     {
       "id": "initial:e9c7ffd9bcbfb4fce93b7353581a6252b5165a31263ef7e219e21ecd08ef3587",
-      "signalId": "6c830cb3-8bdb-49ec-91cf-53135a33b0b8",
+      "signalId": "b8ca2199-f6e1-4d65-959b-6b3b403d309a",
       "sourceSlug": "sequoiadb-official",
-      "observedAt": "2026-08-16T13:01:24.930Z",
+      "observedAt": "2026-08-17T13:06:14.613Z",
       "countDelta": 1
     },
     {
       "id": "initial:f867e0f03befabfd9a6158ba9cfdc548550c594485dceb8a2e7e2b9a3624681e",
-      "signalId": "748fe3cd-66f8-4736-a890-f9141175ba8c",
+      "signalId": "6274921c-3570-4be3-a5ff-0079c7f24f31",
       "sourceSlug": "dameng-docs",
-      "observedAt": "2026-08-16T13:01:24.902Z",
+      "observedAt": "2026-08-17T13:06:14.585Z",
       "countDelta": 1
     }
   ],
@@ -20131,45 +20131,38 @@
   "eventSignals": [
     {
       "eventId": "0637c3c6-69dd-40da-af2c-512622025fbe",
-      "signalId": "fd1dc634-2976-41ce-b2c1-ae401b40a196",
+      "signalId": "350cd7d8-9108-4f4d-8b3a-b01167588445",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.716Z"
     },
     {
       "eventId": "06968103-46fe-48bc-aad7-93bebb49a956",
-      "signalId": "0b6cb515-dead-415d-8fd8-f248890c61f5",
+      "signalId": "1fc1a941-cfe5-458d-bef0-47fff009fbf9",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.719Z"
     },
     {
       "eventId": "06968103-46fe-48bc-aad7-93bebb49a956",
-      "signalId": "1c93903d-a207-4299-a25c-ecf1cd914a44",
+      "signalId": "d6e7dffa-8baf-4d5c-9b00-2b8b46883d42",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T07:16:47.292Z"
     },
     {
       "eventId": "0b14e460-544d-4e72-afe3-d17bcd0c6d93",
-      "signalId": "4a3c6c23-faf4-4750-8222-7f1900db399e",
+      "signalId": "e2588cda-91d0-44f5-8785-d0aade32d426",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.720Z"
     },
     {
       "eventId": "136dc71a-03ce-4b83-a04f-1fd0df8a8bfc",
-      "signalId": "2416b62d-224f-4bee-a742-1eda5784a3cb",
+      "signalId": "3abf66df-bdcd-4dbf-90b1-991e80a02450",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-25T09:02:04.186Z"
-    },
-    {
-      "eventId": "136dc71a-03ce-4b83-a04f-1fd0df8a8bfc",
-      "signalId": "4156c0e2-4af9-47e3-8f63-069ff4958e5f",
-      "evidenceRole": "primary",
-      "relevanceScore": 90,
-      "createdAt": "2026-07-14T07:16:47.288Z"
     },
     {
       "eventId": "136dc71a-03ce-4b83-a04f-1fd0df8a8bfc",
@@ -20179,11 +20172,25 @@
       "createdAt": "2026-07-14T01:53:12.713Z"
     },
     {
+      "eventId": "136dc71a-03ce-4b83-a04f-1fd0df8a8bfc",
+      "signalId": "6de3932e-1159-47ec-83b0-69b12cd43566",
+      "evidenceRole": "primary",
+      "relevanceScore": 90,
+      "createdAt": "2026-07-14T07:16:47.288Z"
+    },
+    {
       "eventId": "177440ad-0922-46ba-a2c4-6dfc7975550a",
-      "signalId": "014b71fd-33a1-4e47-b99b-dea539607f9f",
+      "signalId": "c94d855f-40ba-4afe-95ea-f25829e20c93",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.722Z"
+    },
+    {
+      "eventId": "1cdfb1dd-6b7b-411b-a01d-0bdec24929be",
+      "signalId": "23d1a0cd-946c-4c57-b625-ae5ae317f58a",
+      "evidenceRole": "primary",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-25T09:02:04.175Z"
     },
     {
       "eventId": "1cdfb1dd-6b7b-411b-a01d-0bdec24929be",
@@ -20193,78 +20200,71 @@
       "createdAt": "2026-07-14T01:53:12.710Z"
     },
     {
-      "eventId": "1cdfb1dd-6b7b-411b-a01d-0bdec24929be",
-      "signalId": "eb0bdd33-fd03-4b42-85f4-8eeac19227bf",
-      "evidenceRole": "primary",
-      "relevanceScore": 100,
-      "createdAt": "2026-07-25T09:02:04.175Z"
-    },
-    {
       "eventId": "1fb96d72-6b09-4ce4-afc4-fe29687ad07a",
-      "signalId": "7d532086-6f12-42b8-b6c3-0bfb4afb11cf",
+      "signalId": "4d7f5672-f64c-4cc0-a3bc-5e3edbb90247",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.704Z"
     },
     {
       "eventId": "213383d0-db83-440b-ae47-feceaafeaf02",
-      "signalId": "748fe3cd-66f8-4736-a890-f9141175ba8c",
+      "signalId": "6274921c-3570-4be3-a5ff-0079c7f24f31",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.712Z"
     },
     {
       "eventId": "2f5aec7d-cc25-4fad-aa8d-f44580d969f9",
-      "signalId": "81efa528-a144-4495-b5f9-8d42b2c3d212",
+      "signalId": "b46e85c3-49ca-4709-b4e7-3c21c3e2de16",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.717Z"
     },
     {
       "eventId": "34ca9e2f-06f8-40bc-a800-955efe256fc7",
-      "signalId": "7d532086-6f12-42b8-b6c3-0bfb4afb11cf",
+      "signalId": "4d7f5672-f64c-4cc0-a3bc-5e3edbb90247",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.718Z"
     },
     {
       "eventId": "564413dd-cab6-4c21-a995-8acf41f8cfd1",
-      "signalId": "6e201fbc-41d5-4458-b532-abd0e61564b7",
+      "signalId": "9fd81c5c-53fe-434e-87dc-4183ce726bc1",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.709Z"
     },
     {
       "eventId": "57b0b558-32e2-4dbf-a27f-faf0ef1f8a75",
-      "signalId": "22e70637-33c3-453b-abb1-49be666bbfb8",
+      "signalId": "7e6cc92f-c4d5-424c-b8cf-aba179b19528",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.718Z"
     },
     {
       "eventId": "5c461283-b527-46ec-a935-7767ee96d4ae",
-      "signalId": "0b6cb515-dead-415d-8fd8-f248890c61f5",
+      "signalId": "1fc1a941-cfe5-458d-bef0-47fff009fbf9",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.702Z"
     },
     {
       "eventId": "61e5b445-eaad-40b8-a22a-fdb17cbcb3ab",
-      "signalId": "6e201fbc-41d5-4458-b532-abd0e61564b7",
+      "signalId": "9fd81c5c-53fe-434e-87dc-4183ce726bc1",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.714Z"
     },
     {
       "eventId": "6950dc54-4634-43f6-a05e-14f893b0453b",
-      "signalId": "1e5a82d8-bd46-4e3e-a746-b58595836c27",
+      "signalId": "a53295e7-3c2a-49e6-99f8-a3911d602a79",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.706Z"
     },
     {
       "eventId": "6b3b25f1-b865-4dbb-a8ef-8cfb86615132",
-      "signalId": "f67a62eb-0de3-470b-b9be-d466c4c028ea",
+      "signalId": "d2fbf048-aa96-4135-8336-850f5e3235a1",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.717Z"
@@ -20278,59 +20278,66 @@
     },
     {
       "eventId": "6ef1c730-72d3-4a05-a910-63f81ecd0e38",
-      "signalId": "3c1381ed-84be-49fd-96af-45b05dfca48c",
+      "signalId": "cb23ee2a-6564-4ab2-bc9b-4653fb8ef99f",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-25T09:02:04.172Z"
     },
     {
       "eventId": "71d83ec8-03b8-4a09-ad52-83caba926835",
-      "signalId": "1c12ccab-e185-4a71-b570-22ada6dfcf2f",
+      "signalId": "90b2c230-f786-473b-8f0a-ec030434c0c4",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.711Z"
     },
     {
       "eventId": "74164318-0dda-4cf5-a364-43578aad928e",
-      "signalId": "0b6cb515-dead-415d-8fd8-f248890c61f5",
+      "signalId": "1fc1a941-cfe5-458d-bef0-47fff009fbf9",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.712Z"
     },
     {
       "eventId": "74164318-0dda-4cf5-a364-43578aad928e",
-      "signalId": "1c93903d-a207-4299-a25c-ecf1cd914a44",
+      "signalId": "d6e7dffa-8baf-4d5c-9b00-2b8b46883d42",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T07:16:47.287Z"
     },
     {
       "eventId": "79b0d6cf-1d11-4bcf-aa6c-81a7f63dace1",
-      "signalId": "1e5a82d8-bd46-4e3e-a746-b58595836c27",
+      "signalId": "a53295e7-3c2a-49e6-99f8-a3911d602a79",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.707Z"
     },
     {
       "eventId": "815fab9d-832e-44a8-aeb7-1eee0de91fa8",
-      "signalId": "4ba36758-d513-44a0-91ed-3457714ef597",
+      "signalId": "65afd9a3-f8ac-4399-b640-87e2e1700d2b",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T07:16:47.285Z"
     },
     {
       "eventId": "87681a30-b3e4-4bab-a288-fe76305582ad",
-      "signalId": "0e0b7d79-e1b3-47c3-b183-6ea3d15e36bd",
+      "signalId": "d12e3a6e-1e26-4023-8f8b-4a2f8647c7dc",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.714Z"
     },
     {
       "eventId": "89bf8245-95ca-4a72-aded-2a9677a68ead",
-      "signalId": "6c830cb3-8bdb-49ec-91cf-53135a33b0b8",
+      "signalId": "b8ca2199-f6e1-4d65-959b-6b3b403d309a",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.721Z"
+    },
+    {
+      "eventId": "9af2ada5-876e-4bc7-a8cb-5c2f6a82ecbb",
+      "signalId": "23d1a0cd-946c-4c57-b625-ae5ae317f58a",
+      "evidenceRole": "primary",
+      "relevanceScore": 100,
+      "createdAt": "2026-07-25T09:02:04.163Z"
     },
     {
       "eventId": "9af2ada5-876e-4bc7-a8cb-5c2f6a82ecbb",
@@ -20340,106 +20347,99 @@
       "createdAt": "2026-07-14T01:53:12.707Z"
     },
     {
-      "eventId": "9af2ada5-876e-4bc7-a8cb-5c2f6a82ecbb",
-      "signalId": "eb0bdd33-fd03-4b42-85f4-8eeac19227bf",
-      "evidenceRole": "primary",
-      "relevanceScore": 100,
-      "createdAt": "2026-07-25T09:02:04.163Z"
-    },
-    {
       "eventId": "9d2da4ba-eb97-4972-a126-deb67b3eba36",
-      "signalId": "d1e6cbc0-0771-417b-a9fc-421518e73a08",
+      "signalId": "4d0c8725-d9e6-4648-9bf1-dfbadf1ceb81",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.720Z"
     },
     {
       "eventId": "a78e6886-1c40-4e62-af71-2092bd552c97",
-      "signalId": "7d532086-6f12-42b8-b6c3-0bfb4afb11cf",
+      "signalId": "4d7f5672-f64c-4cc0-a3bc-5e3edbb90247",
       "evidenceRole": "primary",
       "relevanceScore": 90,
       "createdAt": "2026-07-14T01:53:12.701Z"
     },
     {
       "eventId": "a78e6886-1c40-4e62-af71-2092bd552c97",
-      "signalId": "bef37360-c3e1-4fb7-a115-14a21cf85201",
+      "signalId": "e830953d-fc5b-40d7-ab1d-57aa77e24644",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.701Z"
     },
     {
       "eventId": "a7c95e2f-bb50-4d8b-a434-6770cc74885d",
-      "signalId": "2176fb15-a856-4a3a-8851-d6bc9c745995",
+      "signalId": "5f9d92b7-d25c-4647-8ccd-a5fbb9916456",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.723Z"
     },
     {
       "eventId": "a8ba6adc-6c93-48e6-acf1-665b94585eab",
-      "signalId": "e5482c7c-34da-4d87-9fc3-bb9972a2601a",
+      "signalId": "c90b31f9-1c57-494e-985d-4d7f00169df1",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.719Z"
     },
     {
       "eventId": "b16402a0-e411-4b87-a02a-39e44ab20e5f",
-      "signalId": "ae08ec29-3570-4df4-9c20-62daabcd9668",
+      "signalId": "73a57968-85d2-4b23-a3db-0353aff8af20",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.716Z"
     },
     {
       "eventId": "bd6937db-86f6-4e2f-af16-6b2bb6b970c7",
-      "signalId": "81efa528-a144-4495-b5f9-8d42b2c3d212",
+      "signalId": "b46e85c3-49ca-4709-b4e7-3c21c3e2de16",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.711Z"
     },
     {
       "eventId": "bfe5b0ba-9942-4094-a4c5-b9dd0a7d5d8b",
-      "signalId": "e61619b4-c9a0-42f6-86d3-02a154e09c0b",
+      "signalId": "7b089e98-5795-4fff-9d45-5de6a9ce4a6f",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.721Z"
     },
     {
       "eventId": "cafe41f1-7250-4bb6-a1f3-2a4036020537",
-      "signalId": "014b71fd-33a1-4e47-b99b-dea539607f9f",
-      "evidenceRole": "primary",
-      "relevanceScore": 90,
-      "createdAt": "2026-07-14T01:53:12.705Z"
-    },
-    {
-      "eventId": "cafe41f1-7250-4bb6-a1f3-2a4036020537",
-      "signalId": "87a39806-7ca8-4f15-b467-75c804071ce6",
+      "signalId": "bfac7adc-e5a4-4662-861d-75c5b3dae8c8",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.705Z"
     },
     {
+      "eventId": "cafe41f1-7250-4bb6-a1f3-2a4036020537",
+      "signalId": "c94d855f-40ba-4afe-95ea-f25829e20c93",
+      "evidenceRole": "primary",
+      "relevanceScore": 90,
+      "createdAt": "2026-07-14T01:53:12.705Z"
+    },
+    {
       "eventId": "e1dfcbb1-9dca-4283-a7e0-2f7d2e4c1f32",
-      "signalId": "1e5a82d8-bd46-4e3e-a746-b58595836c27",
+      "signalId": "a53295e7-3c2a-49e6-99f8-a3911d602a79",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.724Z"
     },
     {
       "eventId": "ebcfc520-26e1-45ed-a7a0-a1edb003d663",
-      "signalId": "5325062f-8f85-48da-81a5-82159b09cca9",
+      "signalId": "0dc414d8-1c79-4f6c-9ab6-7e55de34a78b",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.723Z"
     },
     {
       "eventId": "ee4f9af7-3aa8-4ac3-a118-5fbf1c5541b2",
-      "signalId": "87a39806-7ca8-4f15-b467-75c804071ce6",
+      "signalId": "bfac7adc-e5a4-4662-861d-75c5b3dae8c8",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.722Z"
     },
     {
       "eventId": "f8f03f72-d551-4817-a468-9814584bf360",
-      "signalId": "e61d739e-0a65-4bdd-a23c-03fda4b61dbf",
+      "signalId": "1d2f835d-c3f0-458d-99c7-ec3edbd3870a",
       "evidenceRole": "primary",
       "relevanceScore": 100,
       "createdAt": "2026-07-14T01:53:12.708Z"
