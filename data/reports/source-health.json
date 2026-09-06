@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "jobId": "f656d8b7-a42b-40b4-995b-66d943ed3d10",
-  "startedAt": "2026-08-30T00:37:46.820Z",
-  "finishedAt": "2026-08-30T00:38:54.651Z",
+  "jobId": "b4e0949e-9f7a-4e8b-be89-a1dd9bf8d9de",
+  "startedAt": "2026-09-06T00:11:04.223Z",
+  "finishedAt": "2026-09-06T00:11:31.028Z",
   "total": 26,
   "healthy": 5,
-  "degraded": 3,
-  "failed": 9,
-  "skipped": 9,
-  "accessible": 23,
-  "fetched": 18,
+  "degraded": 2,
+  "failed": 11,
+  "skipped": 8,
+  "accessible": 22,
+  "fetched": 17,
   "withContent": 5,
   "results": [
     {
@@ -35,7 +35,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_restricted",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1
+      "durationMs": 0
     },
     {
       "slug": "oceanbase-releases",
@@ -60,7 +60,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 480
+      "durationMs": 399
     },
     {
       "slug": "oceanbase-official",
@@ -68,24 +68,24 @@
       "adapterVersion": "1.0.0",
       "robotsPolicy": "review-required",
       "freshnessSloHours": 168,
-      "status": "degraded",
+      "status": "failed",
       "accessStatus": "reachable",
       "fetchStatus": "succeeded",
-      "parseStatus": "empty",
-      "schemaStatus": "empty",
+      "parseStatus": "succeeded",
+      "schemaStatus": "invalid",
       "policyStatus": "allowed_metadata",
       "itemCount": 0,
       "latestItemAt": null,
       "duplicateRatio": 0,
       "qualityScore": 0,
-      "errorType": "content",
-      "errorCode": "EMPTY_RESULT",
-      "repairAction": "inspect_endpoint_or_parser",
+      "errorType": "contract",
+      "errorCode": "INVALID_ITEMS",
+      "repairAction": "repair_item_normalization",
       "proxyHint": "not_required",
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1752
+      "durationMs": 1561
     },
     {
       "slug": "tidb-official",
@@ -110,7 +110,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 663
+      "durationMs": 706
     },
     {
       "slug": "polardb-x-releases",
@@ -135,7 +135,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 516
+      "durationMs": 432
     },
     {
       "slug": "starrocks-releases",
@@ -150,7 +150,7 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-08-28T04:32:12.000Z",
+      "latestItemAt": "2026-08-31T08:28:48.000Z",
       "duplicateRatio": 0,
       "qualityScore": 70,
       "errorType": null,
@@ -160,7 +160,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 796
+      "durationMs": 570
     },
     {
       "slug": "starrocks-official",
@@ -185,7 +185,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 387
+      "durationMs": 322
     },
     {
       "slug": "tdsql-docs",
@@ -210,7 +210,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1971
+      "durationMs": 1937
     },
     {
       "slug": "tdengine-releases",
@@ -235,7 +235,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 349
+      "durationMs": 270
     },
     {
       "slug": "tdengine-official",
@@ -260,7 +260,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 439
+      "durationMs": 430
     },
     {
       "slug": "tidb-releases",
@@ -275,7 +275,7 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-08-28T10:08:43.000Z",
+      "latestItemAt": "2026-08-31T07:16:02.000Z",
       "duplicateRatio": 0,
       "qualityScore": 72,
       "errorType": null,
@@ -285,7 +285,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 474
+      "durationMs": 413
     },
     {
       "slug": "caict-database",
@@ -310,7 +310,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2381
+      "durationMs": 1375
     },
     {
       "slug": "kingbase-official",
@@ -335,7 +335,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2179
+      "durationMs": 2700
     },
     {
       "slug": "kingbase-docs",
@@ -343,24 +343,24 @@
       "adapterVersion": "1.0.0",
       "robotsPolicy": "manual-only",
       "freshnessSloHours": 168,
-      "status": "skipped",
-      "accessStatus": "reachable",
-      "fetchStatus": "succeeded",
-      "parseStatus": "unsupported",
+      "status": "failed",
+      "accessStatus": "unreachable",
+      "fetchStatus": "failed",
+      "parseStatus": "not_started",
       "schemaStatus": "not_applicable",
       "policyStatus": "manual_review",
       "itemCount": 0,
       "latestItemAt": null,
       "duplicateRatio": 0,
       "qualityScore": 0,
-      "errorType": null,
-      "errorCode": null,
-      "repairAction": "configure_stable_adapter",
-      "proxyHint": "not_required",
+      "errorType": "network",
+      "errorCode": "ADAPTER_ERROR",
+      "repairAction": "verify_or_replace_endpoint",
+      "proxyHint": "possible",
       "proxyUsed": false,
-      "retentionDecision": "keep_manual",
+      "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1511
+      "durationMs": 3216
     },
     {
       "slug": "nda-policy",
@@ -385,7 +385,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1138
+      "durationMs": 1629
     },
     {
       "slug": "miit-policy",
@@ -410,7 +410,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1699
+      "durationMs": 1914
     },
     {
       "slug": "tdsql-official",
@@ -435,7 +435,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1392
+      "durationMs": 1366
     },
     {
       "slug": "dameng-docs",
@@ -443,24 +443,24 @@
       "adapterVersion": "1.0.0",
       "robotsPolicy": "manual-only",
       "freshnessSloHours": 168,
-      "status": "skipped",
-      "accessStatus": "reachable",
-      "fetchStatus": "succeeded",
-      "parseStatus": "unsupported",
+      "status": "failed",
+      "accessStatus": "unreachable",
+      "fetchStatus": "failed",
+      "parseStatus": "not_started",
       "schemaStatus": "not_applicable",
       "policyStatus": "manual_review",
       "itemCount": 0,
       "latestItemAt": null,
       "duplicateRatio": 0,
       "qualityScore": 0,
-      "errorType": null,
-      "errorCode": null,
-      "repairAction": "configure_stable_adapter",
-      "proxyHint": "not_required",
+      "errorType": "network",
+      "errorCode": "ADAPTER_ERROR",
+      "repairAction": "verify_or_replace_endpoint",
+      "proxyHint": "possible",
       "proxyUsed": false,
-      "retentionDecision": "keep_manual",
+      "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2397
+      "durationMs": 22518
     },
     {
       "slug": "dameng-official",
@@ -485,7 +485,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2927
+      "durationMs": 4090
     },
     {
       "slug": "polardb-official",
@@ -510,7 +510,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1616
+      "durationMs": 1326
     },
     {
       "slug": "dtcc",
@@ -535,7 +535,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 897
+      "durationMs": 704
     },
     {
       "slug": "gitlink-database",
@@ -560,7 +560,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1465
+      "durationMs": 2181
     },
     {
       "slug": "infoq-cn-database",
@@ -585,7 +585,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2156
+      "durationMs": 2660
     },
     {
       "slug": "ccf-database",
@@ -610,7 +610,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1292
+      "durationMs": 1440
     },
     {
       "slug": "modb",
@@ -618,24 +618,24 @@
       "adapterVersion": "1.0.0",
       "robotsPolicy": "manual-only",
       "freshnessSloHours": 168,
-      "status": "failed",
-      "accessStatus": "unreachable",
-      "fetchStatus": "failed",
-      "parseStatus": "not_started",
+      "status": "skipped",
+      "accessStatus": "reachable",
+      "fetchStatus": "succeeded",
+      "parseStatus": "unsupported",
       "schemaStatus": "not_applicable",
       "policyStatus": "manual_review",
       "itemCount": 0,
       "latestItemAt": null,
       "duplicateRatio": 0,
       "qualityScore": 0,
-      "errorType": "timeout",
-      "errorCode": "TIMEOUT",
-      "repairAction": "verify_or_replace_endpoint",
-      "proxyHint": "possible",
+      "errorType": null,
+      "errorCode": null,
+      "repairAction": "configure_stable_adapter",
+      "proxyHint": "not_required",
       "proxyUsed": false,
-      "retentionDecision": "observe",
+      "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 60817
+      "durationMs": 1452
     },
     {
       "slug": "zhuang-xiaodan-wechat",
