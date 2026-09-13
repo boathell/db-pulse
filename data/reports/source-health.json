@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "jobId": "b4e0949e-9f7a-4e8b-be89-a1dd9bf8d9de",
-  "startedAt": "2026-09-06T00:11:04.223Z",
-  "finishedAt": "2026-09-06T00:11:31.028Z",
+  "jobId": "b9c2f1ef-9d70-4317-9dd9-092a1adeaf56",
+  "startedAt": "2026-09-13T00:13:01.119Z",
+  "finishedAt": "2026-09-13T00:13:12.111Z",
   "total": 26,
   "healthy": 5,
-  "degraded": 2,
+  "degraded": 1,
   "failed": 11,
-  "skipped": 8,
+  "skipped": 9,
   "accessible": 22,
   "fetched": 17,
   "withContent": 5,
@@ -60,7 +60,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 399
+      "durationMs": 285
     },
     {
       "slug": "oceanbase-official",
@@ -85,7 +85,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1561
+      "durationMs": 2114
     },
     {
       "slug": "tidb-official",
@@ -110,7 +110,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 706
+      "durationMs": 899
     },
     {
       "slug": "polardb-x-releases",
@@ -135,7 +135,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 432
+      "durationMs": 253
     },
     {
       "slug": "starrocks-releases",
@@ -160,7 +160,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 570
+      "durationMs": 593
     },
     {
       "slug": "starrocks-official",
@@ -185,7 +185,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 322
+      "durationMs": 517
     },
     {
       "slug": "tdsql-docs",
@@ -210,7 +210,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1937
+      "durationMs": 2466
     },
     {
       "slug": "tdengine-releases",
@@ -235,7 +235,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 270
+      "durationMs": 272
     },
     {
       "slug": "tdengine-official",
@@ -260,7 +260,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 430
+      "durationMs": 143
     },
     {
       "slug": "tidb-releases",
@@ -275,7 +275,7 @@
       "schemaStatus": "valid",
       "policyStatus": "allowed_metadata",
       "itemCount": 10,
-      "latestItemAt": "2026-08-31T07:16:02.000Z",
+      "latestItemAt": "2026-09-10T03:46:07.000Z",
       "duplicateRatio": 0,
       "qualityScore": 72,
       "errorType": null,
@@ -285,7 +285,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep",
       "recommendedLifecycle": "shadow",
-      "durationMs": 413
+      "durationMs": 300
     },
     {
       "slug": "caict-database",
@@ -310,7 +310,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1375
+      "durationMs": 1883
     },
     {
       "slug": "kingbase-official",
@@ -335,7 +335,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2700
+      "durationMs": 2669
     },
     {
       "slug": "kingbase-docs",
@@ -360,7 +360,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 3216
+      "durationMs": 4827
     },
     {
       "slug": "nda-policy",
@@ -385,7 +385,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1629
+      "durationMs": 711
     },
     {
       "slug": "miit-policy",
@@ -393,24 +393,24 @@
       "adapterVersion": "1.0.0",
       "robotsPolicy": "review-required",
       "freshnessSloHours": 168,
-      "status": "degraded",
-      "accessStatus": "reachable",
-      "fetchStatus": "succeeded",
-      "parseStatus": "empty",
-      "schemaStatus": "empty",
+      "status": "failed",
+      "accessStatus": "unreachable",
+      "fetchStatus": "failed",
+      "parseStatus": "not_started",
+      "schemaStatus": "unknown",
       "policyStatus": "allowed_metadata",
       "itemCount": 0,
       "latestItemAt": null,
       "duplicateRatio": 0,
       "qualityScore": 0,
-      "errorType": "content",
-      "errorCode": "EMPTY_RESULT",
-      "repairAction": "inspect_endpoint_or_parser",
-      "proxyHint": "not_required",
+      "errorType": "network",
+      "errorCode": "ADAPTER_ERROR",
+      "repairAction": "verify_network_dns_or_proxy",
+      "proxyHint": "possible",
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1914
+      "durationMs": 3658
     },
     {
       "slug": "tdsql-official",
@@ -435,7 +435,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1366
+      "durationMs": 1536
     },
     {
       "slug": "dameng-docs",
@@ -443,24 +443,24 @@
       "adapterVersion": "1.0.0",
       "robotsPolicy": "manual-only",
       "freshnessSloHours": 168,
-      "status": "failed",
-      "accessStatus": "unreachable",
-      "fetchStatus": "failed",
-      "parseStatus": "not_started",
+      "status": "skipped",
+      "accessStatus": "reachable",
+      "fetchStatus": "succeeded",
+      "parseStatus": "unsupported",
       "schemaStatus": "not_applicable",
       "policyStatus": "manual_review",
       "itemCount": 0,
       "latestItemAt": null,
       "duplicateRatio": 0,
       "qualityScore": 0,
-      "errorType": "network",
-      "errorCode": "ADAPTER_ERROR",
-      "repairAction": "verify_or_replace_endpoint",
-      "proxyHint": "possible",
+      "errorType": null,
+      "errorCode": null,
+      "repairAction": "configure_stable_adapter",
+      "proxyHint": "not_required",
       "proxyUsed": false,
-      "retentionDecision": "observe",
+      "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 22518
+      "durationMs": 1928
     },
     {
       "slug": "dameng-official",
@@ -485,7 +485,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 4090
+      "durationMs": 2662
     },
     {
       "slug": "polardb-official",
@@ -510,7 +510,7 @@
       "proxyUsed": false,
       "retentionDecision": "observe",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1326
+      "durationMs": 2052
     },
     {
       "slug": "dtcc",
@@ -535,7 +535,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 704
+      "durationMs": 1079
     },
     {
       "slug": "gitlink-database",
@@ -560,7 +560,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2181
+      "durationMs": 2760
     },
     {
       "slug": "infoq-cn-database",
@@ -585,7 +585,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 2660
+      "durationMs": 3063
     },
     {
       "slug": "ccf-database",
@@ -610,7 +610,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1440
+      "durationMs": 1408
     },
     {
       "slug": "modb",
@@ -635,7 +635,7 @@
       "proxyUsed": false,
       "retentionDecision": "keep_manual",
       "recommendedLifecycle": "shadow",
-      "durationMs": 1452
+      "durationMs": 2047
     },
     {
       "slug": "zhuang-xiaodan-wechat",
